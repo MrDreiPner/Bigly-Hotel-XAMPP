@@ -1,0 +1,122 @@
+.error{
+    color: red;
+}
+nav {
+    background-color: rgb(255, 0, 0);
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+h1{
+    font-family: 'Akronim', cursive;
+    font-size: 50px;
+    position: absolute;
+    margin-top:40px;
+}
+#Überschrift{
+    color:blueviolet
+}
+.ersteClass{
+    color:blue;
+}
+.zweiteClass{
+    background-color:blue
+}
+.div {
+    margin: auto;
+    box-sizing: border-box;
+    border: 1px solid black;
+    padding: 2%;
+}
+.input_left:not()
+{
+    margin:auto;
+}
+.input_left{
+display:inline-block;
+
+background-color: cyan;
+font-size: 1em;
+margin-bottom: 7px;
+font-family: 'ZCOOL KuaiLe', cursive;
+max-width: fit-content;
+max-height: fit-content;
+padding: 20px;
+border-style: double;
+border-color: black;
+border-radius: 50px;
+border-width: 5px;
+}
+*{
+    box-sizing: border-box;
+    margin: auto;
+}
+
+.fc{
+    background-image: url("background.png");
+    height: 100vh;
+    width: 100vw;
+}
+
+#Header {
+    width: 350px;
+    height:100px;
+    border: 1px;
+}
+
+#harold {
+    max-width: 500px; 
+    max-height: 300px;
+    border-style: double;
+    border-color: green;
+}
+
+#haroldbild {
+    width: 495px; 
+    height: 295px;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: cyan;
+    font-size: 1em;
+    margin-bottom: 7px;
+    font-family: 'ZCOOL KuaiLe', cursive;
+    max-width: fit-content;
+    max-height: fit-content;
+    padding: 20px;
+    border-style: double;
+    border-color: black;
+    border-radius: 50px;
+    border-width: 5px;
+}
+
+
+.input input {
+    background-color: green;
+    border: 2px solid black; 
+    outline: none;
+    font-size: 1em;
+    padding: .1em .25em;   
+    border-radius: 3px;
+}
+
+.input label {     
+    font-size: 1em;
+    margin-bottom: 7px;
+}
+    
+
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: rgb(0, 230, 50);
+    font-size: larger;
+  }
