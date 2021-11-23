@@ -14,73 +14,67 @@
         include "nav.php";
     ?>
     <?php
-        $nachname = $vorname = $email = $anrede = $tel = $strasse = $hausnummer = $ort = $plz = "";
-        $missNachname = $missVorname = $missEmail = $missAnrede = $missTel = $missStrasse = $missHausnummer = $missOrt = $missPlz = "";
+        
+        $checkschecked = "";
+        $inputs = array ("nachname", "vorname", "email","anrede","tel","strasse","hausnummer","ort","plz");
+        $inputsOnlyChars = array("nachname", "vorname", "ort", "strasse",);
+        $data = array();
+        $errors = array();
+
+        foreach ($inputs as &$input){
+            $data[$input] = "";
+            $errors[$input] = "";
+        }
     
+        function test_input($data)
+        {
+            $data = trim($data);
+            $data = stripslashes($data);
+            $data = htmlspecialchars($data);
+            return $data;
+        }
+        function checkOnlyChars($input){
+            return preg_match("/^[a-zA-Z]*$/",$input) ? "" : "Nur Buchstaben erlaubt!";
+        }
+
+        function checkOnlyNumbers($input){
+            return preg_match("/^[0-9]*$/",$input) ? "" : "Nur Zahlen erlaubt!";
+        }
+
+        function checkOnlyCharsAndNumbers($input){
+            return preg_match("/^[a-zA-Z0-9]*$/",$input) ? "" : "Keine Sonderzeichen erlaubt!";
+        }
+
+        function checkTelefon($input){
+            return preg_match("/^[0-9+ ]*$/",$input) ? "" : "Nur + in Vorwahl und Zahlen von 0-9 erlaubt!";
+        }
+
+        function checkEmail($input){
+            return filter_var($input, FILTER_VALIDATE_EMAIL) ? "" : "Adresse ungültig!";
+        }
+
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if (empty($_POST["Nachname"])){
-                $missNachname = "Gib Nachname";
+            $checkschecked = "Regitrierung great success!";
+            foreach($inputs as &$input) {
+                $data[$input] = test_input($_POST[$input]);
             }
-            else{
-                $nachname = test_input($_POST["Nachname"]);
+            foreach($inputsOnlyChars as &$input) {
+                $errors[$input] = checkOnlyChars($data[$input]);
             }
-            if (empty($_POST["Vorname"])){
-                $missVorname = "Gib Vorname";
-            }
-            else{
-                $vorname = test_input($_POST["Vorname"]);
-            }
-            if (empty($_POST["anrede"])){
-                $missAnrede = "Gib Anrede";
-            }
-            else{
-                $anrede = test_input($_POST["anrede"]);
-            }
-            if (empty($_POST["email"])){
-                $missEmail = "Gib E-Mail";
-            }
-            else{
-                $email = test_input($_POST["email"]);
-            }
-            if (empty($_POST["tel"])){
-                $missTel = "Gib Telefonnummer";
-            }
-            else{
-                $tel = test_input($_POST["tel"]);
-            }
-            if (empty($_POST["strasse"])){
-                $missStrasse = "Gib Straße";
-            }
-            else{
-                $strasse = test_input($_POST["strasse"]);
-            }
-            if (empty($_POST["hausnummer"])){
-                $missHausnummer = "Gib Hausnummer";
-            }
-            else{
-                $hausnummer = test_input($_POST["hausnummer"]);
-            }
-            if (empty($_POST["ort"])){
-                $missOrt = "Gib Ort";
-            }
-            else{
-                $ort = test_input($_POST["ort"]);
-            }
-            if (empty($_POST["plz"])){
-                $missPlz = "Gib Postleitzahl";
-            }
-            else{
-                $plz = test_input($_POST["plz"]);
-            }
-        }
-    
-        function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-        }
-    ?>
+
+            $errors["plz"] = checkOnlyNumbers($data["plz"]);
+            $errors["hausnummer"] = checkOnlyCharsAndNumbers($data["hausnummer"]);
+            $errors["email"] = checkEmail($data["email"]);
+            $errors["tel"] = checkTelefon($data["tel"]);
+
+            $counter = 0;
+            foreach ($errors as &$error) {
+                if ($error != "") {
+                    $checkschecked = "Registrierung big fail!";
+                }
+        }}
+     ?>
     <div id="Header">
         <h1 id="Überschrift">Registrieren</h1>
     </div>
@@ -88,7 +82,6 @@
         <div class="ersteClass">
             Anrede:
             <br>
-            <span class="error">* <?php echo $missAnrede;?></span>
             <br> <!--Überlegung ob Anrede notwendig bzw wie man Anrede genderneutral angehen kann-->
                 <input name="anrede" type="radio" value="Herr" checked>Herr
                 <input name="anrede" type="radio" value="Frau">Frau
@@ -97,52 +90,53 @@
         </div>
         <br>
         <div class="ersteClass">
-            <label for="Vorname">Vorname:</label>
-            <span class="error">* <?php echo $missVorname;?></span>
-            <input type="text" name="Vorname" id="Vorname"><br>
+            <label for="vorname">Vorname:</label>
+            <span class="error">* <?php echo $errors["vorname"];?></span>
+            <input type="text" name="vorname" id="vorname" required value="<?php echo $errors["vorname"] != "" ? "" : $data["vorname"];?>"><br>
         </div>
         <div class="ersteClass">
-            <label for="Nachname">Nachname:</label>
-            <span class="error">* <?php echo $missNachname;?></span>
-            <input type="text" name="Nachname" id="Nachname"><br>
+            <label for="nachname">Nachname:</label>
+            <span class="error">* <?php echo $errors["nachname"];?></span>
+            <input type="text" name="nachname" id="nachname" required value="<?php echo $errors["nachname"] != "" ? "" : $data["nachname"];?>""><br>
         </div>
         <div class="ersteClass">
             <label for="email">E-Mail-Adresse:</label>
-            <span class="error">* <?php echo $missEmail;?></span>
-            <input type="email" name="email" id="email"><br>
+            <span class="error">* <?php echo $errors["email"];?></span>
+            <input type="email" name="email" id="email" required value="<?php echo $errors["email"] != "" ? "" : $data["email"];?>"><br>
         </div>
         <div class="ersteClass">
             <label for="tel">Tel. Nummer:</label>
-            <span class="error">* <?php echo $missTel;?></span>
-            <input type="tel" name="tel" id="tel">
+            <span class="error">* <?php echo $errors["tel"];?></span>
+            <input type="tel" name="tel" id="tel" required value="<?php echo $errors["tel"] != "" ? "" : $data["tel"];?>">
         </div>
         <p class="ersteClass">Adresse:<br>
             <label>Straße:</label>
-            <span class="error">* <?php echo $missStrasse;?></span>
-            <input name="strasse" type="text" id="address"><br>
+            <span class="error">* <?php echo $errors["strasse"];?></span>
+            <input name="strasse" type="text" id="address" required value="<?php echo $errors["strasse"] != "" ? "" : $data["strasse"];?>"><br>
             <label>Hausnummer:</label>
-            <span class="error">* <?php echo $missHausnummer;?></span>
-            <input name="hausnummer" type="text" id="address"><br>
+            <span class="error">* <?php echo $errors["hausnummer"];?></span>
+            <input name="hausnummer" type="text" id="address" required value="<?php echo $errors["hausnummer"] != "" ? "" : $data["hausnummer"];?>"><br>
             <label>Ort:</label>
-            <span class="error">* <?php echo $missOrt;?></span>
-            <input name="ort" type="text" id="address"><br>
+            <span class="error">* <?php echo $errors["ort"];?></span>
+            <input name="ort" type="text" id="address" required value="<?php echo $errors["ort"] != "" ? "" : $data["ort"];?>"><br>
             <label>PLZ:</label>
-            <span class="error">* <?php echo $missPlz;?></span>
-            <input name="plz" type="text" id="address"><br>
+            <span class="error">* <?php echo $errors["plz"];?></span>
+            <input name="plz" type="text" id="address" required value="<?php echo $errors["plz"] != "" ? "" : $data["plz"];?>"><br>
         </p>
         <button type="submit">Registrieren</button>
     </form>
 <?php
    echo "<h2>Your Input:</h2>";
-   echo $vorname, "<br>";
-   echo $nachname, "<br>";
-   echo $anrede,"<br>";
-   echo $email,"<br>";
-   echo $tel,"<br>";
-   echo $strasse,"<br>";
-   echo $hausnummer,"<br>";
-   echo $ort,"<br>";
-   echo $plz;
+   echo $data["anrede"],"<br>";
+   echo $data["vorname"], "<br>";
+   echo $data["nachname"], "<br>";
+
+   echo $data["email"],"<br>";
+   echo $data["tel"],"<br>";
+   echo $data["strasse"]," ",$data["hausnummer"],"<br>";
+   echo $data["ort"]," ",$data["plz"],"<br>";
+
+    echo "<h1> $checkschecked </h1>";
 ?>
 </body>
 </html>
