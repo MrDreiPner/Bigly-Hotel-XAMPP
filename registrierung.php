@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Akronim&family=Lato:ital,wght@1,300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <title>Registrierung</title>
-</head>
+<?php include "header.php"; ?>
 <body>
     <?php
         include "nav.php";
@@ -55,7 +45,7 @@
 
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $checkschecked = "Regitrierung great success!";
+            $checkschecked = "Registrierung great success!";
             foreach($inputs as &$input) {
                 $data[$input] = test_input($_POST[$input]);
             }
@@ -124,6 +114,7 @@
             <input name="plz" type="text" id="address" required value="<?php echo $errors["plz"] != "" ? "" : $data["plz"];?>"><br>
         </p>
         <button type="submit">Registrieren</button>
+        <button type="reset">Reset this shit!</button>
     </form>
 <?php
    echo "<h2>Your Input:</h2>";
