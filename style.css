@@ -1,37 +1,45 @@
 .error{
     color: red;
 }
+
 nav {
     background-color: rgb(255, 0, 0);
     position: fixed;
     width: 100%;
     top: 0;
 }
+
 h1{
     font-family: 'Akronim', cursive;
     font-size: 50px;
     position: absolute;
     margin-top:40px;
 }
+
 #Überschrift{
     color:blueviolet
 }
+
 .ersteClass{
     color:blue;
 }
+
 .zweiteClass{
     background-color:blue
 }
+
 .div {
     margin: auto;
     box-sizing: border-box;
     border: 1px solid black;
     padding: 2%;
 }
+
 .input_left:not()
 {
     margin:auto;
 }
+
 .input_left{
 display:inline-block;
 
@@ -93,7 +101,6 @@ border-width: 5px;
     border-width: 5px;
 }
 
-
 .input input {
     background-color: green;
     border: 2px solid black; 
@@ -107,8 +114,6 @@ border-width: 5px;
     font-size: 1em;
     margin-bottom: 7px;
 }
-    
-
 
 nav ul {
     list-style-type: none;
@@ -119,4 +124,4 @@ nav ul {
     padding-bottom: 12px;
     background-color: rgb(0, 230, 50);
     font-size: larger;
-  }
+}

@@ -84,7 +84,7 @@
     <div id="Header">
         <h1 id="Überschrift">Registrieren</h1>
     </div>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" target="_blank">
+    <form method="post">
         <div class="ersteClass">
             Anrede:
             <br>
@@ -132,17 +132,17 @@
         </p>
         <button type="submit">Registrieren</button>
     </form>
- <?php
-    echo "<h2>Your Input:</h2>";
-    echo $vorname, "<br>";
-    echo $nachname, "<br>";
-    echo $anrede,"<br>";
-    echo $email,"<br>";
-    echo $tel,"<br>";
-    echo $strasse,"<br>";
-    echo $hausnummer,"<br>";
-    echo $ort,"<br>";
-    echo $plz;
+<?php
+   echo "<h2>Your Input:</h2>";
+   echo $vorname, "<br>";
+   echo $nachname, "<br>";
+   echo $anrede,"<br>";
+   echo $email,"<br>";
+   echo $tel,"<br>";
+   echo $strasse,"<br>";
+   echo $hausnummer,"<br>";
+   echo $ort,"<br>";
+   echo $plz;
 ?>
 </body>
 </html>
