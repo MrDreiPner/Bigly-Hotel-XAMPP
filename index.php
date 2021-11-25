@@ -1,6 +1,7 @@
 <?php include "header.php"; ?>
 <body>
     <?php
+        session_start();
         include "nav.php";
     ?>
     <div id="Header">

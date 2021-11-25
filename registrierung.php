@@ -4,9 +4,8 @@
         include "nav.php";
     ?>
     <?php
-        
         $checkschecked = "";
-        $inputs = array ("nachname", "vorname", "email","anrede","tel","strasse","hausnummer","ort","plz");
+        $inputs = array ("nachname", "vorname", "email","anrede","tel","strasse","hausnummer","ort","plz", "Bildname");
         $inputsOnlyChars = array("nachname", "vorname", "ort", "strasse",);
         $data = array();
         $errors = array();
@@ -65,10 +64,23 @@
                 }
         }}
      ?>
+     <?php
+        echo "<br><br><br>";
+            var_dump($_FILES);
+            $bildname = $data["Bildname"];
+            if (isset($_FILES["Bildupload"])){
+            $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
+            $destination =$_SERVER["DOCUMENT_ROOT"] ."/WebTech/uploads/" .$bildname. uniqid().".". $path_parts["extension"];
+
+            move_uploaded_file($_FILES["Bildupload"]["tmp_name"], $destination);
+            echo($destination);
+        }
+    
+     ?>
     <div id="Header">
         <h1 id="Überschrift">Registrieren</h1>
     </div>
-    <form method="post">
+    <form enctype="multipart/form-data" method = "post">
         <div class="ersteClass">
             Anrede:
             <br>
@@ -113,15 +125,18 @@
             <span class="error">* <?php echo $errors["plz"];?></span>
             <input name="plz" type="text" id="address" required value="<?php echo $errors["plz"] != "" ? "" : $data["plz"];?>"><br>
         </p>
+        <br>
+        <input type="text" name="Bildname"><br>
+        <input type="file" name="Bildupload"><br>
         <button type="submit">Registrieren</button>
-        <button type="reset">Reset this shit!</button>
-    </form>
+        <button type="reset">Reset this</button>
+    </form> 
 <?php
+
    echo "<h2>Your Input:</h2>";
    echo $data["anrede"],"<br>";
    echo $data["vorname"], "<br>";
    echo $data["nachname"], "<br>";
-
    echo $data["email"],"<br>";
    echo $data["tel"],"<br>";
    echo $data["strasse"]," ",$data["hausnummer"],"<br>";
