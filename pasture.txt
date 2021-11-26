@@ -1,0 +1,72 @@
+        $counter = 0;
+        foreach ($user as $user){
+            if($_POST["Username"] == $user[$user] && $_POST["Password"] == $PW[$counter]){
+                echo "Hallo ", $user[$user], "! Dein PW ist", $PW[$counter];
+            }
+            $counter++;
+        }
+
+        
+        $adminU = "admin";
+        $adminPW = "admin";
+        $userU = "Thomas";
+        $userPW = "Gottschalk";
+
+        if (isset($_POST["Username"])) {
+            if (($_POST["Username"] == $userU) && ($_POST["Password"] == $userPW)) {
+                echo "Hallo $userU! Dein Passwort ist $userPW";
+            } elseif (($_POST["Username"] == $adminU) && ($_POST["Password"] == $adminPW)) {
+                echo "Hallo $adminU! Dein Passwort ist $adminPW";
+            }
+        }
+
+
+        $user = array ("admin", "Thomas"); 
+        $PW = array("admin", "Gottschalk");
+        $user["admin"] = "admin";
+        $user["Thomas"] = "Thomas";
+        $PW["admin"] = "admin";
+        $PW["Gottschalk"] = "Gottschalk";
+        $usernameCheck = FALSE;
+        $PWCheck = FALSE;
+
+        if (isset($_POST["Username"])) {
+
+            foreach ($user as $index) {
+                if ($_POST["Username"] == $user[$index]) {
+                    $usernameCheck = TRUE;
+                    break;
+                }
+            }
+            foreach ($PW as $index) {
+                if ($_POST["Username"] == $PW[$index]) {
+                    $PWCheck = TRUE;
+                    break;
+                }
+            }
+            if ($usernameCheck = TRUE && $PWCheck = TRUE)
+                echo "<br>CHECK Du bist", $_POST["Username"] ," mit PW ", $_POST["Password"];
+        }
+
+
+
+
+        $user[0] = "admin";
+        $user[1] = "Thomas";
+        $PW[0] = "admin";
+        $PW[1] = "Gottschalk";
+        $input = array( "Username", "Password"); 
+        echo "<br>";
+        var_dump($user);
+        var_dump($PW);
+        var_dump($input);
+        echo "<br>";
+
+        if (isset($_POST["Username"])) {
+            foreach ($input as &$index) {
+                if ($input["Username"] == $user[$index] && $input["Password"] == $PW[$index]) {
+                    echo "Hallo ", $user[$index], "! Dein PW ist", $PW[$index];
+                    break;
+                }
+            }
+        }

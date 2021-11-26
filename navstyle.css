@@ -1,0 +1,17 @@
+nav ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: rgb(230, 207, 0);
+    font-size: larger;
+    padding-right: 5%;
+}
+
+nav {
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
