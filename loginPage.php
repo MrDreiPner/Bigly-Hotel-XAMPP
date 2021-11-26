@@ -7,15 +7,15 @@
 
         $user = array ("admin", "Thomas"); 
         $PW = array("admin", "Gottschalk");
-
+        $verification = "Stop it";
         if (isset($_POST["Username"])) {
-            if (($_POST["Username"] == $user[0]) && ($_POST["Password"] == $PW[0])) {
-                echo "You sudo now";
-            } elseif (($_POST["Username"] == $user[1]) && ($_POST["Password"] == $PW[1])) {
-                echo "You logged in as Thommy boy";
+            for ($index =0; $index < sizeof($user); $index++) {
+                if (($_POST["Username"] == $user[$index]) && ($_POST["Password"] == $PW[$index])) {
+                    $verification = "You sudo now";
+                    break;
+                }
             }
-            else
-                echo "Stop it. Get some help.";
+            echo $verification;
         }
 
         echo "<br>";
