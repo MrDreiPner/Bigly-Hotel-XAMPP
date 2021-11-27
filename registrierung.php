@@ -68,9 +68,9 @@
         echo "<br><br><br>";
             $bildname = $data["Bildname"];
             if (isset($_FILES["Bildupload"])){
-            $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
-            $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/uploads/" .$bildname."_". uniqid().".". $path_parts["extension"];
-            move_uploaded_file($_FILES["Bildupload"]["tmp_name"], $destination);
+                $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
+                $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/uploads/" .$bildname."_". uniqid().".". $path_parts["extension"];
+                move_uploaded_file($_FILES["Bildupload"]["tmp_name"], $destination);
         }
     
      ?>

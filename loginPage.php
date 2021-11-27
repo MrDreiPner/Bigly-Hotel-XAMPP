@@ -8,43 +8,45 @@
         $user = array ("admin", "Thomas"); 
         $PW = array("admin", "Gottschalk");
         $verification = "Stop it";
+        $validLogin = FALSE;
         if (isset($_POST["Username"])) {
             for ($index =0; $index < sizeof($user); $index++) {
                 if (($_POST["Username"] == $user[$index]) && ($_POST["Password"] == $PW[$index])) {
                     $verification = "You sudo now";
+                    $validLogin = TRUE;
+                    if (isset($_POST["Username"])){
+                        setcookie("CookieWert", $_POST["Username"], time()+30);
+                    }
+                    if (isset($_POST["Username"])){
+                        $_SESSION["SessionWert"] = $_POST["Username"];
+                    }
                     break;
                 }
             }
             echo $verification;
         }
-
-        echo "<br>";
-        $uploadDir = $_SERVER["DOCUMENT_ROOT"]."/WebTech/uploads/". uniqid().".txt";
-        if (isset($_POST["Username"])){
-            setcookie("CookieWert", $_POST["Username"], time()+30);
-        }
-
         if (isset($_COOKIE["CookieWert"])){
             echo "<br>Cookie: ", $_COOKIE["CookieWert"];
         }
-
-        if (isset($_POST["Username"])){
-            $_SESSION["SessionWert"] = $_POST["Username"];
-        }
+        echo "<br>";
 
         if (isset($_SESSION["SessionWert"])){
             echo "<br>Session: ", $_SESSION["SessionWert"];
         }
-        if (isset($_POST["Bildupload"])) {
+        $bildname = "";
+        if (isset($_POST["Bildname"])) {
+            $bildname = $_POST["Bildname"];
+        }
+        if ($validLogin = TRUE && isset($_POST["Username"])) {
             $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
-            $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/personen/" .$_POST["Bildname"]."_". uniqid().".". $path_parts["extension"];
-            move_uploaded_file($_FILES["Bildupload"]["tmp_name"], $destination);
+            $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/personen/" .$bildname."_". uniqid().".". $path_parts["extension"];
+            move_uploaded_file($_FILES["Bildupload"]["tmp_name"],$destination);
         }
     ?>
 
     <form enctype="multipart/form-data" action="loginPage.php" method="POST">
         <label for="Username">Username</label>
-        <input type="text" name="Username" required placeholder="Username"><br>
+        <input type="text" name="Username" required placeholder="Username" value="<?php echo isset($_COOKIE["CookieWert"]) ? $_COOKIE["CookieWert"] : "";?>"><br>
         <label for="Password">Password</label>
         <input type="password" required name="Password"><br>
         <label for="Bildname">Bild Titel</label>
@@ -52,5 +54,14 @@
         <input type="file" name="Bildupload"><br>
         <input type="submit">
     </form>
-</body>
+
+    <?php
+        if (isset($_COOKIE["CookieWert"])){
+            echo $_COOKIE["CookieWert"] == "admin" ? "<img src= ../Werbebilder/Admin.jpg>" : "<img src= ../Werbebilder/Wetten_dass.jpg>";
+        }
+        if (isset($_SESSION["SessionWert"])){
+            echo $_SESSION["SessionWert"] == "admin" ? "<img src= ../Werbebilder/Admin.jpg>" : "<img src= ../Werbebilder/Wetten_dass.jpg>";
+        }
+    ?>
+    </body>
 </html>
