@@ -13,7 +13,7 @@
         if (isset($_POST["Username"])) {
             for ($index = 0; $index < sizeof($user); $index++) {
                 if (($_POST["Username"] == $user[$index]) && ($_POST["Password"] == $PW[$index])) {
-                    $verification = "You sudo now";
+                    $verification = "You ". $user[$index]." now";
                     $validLogin = TRUE;
                     if (isset($_POST["Username"])){
                         setcookie("CookieWert", $_POST["Username"], time()+3600);
