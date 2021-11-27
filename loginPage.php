@@ -5,17 +5,18 @@
     <?php
         session_start();
 
-        $user = array ("admin", "Thomas"); 
-        $PW = array("admin", "Gottschalk");
+        $user = array ("admin", "Thomas", "Patrick", "Matus"); 
+        $PW = array("admin", "Gottschalk", "Faltas", "Porubsky");
+        $werbung = array("harold1.jpg", "Wetten_dass.jpg", "Faltas.jpg", "MatPor.jpg");
         $verification = "Stop it";
         $validLogin = FALSE;
         if (isset($_POST["Username"])) {
-            for ($index =0; $index < sizeof($user); $index++) {
+            for ($index = 0; $index < sizeof($user); $index++) {
                 if (($_POST["Username"] == $user[$index]) && ($_POST["Password"] == $PW[$index])) {
                     $verification = "You sudo now";
                     $validLogin = TRUE;
                     if (isset($_POST["Username"])){
-                        setcookie("CookieWert", $_POST["Username"], time()+30);
+                        setcookie("CookieWert", $_POST["Username"], time()+3600);
                     }
                     if (isset($_POST["Username"])){
                         $_SESSION["SessionWert"] = $_POST["Username"];
@@ -37,11 +38,12 @@
         if (isset($_POST["Bildname"])) {
             $bildname = $_POST["Bildname"];
         }
-        if (($validLogin == TRUE)) {
-            if (isset($_FILES["Bildupload"])) {
-                $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
-                $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/Bigly Hotel XAMPP/personen/" .$bildname."_". uniqid().".". $path_parts["extension"];
+        if (($validLogin == TRUE) && isset($_FILES["Bildupload"])) {
+            $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
+            if (isset($path_parts["extension"])) {                    
+                $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/Bigly Hotel XAMPP/personen/" .$bildname."_". uniqid().".".$path_parts["extension"];                
                 move_uploaded_file($_FILES["Bildupload"]["tmp_name"], $destination);
+                var_dump($path_parts);
             }
         }
     ?>
@@ -58,12 +60,15 @@
     </form>
 
     <?php
-        if (isset($_COOKIE["CookieWert"])){
-            echo $_COOKIE["CookieWert"] == "admin" ? "<img src= Werbebilder/Admin.jpg>" : "<img src= Werbebilder/Wetten_dass.jpg>";
+        if (isset($_POST["Username"])) {
+            for ($index = 0; $index < sizeof($user); $index++) {
+                if (($_POST["Username"] == $user[$index]) && $validLogin== true) {
+                    echo "<img src='Werbebilder/".$werbung[$index]."'>";
+                    break;
+                }
+            }
         }
-        if (isset($_SESSION["SessionWert"])){
-            echo $_SESSION["SessionWert"] == "admin" ? "<img src= Werbebilder/Admin.jpg>" : "<img src= Werbebilder/Wetten_dass.jpg>";
-        }
+
     ?>
     </body>
 </html>
