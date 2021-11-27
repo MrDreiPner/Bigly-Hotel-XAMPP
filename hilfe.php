@@ -8,7 +8,7 @@
         <h1>Brauchen Sie Hilfe?</h1>  
     </div>      
     <div id="harold">
-        <img src="harold1.jpg" alt="Hide the Pain" id="haroldbild">  
+        <img src="Werbebilder/harold1.jpg" alt="Hide the Pain" id="haroldbild">  
     <form>
         <div class="input">
             Bitte schildern Sie Ihr Problem:

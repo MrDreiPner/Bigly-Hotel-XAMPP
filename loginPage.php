@@ -37,10 +37,12 @@
         if (isset($_POST["Bildname"])) {
             $bildname = $_POST["Bildname"];
         }
-        if ($validLogin = TRUE && isset($_POST["Username"])) {
-            $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
-            $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/personen/" .$bildname."_". uniqid().".". $path_parts["extension"];
-            move_uploaded_file($_FILES["Bildupload"]["tmp_name"],$destination);
+        if (($validLogin == TRUE)) {
+            if (isset($_FILES["Bildupload"])) {
+                $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
+                $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/Bigly Hotel XAMPP/personen/" .$bildname."_". uniqid().".". $path_parts["extension"];
+                move_uploaded_file($_FILES["Bildupload"]["tmp_name"], $destination);
+            }
         }
     ?>
 
@@ -57,10 +59,10 @@
 
     <?php
         if (isset($_COOKIE["CookieWert"])){
-            echo $_COOKIE["CookieWert"] == "admin" ? "<img src= ../Werbebilder/Admin.jpg>" : "<img src= ../Werbebilder/Wetten_dass.jpg>";
+            echo $_COOKIE["CookieWert"] == "admin" ? "<img src= Werbebilder/Admin.jpg>" : "<img src= Werbebilder/Wetten_dass.jpg>";
         }
         if (isset($_SESSION["SessionWert"])){
-            echo $_SESSION["SessionWert"] == "admin" ? "<img src= ../Werbebilder/Admin.jpg>" : "<img src= ../Werbebilder/Wetten_dass.jpg>";
+            echo $_SESSION["SessionWert"] == "admin" ? "<img src= Werbebilder/Admin.jpg>" : "<img src= Werbebilder/Wetten_dass.jpg>";
         }
     ?>
     </body>
