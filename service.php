@@ -1,0 +1,56 @@
+<?php include "head.php"; ?>
+<body>
+    <?php 
+        //include "nav.php";
+        function test_input($data){
+            $data = trim($data);
+            $data = stripslashes($data);
+            $data = htmlspecialchars($data);
+            return $data;
+        }
+
+        $bildname = "";
+        if (isset($_POST["Bildname"])) {
+            $bildname = test_input($_POST["Bildname"]);
+        }
+        if (isset($_FILES["Bildupload"])) {
+            $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
+            if (isset($path_parts["extension"])) {                    
+                $destination =$_SERVER["DOCUMENT_ROOT"]."/Webtech XAMPP/Bigly-Hotel-XAMPP/personen/" .$bildname./*"_". uniqid().*/".".$path_parts["extension"];                
+                move_uploaded_file($_FILES["Bildupload"]["tmp_name"], $destination);
+                //-----Thumbnail machen-----
+                $srcimage = "personen/".$bildname.".jpg"; //Pfad vom original
+                $destimage = "thumbnails/".$bildname."-thumb.jpg"; //Pfad vom resize
+                list($width, $height) = getimagesize($srcimage);
+                $newwidth=720;
+                $newheight=480;
+                //resizing von originalimg wird in thumb hinterlegt
+                $originalimg = imagecreatefromjpeg($srcimage);
+                $thumb = imagecreatetruecolor($newwidth, $newheight);
+                imagecopyresampled(
+                    $thumb, $originalimg,
+                    0, 0, 0, 0,
+                    $newwidth, $newheight,
+                    $width, $height
+                );
+                //speichern des Thumbnails
+                imagejpeg($thumb, $destimage);
+                echo "gespeichert";
+                echo "<img src=$destimage><br>";
+                echo "<img src=$srcimage>";
+                
+            }
+        }
+
+    ?>
+    <br><br><br><br>
+    <form enctype="multipart/form-data" action="service.php" method="POST">
+        <input type="text" placeholder="Why U need help?"><br>
+        <label for="Bildname">Bild Titel</label><br>
+        <input type="text" name="Bildname"><br>
+        <input type="file" name="Bildupload"><br>
+        <input type="submit">
+    </form><br><br>
+    <h2>Dis U?</h2>
+</body>
+</html>
