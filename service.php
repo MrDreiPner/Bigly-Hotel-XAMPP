@@ -10,10 +10,15 @@
         }
 
         $bildname = "";
+        function checkOnlyCharsAndNumbers($input){
+            return preg_match("/^[a-zA-Z0-9_]*$/",$input) ? "" : "Keine Leerzeichen/ Sonderzeichen!";
+        }
+        $errors = "";
         if (isset($_POST["Bildname"])) {
             $bildname = test_input($_POST["Bildname"])."_".uniqid();
+            $errors = checkOnlyCharsAndNumbers($_POST["Bildname"]);
         }
-        if (isset($_FILES["Bildupload"])) {
+        if (isset($_FILES["Bildupload"]) && $errors == "") {
             $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
             if (isset($path_parts["extension"])) {                    
                 $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/Bigly Hotel XAMPP/personen/" .$bildname.".".$path_parts["extension"];                
@@ -46,6 +51,7 @@
     <br><br><br><br>
     <form enctype="multipart/form-data" action="service.php" method="POST">
         <input type="text" placeholder="Why U need help?"><br>
+        <span class="error">* <?php echo $errors;?></span>
         <label for="Bildname">Bild Titel</label><br>
         <input type="text" name="Bildname"><br>
         <input type="file" name="Bildupload"><br>
