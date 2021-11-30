@@ -11,7 +11,7 @@
 
         $bildname = "";
         if (isset($_POST["Bildname"])) {
-            $bildname = test_input($_POST["Bildname"]).uniqid();
+            $bildname = test_input($_POST["Bildname"])."_".uniqid();
         }
         if (isset($_FILES["Bildupload"])) {
             $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
