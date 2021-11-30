@@ -11,12 +11,12 @@
 
         $bildname = "";
         if (isset($_POST["Bildname"])) {
-            $bildname = test_input($_POST["Bildname"]);
+            $bildname = test_input($_POST["Bildname"]).uniqid();
         }
         if (isset($_FILES["Bildupload"])) {
             $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
             if (isset($path_parts["extension"])) {                    
-                $destination =$_SERVER["DOCUMENT_ROOT"]."/Webtech XAMPP/Bigly-Hotel-XAMPP/personen/" .$bildname./*"_". uniqid().*/".".$path_parts["extension"];                
+                $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/Bigly Hotel XAMPP/personen/" .$bildname.".".$path_parts["extension"];                
                 move_uploaded_file($_FILES["Bildupload"]["tmp_name"], $destination);
                 //-----Thumbnail machen-----
                 $srcimage = "personen/".$bildname.".jpg"; //Pfad vom original
@@ -35,7 +35,7 @@
                 );
                 //speichern des Thumbnails
                 imagejpeg($thumb, $destimage);
-                echo "gespeichert";
+                echo "gespeichert<br>";
                 echo "<img src=$destimage><br>";
                 echo "<img src=$srcimage>";
                 
