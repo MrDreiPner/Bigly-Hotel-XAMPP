@@ -1,5 +1,6 @@
 <?php include "head.php"; ?>
 <body>
+    <?php include "nav.php"; ?>
     <?php 
         //include "nav.php";
         function test_input($data){

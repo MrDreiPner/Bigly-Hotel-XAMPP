@@ -3,7 +3,6 @@
     <?php include "nav.php"; ?>
     <br><br><br>
     <?php
-        session_start();
 
         $user = array ("admin", "Thomas", "Patrick", "Matus"); 
         $PW = array("admin", "Gottschalk", "Faltas", "Porubsky");
@@ -15,12 +14,13 @@
                 if (($_POST["Username"] == $user[$index]) && ($_POST["Password"] == $PW[$index])) {
                     $verification = "You ". $user[$index]." now";
                     $validLogin = TRUE;
-                    if (isset($_POST["Username"])){
+                    if (isset($_POST["Username"])) {
                         setcookie("CookieWert", $_POST["Username"], time()+3600);
                     }
-                    if (isset($_POST["Username"])){
+                    if (isset($_POST["Username"])) {
                         $_SESSION["SessionWert"] = $_POST["Username"];
                     }
+                    header("location: index.php");
                     break;
                 }
             }
@@ -59,16 +59,6 @@
         <input type="submit">
     </form>
 
-    <?php
-        if (isset($_POST["Username"])) {
-            for ($index = 0; $index < sizeof($user); $index++) {
-                if (($_POST["Username"] == $user[$index]) && $validLogin== true) {
-                    echo "<img src='Werbebilder/".$werbung[$index]."'>";
-                    break;
-                }
-            }
-        }
-
-    ?>
+    <?php include "werbebanner.php";?>
     </body>
 </html>

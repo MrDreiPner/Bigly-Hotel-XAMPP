@@ -9,4 +9,5 @@
     <link rel="stylesheet" href="style.css">
 
     <title>Registrierung</title>
+    <?php session_start(); ?>
 </head>
