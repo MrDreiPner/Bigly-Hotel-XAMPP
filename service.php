@@ -1,8 +1,8 @@
 <?php include "head.php"; ?>
 <body>
     <?php include "nav.php"; ?>
+    <br><br> <br><br>
     <?php 
-        include "nav.php";
         function test_input($data){
             $data = trim($data);
             $data = stripslashes($data);
