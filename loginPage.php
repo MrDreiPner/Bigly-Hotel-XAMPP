@@ -3,22 +3,29 @@
     <?php include "nav.php"; ?>
     <br><br><br>
     <?php
-
+    function test_input($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
         $user = array ("admin", "Thomas", "Patrick", "Matus"); 
         $PW = array("admin", "Gottschalk", "Faltas", "Porubsky");
         $werbung = array("harold1.jpg", "Wetten_dass.jpg", "Faltas.jpg", "MatPor.jpg");
         $verification = "Stop it";
         $validLogin = FALSE;
         if (isset($_POST["Username"])) {
+            $PW_input = test_input($_POST["Password"]);
+            $user_input = test_input($_POST["Username"]);
             for ($index = 0; $index < sizeof($user); $index++) {
-                if (($_POST["Username"] == $user[$index]) && ($_POST["Password"] == $PW[$index])) {
+                if (($user_input == $user[$index]) && ($PW_input == $PW[$index])) {
                     $verification = "You ". $user[$index]." now";
                     $validLogin = TRUE;
                     if (isset($_POST["Username"])) {
-                        setcookie("CookieWert", $_POST["Username"], time()+3600);
+                        setcookie("CookieWert", $user_input, time()+3600);
                     }
                     if (isset($_POST["Username"])) {
-                        $_SESSION["SessionWert"] = $_POST["Username"];
+                        $_SESSION["SessionWert"] = $user_input;
                     }
                     header("location: index.php");
                     break;
