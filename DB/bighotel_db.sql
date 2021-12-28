@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 28, 2021 at 10:16 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.1
+-- Generation Time: Dec 28, 2021 at 10:29 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,8 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `bighotel_db`
 --
-CREATE DATABASE IF NOT EXISTS `bighotel_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `bighotel_db`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `news`
+--
+
+CREATE TABLE `news` (
+  `content` text DEFAULT NULL,
+  `imgpath` varchar(255) DEFAULT NULL,
+  `date` date NOT NULL,
+  `news_id` int(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -29,15 +40,14 @@ USE `bighotel_db`;
 -- Table structure for table `tickets`
 --
 
-CREATE TABLE IF NOT EXISTS `tickets` (
+CREATE TABLE `tickets` (
   `ticketID` int(255) NOT NULL,
   `text_guest` text NOT NULL,
   `image_path` varchar(255) NOT NULL,
   `text_service` text NOT NULL,
   `resolved` int(4) NOT NULL,
   `userID` int(255) NOT NULL,
-  PRIMARY KEY (`ticketID`),
-  KEY `userID` (`userID`)
+  `Date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -46,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `tickets` (
 -- Table structure for table `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE `user` (
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `email` varchar(80) NOT NULL,
@@ -55,8 +65,31 @@ CREATE TABLE IF NOT EXISTS `user` (
   `nachname` varchar(50) NOT NULL,
   `room` int(255) NOT NULL,
   `userID` int(255) NOT NULL,
-  PRIMARY KEY (`userID`)
+  `active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `news`
+--
+ALTER TABLE `news`
+  ADD PRIMARY KEY (`news_id`);
+
+--
+-- Indexes for table `tickets`
+--
+ALTER TABLE `tickets`
+  ADD PRIMARY KEY (`ticketID`),
+  ADD KEY `userID` (`userID`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`userID`);
 
 --
 -- Constraints for dumped tables
