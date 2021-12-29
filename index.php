@@ -1,6 +1,7 @@
 <?php include "head.php"; ?>
 <body>
     <?php
+    //DB connection needed
         include "nav.php";
     ?>
     <div id="Header">

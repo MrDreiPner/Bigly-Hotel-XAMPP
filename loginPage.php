@@ -1,6 +1,8 @@
 <?php include "head.php"; ?>
 <body>
-    <?php include "nav.php"; ?>
+    <?php 
+    //DB connection needed
+    include "nav.php"; ?>
     <br><br><br>
     <?php
     function test_input($data){

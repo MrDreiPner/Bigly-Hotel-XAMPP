@@ -4,13 +4,14 @@
         include "nav.php";
     ?>
     <?php
+        require_once ('dbaccess.php');
         $checkschecked = "";
-        $inputs = array ("nachname", "vorname", "email","anrede","tel","strasse","hausnummer","ort","plz", "Bildname");
-        $inputsOnlyChars = array("nachname", "vorname", "ort", "strasse",);
+        $inputs = array ("nachname", "vorname", "email","anrede", "password","hausnummer", "room_nr");
+        $inputsOnlyChars = array("nachname", "vorname");
         $data = array();
         $errors = array();
 
-        foreach ($inputs as &$input){
+        foreach ($inputs as $input){
             $data[$input] = "";
             $errors[$input] = "";
         }
@@ -34,9 +35,9 @@
             return preg_match("/^[a-zA-Z0-9]*$/",$input) ? "" : "Keine Sonderzeichen erlaubt!";
         }
 
-        function checkTelefon($input){
+        /*function checkTelefon($input){
             return preg_match("/^[0-9+ ]*$/",$input) ? "" : "Nur + in Vorwahl und Zahlen von 0-9 erlaubt!";
-        }
+        }*/
 
         function checkEmail($input){
             return filter_var($input, FILTER_VALIDATE_EMAIL) ? "" : "Adresse ungültig!";
@@ -45,17 +46,15 @@
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $checkschecked = "Registrierung great success!";
-            foreach($inputs as &$input) {
+            foreach($inputs as $input) {
                 $data[$input] = test_input($_POST[$input]);
             }
-            foreach($inputsOnlyChars as &$input) {
+            foreach($inputsOnlyChars as $input) {
                 $errors[$input] = checkOnlyChars($data[$input]);
             }
 
-            $errors["plz"] = checkOnlyNumbers($data["plz"]);
-            $errors["hausnummer"] = checkOnlyCharsAndNumbers($data["hausnummer"]);
             $errors["email"] = checkEmail($data["email"]);
-            $errors["tel"] = checkTelefon($data["tel"]);
+            $errors["room_nr"] = checkOnlyNumbers($data["room_nr"]);
 
             $counter = 0;
             foreach ($errors as &$error) {
@@ -63,16 +62,7 @@
                     $checkschecked = "Registrierung big fail!";
                 }
         }}
-     ?>
-     <?php
-        echo "<br><br><br>";
-            $bildname = $data["Bildname"];
-            if (isset($_FILES["Bildupload"])){
-                $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
-                $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/Bigly Hotel XAMPP/uploads/" .$bildname."_". uniqid().".". $path_parts["extension"];
-                move_uploaded_file($_FILES["Bildupload"]["tmp_name"], $destination);
-        }
-    
+        //$stmt->close(); $db_obj->close();
      ?>
     <div id="Header">
         <h1 id="Überschrift">Registrieren</h1>
@@ -82,9 +72,9 @@
             Anrede:
             <br>
             <br> <!--Überlegung ob Anrede notwendig bzw wie man Anrede genderneutral angehen kann-->
-                <input name="anrede" type="radio" value="Herr" checked>Herr
-                <input name="anrede" type="radio" value="Frau">Frau
-                <input name="anrede" type="radio" value="Non-Binary">Non-Binary
+                <input name="anrede" type="radio" value=0 checked>Herr
+                <input name="anrede" type="radio" value=1>Frau
+                <input name="anrede" type="radio" value=2>Non-Binary
 
         </div>
         <br>
@@ -104,24 +94,15 @@
             <input type="email" name="email" id="email" required value="<?php echo $errors["email"] != "" ? "" : $data["email"];?>"><br>
         </div>
         <div class="ersteClass">
-            <label for="tel">Tel. Nummer:</label>
-            <span class="error">* <?php echo $errors["tel"];?></span>
-            <input type="tel" name="tel" id="tel" required value="<?php echo $errors["tel"] != "" ? "" : $data["tel"];?>">
+            <label for="password">Password:</label>
+            <span class="error">* <?php echo $errors["password"];?></span>
+            <input type="password" name="password" id="password" required value="<?php echo $errors["password"] != "" ? "" : $data["password"];?>">
         </div>
-        <p class="ersteClass">Adresse:<br>
-            <label>Straße:</label>
-            <span class="error">* <?php echo $errors["strasse"];?></span>
-            <input name="strasse" type="text" id="address" required value="<?php echo $errors["strasse"] != "" ? "" : $data["strasse"];?>"><br>
-            <label>Hausnummer:</label>
-            <span class="error">* <?php echo $errors["hausnummer"];?></span>
-            <input name="hausnummer" type="text" id="address" required value="<?php echo $errors["hausnummer"] != "" ? "" : $data["hausnummer"];?>"><br>
-            <label>Ort:</label>
-            <span class="error">* <?php echo $errors["ort"];?></span>
-            <input name="ort" type="text" id="address" required value="<?php echo $errors["ort"] != "" ? "" : $data["ort"];?>"><br>
-            <label>PLZ:</label>
-            <span class="error">* <?php echo $errors["plz"];?></span>
-            <input name="plz" type="text" id="address" required value="<?php echo $errors["plz"] != "" ? "" : $data["plz"];?>"><br>
-        </p>
+        <div class="ersteClass">
+            <label>Room:</label>
+            <span class="error">* <?php echo $errors["room_nr"];?></span>
+            <input name="room_nr" type="text" id="room" required value="<?php echo $errors["room_nr"] != "" ? "" : $data["room_nr"];?>"><br>
+        </div>
         <br>
         <input type="text" name="Bildname"><br>
         <input type="file" name="Bildupload"><br>
@@ -134,10 +115,9 @@
    echo $data["anrede"],"<br>";
    echo $data["vorname"], "<br>";
    echo $data["nachname"], "<br>";
+   echo $data["password"],"<br>";
    echo $data["email"],"<br>";
-   echo $data["tel"],"<br>";
-   echo $data["strasse"]," ",$data["hausnummer"],"<br>";
-   echo $data["ort"]," ",$data["plz"],"<br>";
+   echo $data["room_nr"],"<br>";
 
     echo "<h1> $checkschecked </h1>";
 ?>
