@@ -3,10 +3,11 @@
     <?php
         include "nav.php";
     ?>
+    <br><br><br><br><br>
     <?php
         require_once ('dbaccess.php');
         $checkschecked = "";
-        $inputs = array ("nachname", "vorname", "email","anrede", "password","hausnummer", "room_nr");
+        $inputs = array ("nachname", "vorname", "email","anrede", "room_nr", "role", "password");
         $inputsOnlyChars = array("nachname", "vorname");
         $data = array();
         $errors = array();
@@ -43,9 +44,8 @@
             return filter_var($input, FILTER_VALIDATE_EMAIL) ? "" : "Adresse ungültig!";
         }
 
-
+        $checkschecked = "Registrierung great success!";
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $checkschecked = "Registrierung great success!";
             foreach($inputs as $input) {
                 $data[$input] = test_input($_POST[$input]);
             }
@@ -55,13 +55,37 @@
 
             $errors["email"] = checkEmail($data["email"]);
             $errors["room_nr"] = checkOnlyNumbers($data["room_nr"]);
+            $errors["password"] = checkOnlyNumbers($data["password"]);
 
-            $counter = 0;
-            foreach ($errors as &$error) {
+            //$counter = 0;
+            foreach ($errors as $error) {
                 if ($error != "") {
                     $checkschecked = "Registrierung big fail!";
                 }
-        }}
+        }
+        if($checkschecked == "Registrierung great success!")
+        {
+            $sql = "INSERT INTO user (Vorname, Nachname, password, email, anrede, role, room, active) VALUES (?, ?, ?, ?, ?, ?, ?, true)";
+            $stmt = $db_obj->prepare($sql);
+
+            if ($stmt==false){
+            echo($db_obj->error);
+            }
+
+            $vorname= $data["vorname"];
+            $nachname = $data["nachname"];
+            $password = $data["password"];
+            //Passwort wird random generiert und sofort gehasht
+            $password = password_hash($password, PASSWORD_DEFAULT);
+            $email = $data["email"];
+            $anrede = $data["anrede"];
+            $role = $data["role"];
+            $room_nr = $data["room_nr"];
+    
+            $stmt->bind_param("ssssiii", $vorname, $nachname, $password, $email, $anrede, $role, $room_nr);
+            $stmt->execute();
+        }
+    }
         //$stmt->close(); $db_obj->close();
      ?>
     <div id="Header">
@@ -70,12 +94,18 @@
     <form enctype="multipart/form-data" method = "post">
         <div class="ersteClass">
             Anrede:
-            <br>
             <br> <!--Überlegung ob Anrede notwendig bzw wie man Anrede genderneutral angehen kann-->
-                <input name="anrede" type="radio" value=0 checked>Herr
-                <input name="anrede" type="radio" value=1>Frau
-                <input name="anrede" type="radio" value=2>Non-Binary
+                <input name="anrede" type="radio" value=1 checked>Herr
+                <input name="anrede" type="radio" value=2>Frau
+                <input name="anrede" type="radio" value=3>Non-Binary
 
+        </div>
+        <br> 
+        <div class="ersteClass">
+            Rolle:
+            <br> <!--Überlegung ob Anrede notwendig bzw wie man Anrede genderneutral angehen kann-->
+                <input name="role" type="radio" value=1 checked>Service
+                <input name="role" type="radio" value=2>Gast
         </div>
         <br>
         <div class="ersteClass">
@@ -113,9 +143,10 @@
 
    echo "<h2>Your Input:</h2>";
    echo $data["anrede"],"<br>";
+   echo $data["role"],"<br>";
    echo $data["vorname"], "<br>";
    echo $data["nachname"], "<br>";
-   echo $data["password"],"<br>";
+   echo $data["password"], "<br>";
    echo $data["email"],"<br>";
    echo $data["room_nr"],"<br>";
 
