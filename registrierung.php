@@ -3,7 +3,7 @@
     <?php
         include "nav.php";
     ?>
-    <br><br><br><br><br>
+    <br><br><br>
     <?php
         require_once ('dbaccess.php');
         $checkschecked = "";
@@ -65,13 +65,14 @@
         }
         if($checkschecked == "Registrierung great success!")
         {
-            $sql = "INSERT INTO user (Vorname, Nachname, password, email, anrede, role, room, active) VALUES (?, ?, ?, ?, ?, ?, ?, true)";
+            $sql = "INSERT INTO user (username, Vorname, Nachname, password, email, anrede, role, room, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, true)";
             $stmt = $db_obj->prepare($sql);
 
             if ($stmt==false){
             echo($db_obj->error);
             }
 
+            $username = $data["email"];
             $vorname= $data["vorname"];
             $nachname = $data["nachname"];
             $password = $data["password"];
@@ -82,12 +83,13 @@
             $role = $data["role"];
             $room_nr = $data["room_nr"];
     
-            $stmt->bind_param("ssssiii", $vorname, $nachname, $password, $email, $anrede, $role, $room_nr);
+            $stmt->bind_param("sssssiii", $username, $vorname, $nachname, $password, $email, $anrede, $role, $room_nr);
             $stmt->execute();
+            $stmt->close(); $db_obj->close();
         }
     }
-        //$stmt->close(); $db_obj->close();
-     ?>
+        
+    ?>
     <div id="Header">
         <h1 id="Überschrift">Registrieren</h1>
     </div>
@@ -104,8 +106,8 @@
         <div class="ersteClass">
             Rolle:
             <br> <!--Überlegung ob Anrede notwendig bzw wie man Anrede genderneutral angehen kann-->
-                <input name="role" type="radio" value=1 checked>Service
-                <input name="role" type="radio" value=2>Gast
+                <input name="role" type="radio" value=2 checked>Service
+                <input name="role" type="radio" value=3>Gast
         </div>
         <br>
         <div class="ersteClass">
@@ -134,8 +136,6 @@
             <input name="room_nr" type="text" id="room" required value="<?php echo $errors["room_nr"] != "" ? "" : $data["room_nr"];?>"><br>
         </div>
         <br>
-        <input type="text" name="Bildname"><br>
-        <input type="file" name="Bildupload"><br>
         <button type="submit">Registrieren</button>
         <button type="reset">Reset this</button>
     </form> 
@@ -150,7 +150,7 @@
    echo $data["email"],"<br>";
    echo $data["room_nr"],"<br>";
 
-    echo "<h1> $checkschecked </h1>";
+echo "<h1> $checkschecked </h1>";
 ?>
 </body>
 </html>
