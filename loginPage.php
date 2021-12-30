@@ -11,36 +11,41 @@
         $data = htmlspecialchars($data);
         return $data;
     }
+        $verification = "Please Log In";
         if (isset($_POST["Username"])) {
             $PW_input = test_input($_POST["Password"]);
             $user_input = test_input($_POST["Username"]);
 
-            $sql = "select username, password, role from user where username = ? and password = ?";
+            $sql = 'select username, password, role from user where username = ?';
 
             $stmt = $db_obj->prepare($sql);
-            $stmt-> bind_param("ss", $user_input, $PW_input);
-            $stmt->execute();
+            $stmt-> bind_param('s', $user_input);
             if ($stmt===false){
                 echo($db_obj->error);
                 echo "fail";
             }
-            $u_username = ""; $u_password = ""; $role = "";
+            $stmt->execute();
+
+            //$u_username = ""; $u_password = ""; $role = "";
             $stmt->bind_result($u_username, $u_password, $role);
             $stmt->fetch();
 
-            if($u_username == "" || $u_password == "" || $role == ""){
+            /*if($u_username == "" || $u_password == "" || $role == ""){
                 $verification = "Wrong credentials! Try again!";
-            }
-            echo "<br>" . $u_username. $u_password. $role . "<br>";
+            }*/
+            echo "<br>". $PW_input ." ". $u_username ." ". $u_password ." ". $role . "<br>"; 
+            echo password_verify($PW_input, $u_password)?"Password ok":"Password nicht ok". "<br>";
 
-            if (($user_input == $u_username) && ($PW_input == $u_password)) {
+            if (password_verify($PW_input, $u_password)) {
                 setcookie("CookieWert", $u_username, time()+3600);
                 $_SESSION["SessionWert"] = $role;
+            }
+            else {
+                $verification = "<br>Wrong credentials! Try again!";
             }
 
             if (isset($_SESSION["SessionWert"])) {
                 setcookie("CookieWert", $user_input, time()+3600);
-                $verification = "Please Log In";
             }
             $stmt->close(); $db_obj->close();
             

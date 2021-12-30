@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 30. Dez 2021 um 00:30
+-- Erstellungszeit: 30. Dez 2021 um 13:40
 -- Server-Version: 10.4.22-MariaDB
 -- PHP-Version: 8.1.1
 
@@ -62,9 +62,10 @@ CREATE TABLE `tickets` (
 
 CREATE TABLE `user` (
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `pw_notiz` varchar(100) NOT NULL COMMENT 'Nur für PW merken zur Arbeit -> LÖSCHEN!',
+  `password` varchar(255) NOT NULL,
   `email` varchar(80) DEFAULT NULL,
-  `anrede` enum('Herr','Frau','Non-Binary') DEFAULT NULL,
+  `anrede` enum('Herr','Frau','Non-Binary','NA') DEFAULT NULL,
   `vorname` varchar(50) DEFAULT NULL,
   `nachname` varchar(50) DEFAULT NULL,
   `room` int(255) DEFAULT NULL,
@@ -77,10 +78,15 @@ CREATE TABLE `user` (
 -- Daten für Tabelle `user`
 --
 
-INSERT INTO `user` (`username`, `password`, `email`, `anrede`, `vorname`, `nachname`, `room`, `userID`, `active`, `role`) VALUES
-('admin', 'admin', 'admin@biglyhotel.at', 'Non-Binary', 'admin', 'admin', 0, 37, 1, 'Admin'),
-('service@biglyhotel.at', 'service', 'service@biglyhotel.at', 'Herr', 'service', 'service', 0, 38, 1, 'Service'),
-('thomas@wettendass.de', 'Gottschalk', 'thomas@wettendass.de', 'Herr', 'Thomas', 'Gottschalk', 69, 39, 1, 'Guest');
+INSERT INTO `user` (`username`, `pw_notiz`, `password`, `email`, `anrede`, `vorname`, `nachname`, `room`, `userID`, `active`, `role`) VALUES
+('admin', 'admin', '$2y$10$z0mpART0vg14vQuCndUKI.ZNhM7UbYX8GVVM/jKQvx3NFZjvd38F6', 'admin@admin.at', 'NA', '', '', 0, 45, 1, 'Admin'),
+('service@biglyhotel.at', 'service123', '$2y$10$Q5f8T04mKPVTN8gCU0Ob4OzOmL9Zj6wIrQlxSogUMjM8dRGxQgnnS', 'service@biglyhotel.at', 'NA', '', '', 0, 46, 1, 'Service'),
+('marko@polo.xd', 'mario123', '$2y$10$e8iRj7IOxXl5Q4yVDPQ6he1X5MXzrAWQgIqbhZHXJKwoG0C0MRy/2', 'marko@polo.xd', 'Herr', 'Marko', 'Polo', 69, 49, 1, 'Guest'),
+('elektriker@biglyhotel.at', 'service321', '$2y$10$DT7PEdiJinCC5cgvVZyrx.Ks444ELKtZcbIYY/QqiaOXUAkkP2WiO', 'elektriker@biglyhotel.at', 'NA', '', '', 0, 50, 1, 'Service'),
+('reception@biglyhotel.at', 'verysavepasswordamk123', '$2y$10$zoTsE6qCFwUxuVKF1fbUnO6wAM59cXYflCk60L5pwgvk7vBvDNOOq', 'reception@biglyhotel.at', 'NA', '', '', 0, 51, 1, 'Admin'),
+('pat@rat.gat', 'BeeBoo!', '$2y$10$o3DCGdBMgDO9DrFlhAiR6.s1wYwTGCVCPGr2G7QmuriWS.yTsdgRO', 'pat@rat.gat', 'NA', 'Pat', 'Rick', 231, 52, 1, 'Service'),
+('tom@gott.de', 'qwert213:&quot;break;&quot;', '$2y$10$mmcJWJ3HHClTz6Wilo6j4O5Z/5eG4mGzoWLXJeFOtKIIpVNBwKWnG', 'tom@gott.de', 'Non-Binary', 'Thomas', 'Gottschalk', 321, 53, 1, 'Guest'),
+('gfgf@gmail.com', 'Pcela1', '$2y$10$JDzRM8DlD.7q8sVU3ew.P.3am1vWZdEBe3H51VLAWRlNCQskKUeuq', 'gfgf@gmail.com', 'Frau', 'Andrea', 'Topalovic', 5, 54, 1, 'Guest');
 
 --
 -- Indizes der exportierten Tabellen
@@ -125,7 +131,7 @@ ALTER TABLE `tickets`
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `userID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- Constraints der exportierten Tabellen

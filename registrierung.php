@@ -55,7 +55,6 @@
 
             $errors["email"] = checkEmail($data["email"]);
             $errors["room_nr"] = checkOnlyNumbers($data["room_nr"]);
-            $errors["password"] = checkOnlyNumbers($data["password"]);
 
             //$counter = 0;
             foreach ($errors as $error) {
@@ -65,25 +64,25 @@
         }
         if($checkschecked == "Registrierung great success!")
         {
-            $sql = "INSERT INTO user (username, Vorname, Nachname, password, email, anrede, role, room, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, true)";
+            $sql = "INSERT INTO user (username, Vorname, Nachname, pw_notiz, password, email, anrede, role, room, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, true)";
             $stmt = $db_obj->prepare($sql);
 
-            if ($stmt==false){
+            if ($stmt===false){
             echo($db_obj->error);
             }
 
             $username = $data["email"];
             $vorname= $data["vorname"];
             $nachname = $data["nachname"];
-            $password = $data["password"];
-            //Passwort wird random generiert und sofort gehasht
-            $password = password_hash($password, PASSWORD_DEFAULT);
+            $pw_notiz = $data["password"];
+            //Passwort wird sofort gehasht
+            $password = password_hash($pw_notiz, PASSWORD_DEFAULT);
             $email = $data["email"];
             $anrede = $data["anrede"];
             $role = $data["role"];
             $room_nr = $data["room_nr"];
     
-            $stmt->bind_param("sssssiii", $username, $vorname, $nachname, $password, $email, $anrede, $role, $room_nr);
+            $stmt->bind_param("ssssssiii", $username, $vorname, $nachname, $pw_notiz, $password, $email, $anrede, $role, $room_nr);
             $stmt->execute();
             $stmt->close(); $db_obj->close();
         }
@@ -97,28 +96,31 @@
         <div class="ersteClass">
             Anrede:
             <br> <!--Überlegung ob Anrede notwendig bzw wie man Anrede genderneutral angehen kann-->
-                <input name="anrede" type="radio" value=1 checked>Herr
+                <input name="anrede" type="radio" value=1>Herr
                 <input name="anrede" type="radio" value=2>Frau
                 <input name="anrede" type="radio" value=3>Non-Binary
+                <input name="anrede" type="radio" value=4 checked>NA
+
 
         </div>
         <br> 
         <div class="ersteClass">
             Rolle:
-            <br> <!--Überlegung ob Anrede notwendig bzw wie man Anrede genderneutral angehen kann-->
+            <br>
+                <input name="role" type="radio" value=1>Admin
                 <input name="role" type="radio" value=2 checked>Service
                 <input name="role" type="radio" value=3>Gast
         </div>
         <br>
         <div class="ersteClass">
             <label for="vorname">Vorname:</label>
-            <span class="error">* <?php echo $errors["vorname"];?></span>
-            <input type="text" name="vorname" id="vorname" required value="<?php echo $errors["vorname"] != "" ? "" : $data["vorname"];?>"><br>
+            <span class="error"> <?php echo $errors["vorname"];?></span>
+            <input type="text" name="vorname" id="vorname" value="<?php echo $errors["vorname"] != "" ? "" : $data["vorname"];?>"><br>
         </div>
         <div class="ersteClass">
             <label for="nachname">Nachname:</label>
-            <span class="error">* <?php echo $errors["nachname"];?></span>
-            <input type="text" name="nachname" id="nachname" required value="<?php echo $errors["nachname"] != "" ? "" : $data["nachname"];?>""><br>
+            <span class="error"> <?php echo $errors["nachname"];?></span>
+            <input type="text" name="nachname" id="nachname" value="<?php echo $errors["nachname"] != "" ? "" : $data["nachname"];?>""><br>
         </div>
         <div class="ersteClass">
             <label for="email">E-Mail-Adresse:</label>
@@ -132,8 +134,8 @@
         </div>
         <div class="ersteClass">
             <label>Room:</label>
-            <span class="error">* <?php echo $errors["room_nr"];?></span>
-            <input name="room_nr" type="text" id="room" required value="<?php echo $errors["room_nr"] != "" ? "" : $data["room_nr"];?>"><br>
+            <span class="error"> <?php echo $errors["room_nr"];?></span>
+            <input name="room_nr" type="text" id="room" value="<?php echo $errors["room_nr"] != "" ? "" : $data["room_nr"];?>"><br>
         </div>
         <br>
         <button type="submit">Registrieren</button>
