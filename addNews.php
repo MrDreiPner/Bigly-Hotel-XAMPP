@@ -23,7 +23,7 @@
         if (isset($_FILES["Bildupload"]) && $errors == "") {
             $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
             if (isset($path_parts["extension"])) {                    
-                $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/Bigly Hotel XAMPP/uploads/source/" .$bildname.".".$path_parts["extension"];                
+                $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/Bigly-Hotel-XAMPP/uploads/source/" .$bildname.".".$path_parts["extension"];                
                 move_uploaded_file($_FILES["Bildupload"]["tmp_name"], $destination);
                 switch($path_parts["extension"]){
                     case "jpg" : resizeJpeg($bildname); break;

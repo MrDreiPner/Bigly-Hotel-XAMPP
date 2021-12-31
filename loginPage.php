@@ -16,7 +16,7 @@
             $PW_input = test_input($_POST["Password"]);
             $user_input = test_input($_POST["Username"]);
 
-            $sql = 'select username, password, role from user where username = ?';
+            $sql = 'select userID, username, password, role from user where username = ?';
 
             $stmt = $db_obj->prepare($sql);
             $stmt-> bind_param('s', $user_input);
@@ -27,7 +27,7 @@
             $stmt->execute();
 
             //$u_username = ""; $u_password = ""; $role = "";
-            $stmt->bind_result($u_username, $u_password, $role);
+            $stmt->bind_result($u_id, $u_username, $u_password, $role);
             $stmt->fetch();
 
             /*if($u_username == "" || $u_password == "" || $role == ""){
@@ -39,6 +39,8 @@
             if (password_verify($PW_input, $u_password)) {
                 setcookie("CookieWert", $u_username, time()+3600);
                 $_SESSION["SessionWert"] = $role;
+                $_SESSION["User"] = $u_username;
+                $_SESSION["ID"] = $u_id;
             }
             else {
                 $verification = "<br>Wrong credentials! Try again!";
