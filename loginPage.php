@@ -64,7 +64,9 @@
             header("location: index.php");
         }
     ?>
-
+    <div id="Header">
+        <h1 id="Überschrift">User Log In</h1>
+    </div>
     <form enctype="multipart/form-data" action="loginPage.php" method="POST">
         <label for="Username">Username</label>
         <input type="text" name="Username" required placeholder="Username" value="<?php echo isset($_COOKIE["CookieWert"]) ? $_COOKIE["CookieWert"] : "";?>"><br>

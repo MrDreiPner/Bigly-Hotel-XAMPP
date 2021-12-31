@@ -105,13 +105,16 @@
         }
     ?>
     <br><br><br><br>
+    <div class="input">
     <form enctype="multipart/form-data" action="service.php" method="POST">
+        Please describe the issues:<br>
         <input type="text" placeholder="Why U need help?"><br>
         <span class="error"><?php echo $errors;?></span>
         <label for="Bildname">Bild Titel</label><br>
         <input type="text" name="Bildname"><br>
         <input type="file" name="Bildupload"><br>
         <input type="submit">
-    </form><br><br>
+    </form>
+    </div>
 </body>
 </html>

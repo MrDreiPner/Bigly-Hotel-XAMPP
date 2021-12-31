@@ -35,7 +35,7 @@
         }
         function resizeJpeg($bildname) {
             //-----Thumbnail machen-----
-            $srcimage = "uploads/source/".$bildname."-original.jpg"; //Pfad vom original
+            $srcimage = "uploads/source/".$bildname.".jpg"; //Pfad vom original
             $destimage = "uploads/news/".$bildname."-thumb.jpg"; //Pfad vom resize
             list($width, $height) = getimagesize($srcimage);
             $newwidth=720;
@@ -58,7 +58,7 @@
 
         function resizePng($bildname) {
             //-----Thumbnail machen-----
-            $srcimage = "uploads/source/".$bildname."-original.png"; //Pfad vom original
+            $srcimage = "uploads/source/".$bildname.".png"; //Pfad vom original
             $destimage = "uploads/news/".$bildname."-thumb.png"; //Pfad vom resize
             list($width, $height) = getimagesize($srcimage);
             $newwidth=720;
@@ -80,17 +80,19 @@
         }
         ?>
         <br><br><br><br>
+    <div class="input">
     <form enctype="multipart/form-data" action="addNews.php" method = "post">
         Headline:<br>
         <input type="text" name="newsHeadline"><br>
         Write your news here:<br>
         <textarea name="newsText"></textarea><br>
         <span class="error"><?php echo $errors;?></span>
-        <label for="Bildname">Bild Titel</label><br>
+        <label for="Bildname">Picture Title</label><br>
         <input type="text" name="Bildname"><br>
         <input type="file" name="Bildupload"><br>
         <input type="submit">
 
     </form>
+    </div>
 </body>
 </html>

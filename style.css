@@ -56,7 +56,7 @@ border-width: 5px;
 }
 
 .fc{
-    background-image: url("Werbebilder/background.png");
+    
     height: 100vh;
     width: 100vw;
 }
@@ -97,7 +97,6 @@ border-width: 5px;
 }
 
 .input input {
-    background-color: green;
     border: 2px solid black; 
     outline: none;
     font-size: 1em;
@@ -109,3 +108,8 @@ border-width: 5px;
     font-size: 1em;
     margin-bottom: 7px;
 }
+
+#table {
+    border: 5px solid black;
+    border-collapse: collapse;
+  }
