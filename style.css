@@ -11,6 +11,13 @@ h1{
     margin-top:40px;
 }
 
+h2{
+    font-family: 'Akronim', cursive;
+    font-size: 25px;
+    position: absolute;
+    margin-top:20px;
+}
+
 #Überschrift{
     color:blueviolet
 }
@@ -70,8 +77,12 @@ border-width: 5px;
 #harold {
     max-width: 500px; 
     max-height: 300px;
-    border-style: double;
-    border-color: green;
+}
+
+#ua_access {
+    max-width: fit-content;
+    max-height: fit-content;
+    background-image: url("Werbebilder/401error.jpg");
 }
 
 #haroldbild {

@@ -1,11 +1,11 @@
 <?php include "head.php"; ?>
 <body>
     <?php 
+        include "user_guest_check.php";
         require_once('dbaccess.php');
         include "nav.php";
     ?>
     <br><br> <br><br>
-    <br><br>
     <div class="input">
     <form enctype="multipart/form-data" method="POST">
         Please describe the issues:<br><br>

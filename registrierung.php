@@ -1,11 +1,12 @@
 <?php include "head.php"; ?>
 <body>
     <?php
+        include "user_admin_check.php";
+        require_once ('dbaccess.php');
         include "nav.php";
     ?>
     <br><br><br>
     <?php
-        require_once ('dbaccess.php');
         $checkschecked = "";
         $inputs = array ("nachname", "vorname", "email","anrede", "room_nr", "role", "password");
         $inputsOnlyChars = array("nachname", "vorname");

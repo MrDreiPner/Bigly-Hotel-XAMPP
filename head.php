@@ -10,12 +10,12 @@
     
     <?php 
         session_start(); 
-        if (isset($_SESSION['LAST_ACTIVITY'])) {
+        if (isset($_SESSION['SessionWert'])) {
             if(time() - $_SESSION['LAST_ACTIVITY'] > 1800){
             session_unset(); 
             session_destroy();
             }
-            header("Refresh: 1801 ; url=index.php");
+            header("Refresh: 1801 ; url=redirect.php");
         }
         if (isset($_SESSION['SessionWert'])){
             $_SESSION['LAST_ACTIVITY'] = time();
