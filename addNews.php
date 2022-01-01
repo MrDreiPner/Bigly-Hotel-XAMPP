@@ -88,7 +88,7 @@
         <span class="error"><?php echo $errors;?></span>
         <label for="Bildname">Picture Title</label><br>
         <input type="text" name="Bildname"><br>
-        <input type="file" name="Bildupload"><br>
+        <input type="file" accept=".jpg, .png" name="Bildupload"><br>
         <input type="submit">
 
     </form>

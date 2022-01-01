@@ -14,7 +14,7 @@
         <label for="Bildname">Bild Titel</label><br>
         <span class="error"> <?php if(isset($error)){ echo $error;}?></span>
         <input type="text" name="Bildname"><br>
-        <input type="file" name="Bildupload"><br>
+        <input type="file" accept=".jpg, .png"  name="Bildupload"><br>
         <input type="submit">
     </form>
     </div>
