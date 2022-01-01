@@ -30,7 +30,6 @@
                     case "png" : resizePng($bildname); break;
                     default: $error = "Bitte nur JPG oder PNG Files!!!!!";
                 }
-
             }
         }
         function resizeJpeg($bildname) {

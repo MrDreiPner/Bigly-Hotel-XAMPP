@@ -41,6 +41,7 @@
                 $_SESSION["SessionWert"] = $role;
                 $_SESSION["User"] = $u_username;
                 $_SESSION["ID"] = $u_id;
+                $_SESSION['LAST_ACTIVITY'] = time();
             }
             else {
                 $verification = "<br>Wrong credentials! Try again!";

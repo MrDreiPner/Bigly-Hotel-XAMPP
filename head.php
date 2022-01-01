@@ -8,5 +8,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Akronim&family=Lato:ital,wght@1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     
-    <?php session_start(); ?>
+    <?php 
+        session_start(); 
+        if (isset($_SESSION['LAST_ACTIVITY'])) {
+            if(time() - $_SESSION['LAST_ACTIVITY'] > 1800){
+            session_unset(); 
+            session_destroy();
+            }
+            header("Refresh: 1801 ; url=index.php");
+        }
+        if (isset($_SESSION['SessionWert'])){
+            $_SESSION['LAST_ACTIVITY'] = time();
+        }
+    ?>
+
 </head>
