@@ -64,7 +64,15 @@
 
         if (isset($_SESSION["SessionWert"])){
             echo "<br>Session: ", $_SESSION["SessionWert"];
-            header("location: index.php");
+            switch ($_SESSION["SessionWert"]){
+                case "Admin": header("location: registrierung.php");
+                break;
+                case "Service": header("location: ticketVerwaltung.php");
+                break;
+                case "Guest": header("location: index.php");
+                break;
+                default: header("location: index.php");
+            }
         }
     ?>
     <div id="Header">
