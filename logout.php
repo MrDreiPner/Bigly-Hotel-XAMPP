@@ -3,7 +3,8 @@
     <?php 
         session_unset();
         session_destroy();
-        header("location: loginPage.php");
+        echo "<h3>You have been logged out successfully! Wow! :3</h3>";
+        header("Refresh:1; url=loginPage.php");
     ?>
 </body>
 </html>
