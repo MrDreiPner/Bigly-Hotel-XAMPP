@@ -65,7 +65,7 @@
         if (isset($_SESSION["SessionWert"])){
             echo "<br>Session: ", $_SESSION["SessionWert"];
             switch ($_SESSION["SessionWert"]){
-                case "Admin": header("location: registrierung.php");
+                case "Admin": header("location: adminpage.php");
                 break;
                 case "Service": header("location: ticketVerwaltung.php");
                 break;
