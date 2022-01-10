@@ -1,0 +1,9 @@
+ticketpage nach datum filtern/ordnen
+
+addNews zu manageNews machen:   
+    liste ausgeben mit allen news, mit checkboxen, welche news angezeigt werden
+    checkboxen zum löschen von news
+
+userbearbeitung durch user ermöglichen
+
+design
