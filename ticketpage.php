@@ -3,7 +3,9 @@
     require_once("dbaccess.php");
 ?>
 <body>
-    <?php include "nav.php"; //Ticket wird angezeigt
+    <?php 
+    include "user_service_check.php";
+    include "nav.php"; //Ticket wird angezeigt
     if (isset($_GET["ticketID"])){
         $sql = 'select text_guest, image_path, resolved, userID, Date, room, title 
                 from tickets join user using(userID) 
