@@ -26,8 +26,8 @@
                 $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/Bigly-Hotel-XAMPP/uploads/source/" .$bildname.".".$path_parts["extension"];                
                 move_uploaded_file($_FILES["Bildupload"]["tmp_name"], $destination);
                 switch($path_parts["extension"]){
-                    case "jpg" : resizeJpeg($bildname); break;
-                    case "png" : resizePng($bildname); break;
+                    case "jpg" : $destimage = resizeJpeg($bildname); break;
+                    case "png" : $destimage = resizePng($bildname); break;
                     default: $error = "Bitte nur JPG oder PNG Files!!!!!";
                 }
             }
@@ -52,7 +52,8 @@
             imagejpeg($thumb, $destimage);
             echo "gespeichert<br>";
             echo "<img src=$destimage><br>";
-            echo "<img src=$srcimage>";    
+            echo "<img src=$srcimage>";   
+            return $destimage; 
         }
 
         function resizePng($bildname) {
@@ -76,9 +77,24 @@
             echo "gespeichert<br>";
             echo "<img src=$destimage><br>";
             echo "<img src=$srcimage>";    
+            return $destimage;
         }
         ?>
         <br><br><br><br>
+        <?php
+            if (isset($_POST["newsText"]) && $errors == ""){
+            $content = test_input($_POST["newsText"]);
+            $headline = test_input($_POST["newsHeadline"]);
+            $sql = "INSERT INTO news (content, headline, imgpath, active) VALUES (?, ?, ?, true)";
+            $stmt = $db_obj->prepare($sql);
+            if ($stmt===false){
+                echo($db_obj->error);
+            }
+            $stmt->bind_param("sss",$content, $headline, $destimage);
+            $stmt->execute();
+            $stmt->close(); $db_obj->close();
+        }
+        ?>
     <div class="input">
     <form enctype="multipart/form-data" action="addNews.php" method = "post">
         Headline:<br>
