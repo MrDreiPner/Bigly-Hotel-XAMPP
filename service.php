@@ -101,7 +101,7 @@
         if (isset($_POST["serviceText"]) && $error == ""){
             $serviceText = test_input($_POST["serviceText"]);
             $u_username = $_SESSION["ID"];
-            $sql = "INSERT INTO tickets (betreff, text_guest, image_path, userID, status, resolved) VALUES (?, ?, ?, ?, true, false)";
+            $sql = "INSERT INTO tickets (title, text_guest, image_path, userID, status, resolved) VALUES (?, ?, ?, ?, true, false)";
             $stmt = $db_obj->prepare($sql);
             if ($stmt===false){
                 echo($db_obj->error);

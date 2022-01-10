@@ -134,3 +134,17 @@ background-image: url("Werbebilder/background.png");
         }
     }
 ?>
+
+
+  <?php
+        $sql = 'select text_guest, image_path, resolved, userID, Date, room, title 
+                from tickets join user using(userID) 
+                where status = true';
+        $stmt = $db_obj->prepare($sql);
+        if ($stmt===false){
+            echo($db_obj->error);
+            echo "fail";
+        }
+        $stmt->execute();
+        $stmt->bind_result($text_guest, $image_path, $resolved, $userID, $date, $room, $title);
+    ?>
