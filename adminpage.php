@@ -1,4 +1,7 @@
-<?php include "head.php" ?>
+<?php include "head.php"; 
+      include "user_admin_check.php";
+?>
+
 <body>
     <h1>Hello Admin!</h1>
     <a href="registrierung.php">Add User</a>

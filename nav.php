@@ -8,6 +8,7 @@
                 if ($_SESSION["SessionWert"] == "Admin") {
                     echo "<il><a href='addNews.php'>Neue News</a></il>";
                     echo "<il><a href='registrierung.php'>Registrieren</a></il>";
+                    echo "<il><a href='adminpage.php'>Admin Page</a></il>";
                 }
                 if ($_SESSION["SessionWert"] == "Guest" || $_SESSION["SessionWert"] == "Admin") {
                     echo "<il><a href='service.php'>Service</a></il>";
