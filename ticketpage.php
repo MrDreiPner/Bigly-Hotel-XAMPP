@@ -3,14 +3,14 @@
     require_once("dbaccess.php");
 ?>
 <body>
+<br><br>
     <?php 
     include "user_service_check.php";
     include "nav.php"; //Ticket wird angezeigt
     if (isset($_GET["ticketID"])){
-        $sql = 'select text_guest, image_path, resolved, userID, Date, room, title 
+        $sql = 'select text_guest, image_path, resolved, userID, Date, Time, room, title 
                 from tickets join user using(userID) 
-                where status = true
-                and ticketid = ?';
+                where ticketid = ?';
         $stmt = $db_obj->prepare($sql);
         $stmt->bind_param('i', $_GET["ticketID"]);
         if ($stmt===false){
@@ -18,20 +18,18 @@
             echo "fail";
         }
         $stmt->execute();
-        $stmt->bind_result($text_guest, $image_path, $resolved, $userID, $date, $room, $title);
+        $stmt->bind_result($text_guest, $image_path, $resolved, $userID, $date, $time, $room, $title);
         $stmt->fetch();
-        echo "<br><br><br><br><br><br><br><h2>". $title. "</h2><br><h3>". $date ."</h3><br>"
-        . $text_guest . "<br><img src='". $image_path ."' alt ='". $room ."'>";
+        $stmt->close(); //$db_obj->close();
+        echo "<br><br><br><br><br><br><br><h2>". $title. "</h2><br><h3>". $date. " ". $time .
+        " "."Room: ".$room ."</h3><br>". $text_guest;
+        echo "<br><img src='". $image_path ."' alt ='Room: ". $room ."'>";
+
         $_SESSION["ticketID"] = $_GET["ticketID"];
     }
     ?>
     <?php //Ticket wird bearbeitet
-         function test_input($data){
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
-        }
+        include "test_input.php"; //use test_input() to call function
 
          if (isset($_POST["text_service"])){
             if(isset($_POST["resolved"])){
@@ -60,7 +58,6 @@
             header("Refresh:0; url=ticketVerwaltung.php");
          }
         ?>
-    ?>
 
     <form method="POST" action="ticketpage.php">
         <textarea placeholder="Service Response" required name="text_service"></textarea>

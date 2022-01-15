@@ -6,6 +6,7 @@
     <a href="addNews.php">Add News</a>
     <a href="manageNews.php">Manage News</a>
     <a href="ticketVerwaltung.php">Ticket Verwaltung</a>
+    <a href="user_manage.php">Admin Profile</a>
 
 </body>
 </html>

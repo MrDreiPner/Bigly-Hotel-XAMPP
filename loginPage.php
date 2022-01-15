@@ -5,12 +5,7 @@
     include "nav.php"; ?>
 <br><br><br><br>
     <?php
-    function test_input($data){
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
+    include "test_input.php"; //use test_input() to call function
         $verification = "Please Log In";
         if (isset($_POST["Username"])) {
             $PW_input = test_input($_POST["Password"]);

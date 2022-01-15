@@ -18,13 +18,7 @@
             $errors[$input] = "";
         }
     
-        function test_input($data)
-        {
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
-        }
+        include "test_input.php"; //use test_input() to call function
         function checkOnlyChars($input){
             return preg_match("/^[a-zA-Z]*$/",$input) ? "" : "Nur Buchstaben erlaubt!";
         }

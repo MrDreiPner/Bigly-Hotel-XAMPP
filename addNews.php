@@ -4,12 +4,7 @@
         require_once('dbaccess.php');
         include "nav.php";
 
-        function test_input($data){
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
-        }
+        include "test_input.php"; //use test_input() to call function
 
         $bildname = "";
         function checkOnlyCharsAndNumbers($input){
