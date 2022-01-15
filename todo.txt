@@ -7,3 +7,6 @@ addNews zu manageNews machen:
 userbearbeitung durch user ermöglichen
 
 design
+
+User kann im Service bereich eine liste mit all seinen tickets sehen
+

@@ -3,24 +3,27 @@
     <?php
         include "user_service_check.php";
         require_once ('dbaccess.php');
-       // include "nav.php";
+        include "nav.php";
     ?>
     <h1>Get to work you ungrateful git!</h1>
     <?php
-        if(isset($_POST["filter"])){
-            var_dump($_POST["filter"]);
-            var_dump($_POST["orderby"]);
-            $sql = 'select ticketID, resolved, userID, Date, Time, room, title 
+        if(isset($_POST["filter"]) && $_POST["filter"] != "4"){
+            $filter = $_POST["filter"];
+            $orderby = $_POST["orderby"];
+            $sql = "select ticketID, resolved, userID, Date, Time, room, title 
                     from tickets join user using(userID)
-                    where resolved = ?
-                    order by Date ?';
+                    where resolved = $filter 
+                    order by Date $orderby";
             $stmt = $db_obj->prepare($sql);
-            
-            $stmt->bind_param('ss', $_POST["filter"], $_POST["orderby"]);
+            //$stmt->bind_param('ss', $_POST["filter"], $_POST["orderby"]);
         } else {
-            $sql = 'select ticketID, resolved, userID, Date, Time, room, title 
+            $orderby = "asc";
+            if(isset($_POST["orderby"])){
+                $orderby = $_POST["orderby"];
+            }
+            $sql = "select ticketID, resolved, userID, Date, Time, room, title 
                     from tickets join user using(userID)
-                    order by Date asc';
+                    order by Date $orderby";
             $stmt = $db_obj->prepare($sql);
         }
         if ($stmt===false){
@@ -59,10 +62,10 @@
         <form name="filters" method="POST" action="ticketVerwaltung.php">
             <label for="filter">Filter by:</label>
             <select name="filter">
-                <option value="1">open</option>
-                <option value="2">resolved</option>
-                <option value="3">unresolved</option>
-                <option>No Filter</option>
+                <option value=4>No Filter</option>
+                <option value=1>open</option>
+                <option value=2>resolved</option>
+                <option value=3>unresolved</option>
             </select>
             <br>
             <label for="orderby">Order by Date:</label>
