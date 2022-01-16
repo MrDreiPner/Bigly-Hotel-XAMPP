@@ -6,71 +6,20 @@
         include "nav.php";
         include "user_indicator.php";
         include "test_input.php"; //use test_input() to call function
+        include "resizeImage.php";
 
         //Checkt die mit POST gesendeten Daten auf unerwünschte Inputs
         $bildname = "";
-        function checkOnlyCharsAndNumbers($input){
-            return preg_match("/^[a-zA-Z0-9_]*$/",$input) ? "" : "Keine Leerzeichen/ Sonderzeichen!";
-        }
         $errors = "";
         if (isset($_POST["Bildname"])) {
             $bildname = test_input($_POST["Bildname"])."_".uniqid();
             $errors = checkOnlyCharsAndNumbers($_POST["Bildname"]);
-        }
-        if (isset($_FILES["Bildupload"]) && $errors == "") {
             $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
-            if (isset($path_parts["extension"])) {                    
-                $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/Bigly-Hotel-XAMPP/uploads/source/" .$bildname.".".$path_parts["extension"];                
-                move_uploaded_file($_FILES["Bildupload"]["tmp_name"], $destination);
-                switch($path_parts["extension"]){
-                    case "jpg" : $destimage = resizeJpeg($bildname); break;
-                    case "png" : $destimage = resizePng($bildname); break;
-                    default: $error = "Bitte nur JPG oder PNG Files!!!!!";
-                }
+            switch($path_parts["extension"]){
+                case "jpg" : $destimage = resizeJpeg($bildname); break;
+                case "png" : $destimage = resizePng($bildname); break;
+                default: $error = "Bitte nur JPG oder PNG Files!!!!!";
             }
-        }
-        function resizeJpeg($bildname) {
-            //-----Thumbnail machen-----
-            $srcimage = "uploads/source/".$bildname.".jpg"; //Pfad vom original
-            $destimage = "uploads/news/".$bildname."-thumb.jpg"; //Pfad vom resize
-            list($width, $height) = getimagesize($srcimage);
-            $newwidth=720;
-            $newheight=480;
-            //resizing von originalimg wird in thumb hinterlegt
-            $originalimg = imagecreatefromjpeg($srcimage);
-            $thumb = imagecreatetruecolor($newwidth, $newheight);
-            imagecopyresampled(
-                $thumb, $originalimg,
-                0, 0, 0, 0,
-                $newwidth, $newheight,
-                $width, $height
-            );
-            //speichern des Thumbnails
-            imagejpeg($thumb, $destimage);
-            echo "Saved successfully<br>";
-            return $destimage; 
-        }
-
-        function resizePng($bildname) {
-            //-----Thumbnail machen-----
-            $srcimage = "uploads/source/".$bildname.".png"; //Pfad vom original
-            $destimage = "uploads/news/".$bildname."-thumb.png"; //Pfad vom resize
-            list($width, $height) = getimagesize($srcimage);
-            $newwidth=720; //Maße, die in den Unterlagen gegeben wurden
-            $newheight=480;
-            //resizing von originalimg wird in thumb hinterlegt
-            $originalimg = imagecreatefrompng($srcimage);
-            $thumb = imagecreatetruecolor($newwidth, $newheight);
-            imagecopyresampled(
-                $thumb, $originalimg,
-                0, 0, 0, 0,
-                $newwidth, $newheight,
-                $width, $height
-            );
-            //speichern des Thumbnails
-            imagepng($thumb, $destimage);
-            echo "Saved successfully<br>";    
-            return $destimage;
         }
         ?>
         <br><br><br><br>

@@ -22,12 +22,9 @@
     </div>
     <?php 
         include "test_input.php"; //use test_input() to call function
-
+        include "resizeImage.php";
+        
         $bildname = "";
-        function checkOnlyCharsAndNumbers($input){
-            return preg_match("/^[a-zA-Z0-9_ ]*$/",$input) ? "" : "Keine Sonderzeichen!";
-        }
-
         $errors = "";
         $error = "";
         if (isset($_POST["Betreff"])){
@@ -35,60 +32,17 @@
             $betreff = test_input($_POST["Betreff"]);
         }
 
-        if (isset($_FILES["Bildupload"]) && $errors == "") {
-            $bildname = "service_". time()."_".uniqid();
+        if (isset($_FILES["Bildupload"]["name"])){
+            $bildname = test_input($_FILES["Bildupload"]["name"])."_".uniqid();
+            $errors = checkOnlyCharsAndNumbers($_FILES["Bildupload"]["name"]);
             $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
-            if (isset($path_parts["extension"]) && ($path_parts["extension"] == "png" || $path_parts["extension"] == "jpg")) {                    
-                $destination =$_SERVER["DOCUMENT_ROOT"]."/WebTech/Bigly-Hotel-XAMPP/uploads/source/" .$bildname.".".$path_parts["extension"];                
-                move_uploaded_file($_FILES["Bildupload"]["tmp_name"], $destination);
-                switch($path_parts["extension"]){
-                    case "jpg" : $destimage = resizeJpeg($bildname); break;
-                    case "png" : $destimage = resizePng($bildname); break;
-                    default: $error = "Bitte nur JPG oder PNG Files!!!!!";
-                }
+            switch($path_parts["extension"]){
+                case "jpg" : $destimage = resizeJpeg($bildname); break;
+                case "png" : $destimage = resizePng($bildname); break;
+                default: $error = "Bitte nur JPG oder PNG Files!!!!!";
             }
         }
-        function resizeJpeg($bildname) {
-            //-----Thumbnail machen-----
-            $srcimage = "uploads/source/".$bildname.".jpg"; //Pfad vom original
-            $destimage = "uploads/service/".$bildname."-thumb.jpg"; //Pfad vom resize
-            list($width, $height) = getimagesize($srcimage);
-            $newwidth=720;
-            $newheight=480;
-            //resizing von originalimg wird in thumb hinterlegt
-            $originalimg = imagecreatefromjpeg($srcimage);
-            $thumb = imagecreatetruecolor($newwidth, $newheight);
-            imagecopyresampled(
-                $thumb, $originalimg,
-                0, 0, 0, 0,
-                $newwidth, $newheight,
-                $width, $height
-            );
-            //speichern des Thumbnails
-            imagejpeg($thumb, $destimage);  
-            return $destimage; 
-        }
-
-        function resizePng($bildname) {
-            //-----Thumbnail machen-----
-            $srcimage = "uploads/source/".$bildname.".png"; //Pfad vom original
-            $destimage = "uploads/service/".$bildname."-thumb.png"; //Pfad vom resize
-            list($width, $height) = getimagesize($srcimage);
-            $newwidth=720;
-            $newheight=480;
-            //resizing von originalimg wird in thumb hinterlegt
-            $originalimg = imagecreatefrompng($srcimage);
-            $thumb = imagecreatetruecolor($newwidth, $newheight);
-            imagecopyresampled(
-                $thumb, $originalimg,
-                0, 0, 0, 0,
-                $newwidth, $newheight,
-                $width, $height
-            );
-            //speichern des Thumbnails
-            imagepng($thumb, $destimage); 
-            return $destimage; 
-        }
+        
         if (isset($_POST["serviceText"]) && $error == ""){
             $serviceText = test_input($_POST["serviceText"]);
             $u_username = $_SESSION["ID"];//ENUM BEGINNT BEI 1
