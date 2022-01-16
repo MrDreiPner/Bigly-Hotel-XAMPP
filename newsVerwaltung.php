@@ -11,7 +11,7 @@
                     from news
                     order by date asc";
             $stmt = $db_obj->prepare($sql);*/
-        if(isset($_POST["filter"]) && $_POST["filter"] != "4"){
+        if(isset($_POST["filter"]) && $_POST["filter"] != "2"){
             $filter = $_POST["filter"];
             $orderby = $_POST["orderby"];
             $sql = "select headline, date, time, active, news_id  
@@ -38,9 +38,10 @@
         $stmt->bind_result($headline, $date, $time, $active, $id);
     ?>
     <div>
-        <form name="filters" method="POST" action="manageNews.php">
+        <form name="filters" method="POST" action="newsVerwaltung.php">
             <label for="filter">Filter by:</label>
             <select name="filter">
+                <option value=2>No Filter</option>
                 <option value=1>active</option>
                 <option value=0>inactive</option>
             </select>

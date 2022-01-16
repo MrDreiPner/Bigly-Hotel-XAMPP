@@ -12,7 +12,7 @@
                 }
                 if ($_SESSION["SessionWert"] == "Guest" || $_SESSION["SessionWert"] == "Admin") {
                     echo "<il><a href='service.php'>Service</a></il>";
-                    echo "<il><a href='user_manage.php'>Profile</a></il>";
+                    echo "<il><a href='manageUser.php'>Profile</a></il>";
                 }
                 if ($_SESSION["SessionWert"] == "Service" || $_SESSION["SessionWert"] == "Admin") {
                     echo "<il><a href='ticketVerwaltung.php'>Service-Tickets</a></il>";

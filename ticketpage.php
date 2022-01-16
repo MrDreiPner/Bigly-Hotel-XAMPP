@@ -22,8 +22,8 @@
             $stmt->bind_result($text_guest, $image_path, $resolved, $userID, $date, $time, $room, $title, $textS);
             $stmt->fetch();
             $stmt->close(); //$db_obj->close();
-            echo "<br><br><br><br><br><br><br><h2>". $title. "</h2><br><h3>". $date. " ". $time .
-            " "."Room: ".$room ."</h3><br>". $text_guest;
+            echo "<br><br><br><br><br><br><br><h3>". $title. "</h3><br><h4>". $date. " ". $time .
+            " "."Room: ".$room ."</h4><br>". $text_guest;
             echo "<br><img src='". $image_path ."' alt ='Room: ". $room ."'>";
             echo "<br><div>Service Response:<br>".$textS. "</div>";
 
@@ -90,7 +90,7 @@
         if($resolved != "open")
         {
             echo "<br><input type='checkbox'name='resolved' value=1>Open Ticket"; 
-            echo "<br><input type='submit' value='Submit'>";
+            echo "<br><input type='submit' value='Submit'> ";
         }
         else{
                 echo "Ticket open!"; 
@@ -102,6 +102,15 @@
         }
         ?>
     </form>
-
+    <?php
+    if($_SESSION["SessionWert"] == "Admin" || $_SESSION["SessionWert"] == "Service")
+    {
+        echo "<form action='ticketVerwaltung.php'><input type='submit' value='Back'></form>";
+    }
+    else
+    {
+        echo "<form action='service.php'><input type='submit' value='Back'></form>";
+    }
+    ?>
 </body>
 </html>

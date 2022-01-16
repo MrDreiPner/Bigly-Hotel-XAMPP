@@ -30,27 +30,27 @@
     ?>
     <?php //News wird bearbeitet
         include "test_input.php"; //use test_input() to call function
-         if(isset($_POST["delete"]))
-         {
-             $ID = $_SESSION["news_ID"];
-             $sql = "delete 
-                    from news 
-                    where news_id = ?";
-             $stmt = $db_obj->prepare($sql);
-             $stmt->bind_param('i', $_SESSION["news_ID"]);
-             if ($stmt===false){
-             echo($db_obj->error);
-                 echo "fail";
-             }
-             $stmt->execute();
-             $stmt->close(); $db_obj->close();
-             unset($_SESSION['news_ID']);
-             header("Refresh:0; url=manageNews.php");
+        if(isset($_POST["delete"]))
+        {
+            $ID = $_SESSION["news_ID"];
+            $sql = "delete 
+                   from news 
+                   where news_id = ?";
+            $stmt = $db_obj->prepare($sql);
+            $stmt->bind_param('i', $_SESSION["news_ID"]);
+            if ($stmt===false){
+            echo($db_obj->error);
+                echo "fail";
+            }
+            $stmt->execute();
+            $stmt->close(); $db_obj->close();
+            unset($_SESSION['news_ID']);
+            header("Refresh:0; url=newsVerwaltung.php");
 
-         }
+        }
 
-         if(isset($_POST["active"]))
-         {
+        if(isset($_POST["active"]))
+        {
             if(isset($_POST["content"]) && isset($_POST["update_c"]))
             {
                 $ID = $_SESSION["news_ID"];
@@ -78,7 +78,7 @@
             $stmt->execute();
             $stmt->close(); $db_obj->close();
             unset($_SESSION['news_ID']);
-            header("Refresh:0; url=manageNews.php");
+            header("Refresh:0; url=newsVerwaltung.php");
          }
          else if(isset($_POST["update_c"]))
          {
@@ -95,12 +95,12 @@
             $stmt->execute();
             $stmt->close(); $db_obj->close();
             unset($_SESSION['news_ID']);
-            header("Refresh:0; url=manageNews.php");
+            header("Refresh:0; url=newsVerwaltung.php");
          }
          else if(isset($_POST["sent"]))
          {
             setcookie("nothingHappened", 1, time()+5);
-            header("Refresh:0; url=manageNews.php");
+            header("Refresh:0; url=newsVerwaltung.php");
          }
         ?>
 
@@ -136,6 +136,7 @@
                 echo "<br><input type='submit'>";
             }
         }
+        echo "<form action='newsVerwaltung.php'><input type='submit' value='Back'></form>";
         ?>
     </form>
 

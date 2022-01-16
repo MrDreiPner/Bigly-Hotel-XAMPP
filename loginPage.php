@@ -13,7 +13,7 @@
             $PW_input = test_input($_POST["Password"]);
             $user_input = test_input($_POST["Username"]);
 
-            $sql = 'select userID, username, password, role from user where username = ?';
+            $sql = 'select userID, username, password, vorname, role from user where username = ?';
 
             $stmt = $db_obj->prepare($sql);
             $stmt-> bind_param('s', $user_input);
@@ -24,7 +24,7 @@
             $stmt->execute();
 
             //$u_username = ""; $u_password = ""; $role = "";
-            $stmt->bind_result($u_id, $u_username, $u_password, $role);
+            $stmt->bind_result($u_id, $u_username, $u_password, $vorname, $role);
             $stmt->fetch();
 
             /*if($u_username == "" || $u_password == "" || $role == ""){
@@ -38,6 +38,7 @@
                 $_SESSION["SessionWert"] = $role;
                 $_SESSION["User"] = $u_username;
                 $_SESSION["ID"] = $u_id;
+                $_SESSION["vorname"] = $vorname;
                 $_SESSION['LAST_ACTIVITY'] = time();
             }
             else {

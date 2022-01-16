@@ -14,7 +14,6 @@
         if (isset($_COOKIE["inactiveLogout"])){
             echo "<br><h3>You have been logged out due to inactivity!</h3>";
         }
-        include "user_indicator.php";
         ?>
         <br>
         <h1><a href="https://www.youtube.com/watch?v=FfKWHtNDGKU" target="_blank">Quality content</a></h1>

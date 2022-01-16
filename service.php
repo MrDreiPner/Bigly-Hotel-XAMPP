@@ -65,10 +65,7 @@
                 $width, $height
             );
             //speichern des Thumbnails
-            imagejpeg($thumb, $destimage);
-            echo "gespeichert<br>";
-            echo "<img src=$destimage><br>";
-            echo "<img src=$srcimage>";    
+            imagejpeg($thumb, $destimage);  
             return $destimage; 
         }
 
@@ -89,10 +86,7 @@
                 $width, $height
             );
             //speichern des Thumbnails
-            imagepng($thumb, $destimage);
-            echo "gespeichert<br>";
-            echo "<img src=$destimage><br>";
-            echo "<img src=$srcimage>";   
+            imagepng($thumb, $destimage); 
             return $destimage; 
         }
         if (isset($_POST["serviceText"]) && $error == ""){
@@ -105,8 +99,82 @@
             }
             $stmt->bind_param("sssi",$betreff, $serviceText, $destimage, $u_username);
             $stmt->execute();
-            $stmt->close(); $db_obj->close();
+            //$stmt->close(); $db_obj->close();
         }
     ?>
+        <?php
+        if(isset($_POST["filter"]) && $_POST["filter"] != "4"){
+            $filter = $_POST["filter"];
+            $orderby = $_POST["orderby"];
+            $userID = $_SESSION["ID"];
+            $sql = "select ticketID, resolved, userID, Date, Time, room, title 
+                    from tickets join user using(userID)
+                    where resolved = $filter and userID = $userID
+                    order by Date $orderby";
+            $stmt = $db_obj->prepare($sql);
+            //$stmt->bind_param('ss', $_POST["filter"], $_POST["orderby"]);
+        } else {
+            $userID = $_SESSION["ID"];
+            $orderby = "asc";
+            if(isset($_POST["orderby"])){
+                $orderby = $_POST["orderby"];
+            }
+            $sql = "select ticketID, resolved, userID, Date, Time, room, title 
+                    from tickets join user using(userID)
+                    where userID = $userID
+                    order by Date $orderby";
+            $stmt = $db_obj->prepare($sql);
+        }
+        if ($stmt===false){
+            echo($db_obj->error);
+            echo "fail";
+        }
+        $stmt->execute();
+        $stmt->bind_result($ticketid, $resolved, $userID, $date, $time, $room, $title);
+    
+    ?>
+    <br><br><br><br><br><br><br>
+    <div class="input">
+        <h3>Your Service-Tickets</h3><br>
+    <table id="table">
+        <tr>
+            <th>Resolved</th>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Room</th>
+        </tr>
+        <?php 
+            while($stmt->fetch()){
+                echo "<tr>
+                <td>". $resolved.
+                "</td><td><a href='ticketpage.php?ticketID=" . $ticketid ."'>" .$title.
+                "</a></td><td>". $date.
+                "</td><td>". $time.
+                "</td><td>". $room.
+                "</td></tr>";
+            }
+            $stmt->close(); $db_obj->close();
+        ?>
+    </table>
+    </div>
+    <div>
+        <form name="filters" method="POST" action="service.php">
+            <label for="filter">Filter by:</label>
+            <select name="filter">
+                <option value=4>No Filter</option>
+                <option value=1>open</option>
+                <option value=2>resolved</option>
+                <option value=3>unresolved</option>
+            </select>
+            <br>
+            <label for="orderby">Order by Date:</label>
+            <select name="orderby">
+                <option value="asc">ascending</option>
+                <option value="desc">descending</option>
+            </select>
+            <input type="submit">
+        </form>
+    </div>
 </body>
 </html>
