@@ -8,8 +8,12 @@
         include "user_indicator.php";
     ?>
     <?php
+        if(isset($_GET["user_to_manage_ID"]))
+        {
+            $_SESSION["user_to_manage_ID"] = $_GET["user_to_manage_ID"];
+        }
         if (isset($_SESSION["ID"])){
-            $ID = isset($_GET["user_to_manage_ID"])?$_GET["user_to_manage_ID"] : $_SESSION["ID"];
+            $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
             $sql = 'select username, email, room 
                     from user
                     where userid = ?';
@@ -47,10 +51,10 @@
 
         if(isset($_POST["delete"]) && $_SESSION["SessionWert"] == "Admin")
         {
-            $ID = $_GET["user_to_manage_ID"];
+            $ID = $_SESSION["user_to_manage_ID"];
             $sql = "delete 
                    from user 
-                   where user_id = ?";
+                   where userid = ?";
             $stmt = $db_obj->prepare($sql);
             $stmt->bind_param('i', $ID);
             if ($stmt===false){
@@ -74,21 +78,21 @@
             $result->close();
             if($errors["ch_username"] == "" && $ch_username != "")
             {
-            if(isset($_GET["user_to_manage_ID"]) && $_SESSION["user"] == "Admin")
+            if(isset($_SESSION["user_to_manage_ID"]) && $_SESSION["user"] == "Admin")
             {
-                $ID = $_GET["user_to_manage_ID"];
+                $ID = $_SESSION["user_to_manage_ID"];
                 $sql = "update user 
                     set username = ?
-                    where userID = $ID";
+                    where userID = ?";
             }
             else{
                 $ID = $_SESSION["ID"];
                 $sql = "update user 
                     set username = ?
-                    where userID = $ID";
+                    where userID = ?";
             }
             $stmt = $db_obj->prepare($sql);
-            $stmt->bind_param('s', $ch_username);
+            $stmt->bind_param('si', $ch_username, $ID);
             if ($stmt===false){
                 echo($db_obj->error);
                 echo "fail";
@@ -114,14 +118,14 @@
             {
             if($ch_password != "")
             {
-                if(isset($_GET["user_to_manage_ID"]) && $_SESSION["user"] == "Admin")
+                if(isset($_SESSION["user_to_manage_ID"]) && $_SESSION["user"] == "Admin")
                 {
-                    $ID = $_GET["user_to_manage_ID"];
+                    $ID = $_SESSION["user_to_manage_ID"];
                     $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
                     $sql = "update user 
                         set password = ?,
                         pw_notiz = ?
-                        where userID = $ID";
+                        where userID = ?";
                 }
                 else{
                     $ID = $_SESSION["ID"];
@@ -129,10 +133,10 @@
                     $sql = "update user 
                         set password = ?,
                         pw_notiz = ?
-                        where userID = $ID";
+                        where userID = ?";
                 }
                 $stmt = $db_obj->prepare($sql);
-                $stmt->bind_param('ss', $ch_password, $ch_password_c);
+                $stmt->bind_param('ssi', $ch_password, $ch_password_c, $ID);
                 if ($stmt===false){
                     echo($db_obj->error);
                     echo "fail";
@@ -148,13 +152,13 @@
             $errors["email"] = checkEmail($ch_email);
             if($errors["email"] == "" && $ch_email != "")
             {
-                if(isset($_GET["user_to_manage_ID"]) && $_SESSION["user"] == "Admin")
+                if(isset($_SESSION["user_to_manage_ID"]) && $_SESSION["user"] == "Admin")
                 {
-                    $ID = $_GET["user_to_manage_ID"];
+                    $ID = $_SESSION["user_to_manage_ID"];
                     $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
                     $sql = "update user 
                         set email = ?
-                        where userID = $ID";
+                        where userID = ?";
                 }
                 else
                 {
@@ -162,10 +166,10 @@
                     $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
                     $sql = "update user 
                         set email = ?
-                        where userID = $ID";
+                        where userID = ?";
                 }
             $stmt = $db_obj->prepare($sql);
-            $stmt->bind_param('s', $ch_email);
+            $stmt->bind_param('si', $ch_email, $ID);
             if ($stmt===false){
                 echo($db_obj->error);
                 echo "fail";
@@ -181,12 +185,12 @@
             $errors["ch_vorname"] = checkOnlyChars($vorname);
             if($errors["ch_vorname"] == "" && $vorname != "")
             {
-                $ID = isset($_GET["user_to_manage_ID"])?$_GET["user_to_manage_ID"] : $_SESSION["ID"];
+                $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
                 $sql = "update user 
                     set vorname = ?
-                    where userID = $ID";
+                    where userID = ?";
                 $stmt = $db_obj->prepare($sql);
-                $stmt->bind_param('s', $vorname);
+                $stmt->bind_param('si', $vorname, $ID);
                 if ($stmt===false){
                     echo($db_obj->error);
                     echo "fail";
@@ -203,12 +207,12 @@
             $errors["ch_nachname"] = checkOnlyChars($nachname);
             if($errors["ch_nachname"] == "" && $nachname != "")
             {
-                $ID = isset($_GET["user_to_manage_ID"])?$_GET["user_to_manage_ID"] : $_SESSION["ID"];
+                $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
                 $sql = "update user 
                     set nachname = ?
-                    where userID = $ID";
+                    where userID = ?";
                 $stmt = $db_obj->prepare($sql);
-                $stmt->bind_param('s', $nachname);
+                $stmt->bind_param('si', $nachname, $ID);
                 if ($stmt===false){
                     echo($db_obj->error);
                     echo "fail";
@@ -220,16 +224,16 @@
 
         if(isset($_POST["ch_room"]) && $_SESSION["SessionWert"] == "Admin")
         {
-            $room = test_input($_POST["ch_room"]);
-            $errors["ch_room"] = checkOnlyNumbers($room);
-            if($errors["ch_room"] == "" && $room != "")
+            $ch_room = test_input($_POST["ch_room"]);
+            $errors["ch_room"] = checkOnlyNumbers($ch_room);
+            if($errors["ch_room"] == "" && $ch_room != "")
             {
-                $ID = isset($_GET["user_to_manage_ID"])?$_GET["user_to_manage_ID"] : $_SESSION["ID"];
+                $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
                 $sql = "update user 
                     set room = ?
-                    where userID = $ID";
+                    where userID = ?";
                 $stmt = $db_obj->prepare($sql);
-                $stmt->bind_param('i', $room);
+                $stmt->bind_param('ii', $ch_room, $ID);
                 if ($stmt===false){
                     echo($db_obj->error);
                     echo "fail";
@@ -241,12 +245,12 @@
 
         if(isset($_POST["anrede"]) && $_SESSION["SessionWert"] == "Admin")
         {
-            $ID = isset($_GET["user_to_manage_ID"])?$_GET["user_to_manage_ID"] : $_SESSION["ID"];
+            $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
             $sql = "update user 
                 set anrede = ?
-                where userID = $ID";
+                where userID = ?";
             $stmt = $db_obj->prepare($sql);
-            $stmt->bind_param('i', $_POST["anrede"]);
+            $stmt->bind_param('ii', $_POST["anrede"], $ID);
             if ($stmt===false){
                 echo($db_obj->error);
                 echo "fail";
@@ -257,12 +261,12 @@
 
         if(isset($_POST["role"]) && $_SESSION["SessionWert"] == "Admin")
         {
-            $ID = isset($_GET["user_to_manage_ID"])?$_GET["user_to_manage_ID"] : $_SESSION["ID"];
+            $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
             $sql = "update user 
                 set role = ?
-                where userID = $ID";
+                where userID = ?";
             $stmt = $db_obj->prepare($sql);
-            $stmt->bind_param('i', $_POST["role"]);
+            $stmt->bind_param('ii', $_POST["role"], $ID);
             if ($stmt===false){
                 echo($db_obj->error);
                 echo "fail";
@@ -273,12 +277,12 @@
 
         if(isset($_POST["active"]) && $_SESSION["SessionWert"] == "Admin")
         {
-            $ID = isset($_GET["user_to_manage_ID"])?$_GET["user_to_manage_ID"] : $_SESSION["ID"];
+            $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
             $sql = "update user 
                 set active = ?
-                where userID = $ID";
+                where userID = ?";
             $stmt = $db_obj->prepare($sql);
-            $stmt->bind_param('i', $_POST["active"]);
+            $stmt->bind_param('ii', $_POST["active"], $ID);
             if ($stmt===false){
                 echo($db_obj->error);
                 echo "fail";
@@ -291,13 +295,15 @@
             if ($error != "") {
                 $checkschecked = "Profile NOT updated! Faulty input!";
                 setcookie("NotUpdated", 1, time()+1);
+
             }
         }
 
-        if(isset($_POST["sent"]))
+        if(isset($_POST["sent"]) && $checkschecked == "Profile updated!")
         {
-            header("Refresh:0 , url=manageUser.php");
             $db_obj->close();
+            unset($_SESSION['user_to_manage_ID']);
+            $_SESSION["SessionWert"] == "Admin" ? header("Refresh:0 , url=userVerwaltung.php") : header("Refresh:2 , url=manageUser.php");
         }
 
         if($checkschecked == "Profile updated!" && isset($_POST["sent"])){

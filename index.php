@@ -15,11 +15,10 @@
             echo "<br><h3>You have been logged out due to inactivity!</h3>";
         }
         ?>
-        <br>
-        <h1><a href="https://www.youtube.com/watch?v=FfKWHtNDGKU" target="_blank">Quality content</a></h1>
-        <a href="UA_access.php"> 401 error page </a>
     </p>
-    <!--<img src="Werbebilder/harold1.jpg" alt="Work in Progress">-->
+    <div>
+        <h3>News Feed</h3>
+    </div>
     <br>
     <?php
         $sql = 'select headline, imgpath, content, date from news where active = true';
@@ -34,8 +33,8 @@
     <ul>
         <?php 
             while($stmt->fetch()){
-                echo "<li><p><h3>". $headline. "</h3>". $date ."<br>"
-                 . $content . "<img src='". $imgpath ."' alt ='". $headline ."'>
+                echo "<li><p><h4>". $headline. "</h4>". $date ."<br>"
+                 . $content . "<br><img src='". $imgpath ."' alt ='". $headline ."'>
                  </p>
                 </li>";
             }

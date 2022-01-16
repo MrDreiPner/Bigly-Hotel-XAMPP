@@ -148,3 +148,6 @@ background-image: url("Werbebilder/background.png");
         $stmt->execute();
         $stmt->bind_result($text_guest, $image_path, $resolved, $userID, $date, $room, $title);
     ?>
+
+        high quality content
+<h1><a href="https://www.youtube.com/watch?v=FfKWHtNDGKU" target="_blank">Quality content</a></h1>

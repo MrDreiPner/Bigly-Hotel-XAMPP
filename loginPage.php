@@ -13,7 +13,7 @@
             $PW_input = test_input($_POST["Password"]);
             $user_input = test_input($_POST["Username"]);
 
-            $sql = 'select userID, username, password, vorname, role from user where username = ?';
+            $sql = 'select userID, username, password, vorname, role, active from user where username = ?';
 
             $stmt = $db_obj->prepare($sql);
             $stmt-> bind_param('s', $user_input);
@@ -23,17 +23,14 @@
             }
             $stmt->execute();
 
-            //$u_username = ""; $u_password = ""; $role = "";
-            $stmt->bind_result($u_id, $u_username, $u_password, $vorname, $role);
+            $stmt->bind_result($u_id, $u_username, $u_password, $vorname, $role, $active);
             $stmt->fetch();
 
-            /*if($u_username == "" || $u_password == "" || $role == ""){
-                $verification = "Wrong credentials! Try again!";
-            }*/
-            echo "<br>". $PW_input ." ". $u_username ." ". $u_password ." ". $role . "<br>"; 
-            echo password_verify($PW_input, $u_password)?"Password ok":"Password nicht ok". "<br>";
-
-            if (password_verify($PW_input, $u_password)) {
+            if($active != 1)
+            {
+                $verification = "Account inactive! Please contact Administrator.";
+            }
+            else if (password_verify($PW_input, $u_password)) {
                 setcookie("CookieWert", $u_username, time()+3600);
                 $_SESSION["SessionWert"] = $role;
                 $_SESSION["User"] = $u_username;
@@ -54,9 +51,6 @@
         
         if (isset($verification)){
             echo $verification;
-        }
-        if (isset($_COOKIE["CookieWert"])){
-            echo "<br>Cookie: ", $_COOKIE["CookieWert"];
         }
         echo "<br>";
 
