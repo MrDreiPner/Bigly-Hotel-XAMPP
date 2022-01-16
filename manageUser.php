@@ -78,19 +78,10 @@
             $result->close();
             if($errors["ch_username"] == "" && $ch_username != "")
             {
-            if(isset($_SESSION["user_to_manage_ID"]) && $_SESSION["user"] == "Admin")
-            {
-                $ID = $_SESSION["user_to_manage_ID"];
-                $sql = "update user 
-                    set username = ?
-                    where userID = ?";
-            }
-            else{
-                $ID = $_SESSION["ID"];
-                $sql = "update user 
-                    set username = ?
-                    where userID = ?";
-            }
+            $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
+            $sql = "update user 
+                set username = ?
+                where userID = ?";
             $stmt = $db_obj->prepare($sql);
             $stmt->bind_param('si', $ch_username, $ID);
             if ($stmt===false){
@@ -118,23 +109,12 @@
             {
             if($ch_password != "")
             {
-                if(isset($_SESSION["user_to_manage_ID"]) && $_SESSION["user"] == "Admin")
-                {
-                    $ID = $_SESSION["user_to_manage_ID"];
+                $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
                     $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
                     $sql = "update user 
                         set password = ?,
                         pw_notiz = ?
                         where userID = ?";
-                }
-                else{
-                    $ID = $_SESSION["ID"];
-                    $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
-                    $sql = "update user 
-                        set password = ?,
-                        pw_notiz = ?
-                        where userID = ?";
-                }
                 $stmt = $db_obj->prepare($sql);
                 $stmt->bind_param('ssi', $ch_password, $ch_password_c, $ID);
                 if ($stmt===false){
@@ -152,22 +132,11 @@
             $errors["email"] = checkEmail($ch_email);
             if($errors["email"] == "" && $ch_email != "")
             {
-                if(isset($_SESSION["user_to_manage_ID"]) && $_SESSION["user"] == "Admin")
-                {
-                    $ID = $_SESSION["user_to_manage_ID"];
-                    $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
-                    $sql = "update user 
-                        set email = ?
-                        where userID = ?";
-                }
-                else
-                {
-                    $ID = $_SESSION["ID"];
-                    $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
-                    $sql = "update user 
-                        set email = ?
-                        where userID = ?";
-                }
+            $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
+            $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
+            $sql = "update user 
+                set email = ?
+                where userID = ?";
             $stmt = $db_obj->prepare($sql);
             $stmt->bind_param('si', $ch_email, $ID);
             if ($stmt===false){
@@ -326,10 +295,10 @@
         <input type="text" name="ch_username"><br>
         <label for="ch_pw" required>Change password: </label><br>
         <span class="error"> <?php if(isset($errors["ch_pw"])){ echo $errors["ch_pw"];}?></span>
-        <input type="text" name="ch_pw"><br>
+        <input type="password" name="ch_pw"><br>
         <label for="ch_pw_c" required>Confirm password: </label><br>
         <span class="error"> <?php if(isset($errors["ch_pw_c"])){ echo $errors["ch_pw_c"];}?></span>
-        <input type="text" name="ch_pw_c"><br>
+        <input type="password" name="ch_pw_c"><br>
         <label for="ch_email" required>Change E-Mail: </label><br>
         <span class="error"> <?php if(isset($errors["email"])){ echo $errors["email"];}?></span>
         <input type="email" name="ch_email"><br>
