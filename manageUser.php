@@ -43,10 +43,7 @@
 
         $checkschecked = "Profile updated!";
         $errors = array();
-        foreach ($errors as $error)
-        {
-            $errors[$error] = "";
-        }
+
 
         if(isset($_POST["delete"]) && $_SESSION["SessionWert"] == "Admin")
         {
@@ -293,6 +290,7 @@
         foreach ($errors as $error) {
             if ($error != "") {
                 $checkschecked = "Profile NOT updated! Faulty input!";
+                setcookie("NotUpdated", 1, time()+1);
             }
         }
 
@@ -378,6 +376,10 @@
         <input type="submit" value="Update">
     </form>
     <?php
+        if(isset($_COOKIE["NotUpdated"]))
+        {
+             echo "Profile NOT updated!";
+        }
     if($_SESSION["SessionWert"] == "Admin")
     {
         echo "<form action='userVerwaltung.php'><input type='submit' value='Back'></form>";
