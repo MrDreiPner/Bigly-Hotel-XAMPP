@@ -9,11 +9,12 @@
     ?>
     <?php
         if (isset($_SESSION["ID"])){
+            $ID = isset($_GET["user_to_manage_ID"])?$_GET["user_to_manage_ID"] : $_SESSION["ID"];
             $sql = 'select username, email, room 
                     from user
                     where userid = ?';
             $stmt = $db_obj->prepare($sql);
-            $stmt->bind_param('i', $_SESSION["ID"]);
+            $stmt->bind_param('i', $ID);
             if ($stmt===false){
                 echo($db_obj->error);
                 echo "fail";
@@ -21,7 +22,6 @@
             $stmt->execute();
             $stmt->bind_result($username, $email, $room);
             $stmt->fetch();
-            $_SESSION["user"] = $username;
             $stmt->close();
         }
 
