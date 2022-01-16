@@ -20,26 +20,7 @@
             $errors[$input] = "";
         }
     
-        include "test_input.php"; //use test_input() to call function
-        function checkOnlyChars($input){
-            return preg_match("/^[a-zA-Z]*$/",$input) ? "" : "Nur Buchstaben erlaubt!";
-        }
-
-        function checkOnlyNumbers($input){
-            return preg_match("/^[0-9]*$/",$input) ? "" : "Nur Zahlen erlaubt!";
-        }
-
-        function checkOnlyCharsAndNumbers($input){
-            return preg_match("/^[a-zA-Z0-9]*$/",$input) ? "" : "Keine Sonderzeichen erlaubt!";
-        }
-
-        /*function checkTelefon($input){
-            return preg_match("/^[0-9+ ]*$/",$input) ? "" : "Nur + in Vorwahl und Zahlen von 0-9 erlaubt!";
-        }*/
-
-        function checkEmail($input){
-            return filter_var($input, FILTER_VALIDATE_EMAIL) ? "" : "Adresse ungültig!";
-        }
+        include "test_input.php"; //test_input() nutzen um rohe Daten, für mehr siehe test_input.php
 
         $checkschecked = "Registrierung great success!";
         if ($_SERVER["REQUEST_METHOD"] == "POST") {

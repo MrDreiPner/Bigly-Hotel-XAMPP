@@ -31,7 +31,7 @@
         }
     ?>
     <?php //Ticket wird bearbeitet
-        include "test_input.php"; //use test_input() to call function
+        include "test_input.php"; //test_input() nutzen um rohe Daten, für mehr siehe test_input.php
 
          if (isset($_POST["text_service"])){
             $resolvInput = $_POST["resolved"];
@@ -52,7 +52,7 @@
             unset($_SESSION['ticketID']);
             header("Refresh:0; url=ticketVerwaltung.php");
          }
-         if(isset($_POST["resolved"]) && $_SESSION["SessionWert"] == "Admin")
+         if(isset($_POST["resolved"]))
          {
             $resolvInput = $_POST["resolved"];
             $ID = $_SESSION["ticketID"];
@@ -67,7 +67,14 @@
             $stmt->execute();
             $stmt->close(); $db_obj->close();
             unset($_SESSION['ticketID']);
-            header("Refresh:0; url=ticketVerwaltung.php");
+            if($_SESSION["SessionWert"] == "Admin")
+            {
+                header("Refresh:0; url=ticketVerwaltung.php");
+            }
+            else
+            {
+                header("Refresh:0; url=service.php");
+            }
          }
         ?>
 
@@ -85,7 +92,7 @@
             echo "Ticket closed! Ticket ". $resolved; 
         }
         }
-        if($_SESSION["SessionWert"] == "Admin")
+        if($_SESSION["SessionWert"] == "Admin" || $_SESSION["SessionWert"] == "Guest")
         { 
         if($resolved != "open")
         {
@@ -95,10 +102,6 @@
         else{
                 echo "Ticket open!"; 
             }
-        }
-        if($_SESSION["SessionWert"] == "Guest")
-        {
-            echo "Ticket ". $resolved;
         }
         ?>
     </form>

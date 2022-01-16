@@ -12,7 +12,7 @@
         if(isset($_POST["filter"]) && $_POST["filter"] != "4"){
             $filter = $_POST["filter"];
             $orderby = $_POST["orderby"];
-            $sql = "select ticketID, resolved, userID, Date, Time, room, title 
+            $sql = "select ticketID, resolved, userID, Date, Time, username, nachname, room, title 
                     from tickets join user using(userID)
                     where resolved = $filter 
                     order by Date $orderby";
@@ -23,7 +23,7 @@
             if(isset($_POST["orderby"])){
                 $orderby = $_POST["orderby"];
             }
-            $sql = "select ticketID, resolved, userID, Date, Time, room, title 
+            $sql = "select ticketID, resolved, userID, Date, Time, username, nachname, room, title 
                     from tickets join user using(userID)
                     order by Date $orderby";
             $stmt = $db_obj->prepare($sql);
@@ -33,7 +33,7 @@
             echo "fail";
         }
         $stmt->execute();
-        $stmt->bind_result($ticketid, $resolved, $userID, $date, $time, $room, $title);
+        $stmt->bind_result($ticketid, $resolved, $userID, $date, $time, $username, $nachname, $room, $title);
     
     ?>
     <br><br><br><br><br><br><br>
@@ -41,7 +41,9 @@
     <table id="table">
         <tr>
             <th>Resolved</th>
+            <th>Username</th>
             <th>Title</th>
+            <th>Nachname</th>
             <th>Date</th>
             <th>Time</th>
             <th>Room</th>
@@ -50,8 +52,10 @@
             while($stmt->fetch()){
                 echo "<tr>
                 <td>". $resolved.
+                "</td><td>".$username.
                 "</td><td><a href='ticketpage.php?ticketID=" . $ticketid ."'>" .$title.
-                "</a></td><td>". $date.
+                "</a></td><td>". $nachname.
+                "</td><td>". $date.
                 "</td><td>". $time.
                 "</td><td>". $room.
                 "</td></tr>";

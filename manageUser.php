@@ -8,13 +8,22 @@
         include "user_indicator.php";
     ?>
     <?php
-        if(isset($_GET["user_to_manage_ID"]))
+        //Wenn der Admin über die userVerwaltung.php auf manageUser zugreift
+        //wird die mitgeschickte ID hier in einen Session Wert gespeichert.
+        //Es wird sichergestellt, dass die Session nur bei eingeloggten Admins gesetzt wird
+        if(isset($_GET["user_to_manage_ID"]) && $_SESSION["SessionWert"] == "Admin")
         {
             $_SESSION["user_to_manage_ID"] = $_GET["user_to_manage_ID"];
         }
+        else if (isset($_GET["user_to_manage_ID"]) && $_SESSION["SessionWert"] != "Admin")
+        {
+            header("location: UA_access.php");
+        }
         if (isset($_SESSION["ID"])){
+            //Je nachdem wie auf manageUser zugegriffen wird, werden entweder die eigenen
+            //Daten geholt (Gast) oder die des zu bearbeitenden users (als Admin)
             $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
-            $sql = 'select username, email, room 
+            $sql = 'select username, email, room, vorname, nachname, role, password, anrede
                     from user
                     where userid = ?';
             $stmt = $db_obj->prepare($sql);
@@ -24,26 +33,24 @@
                 echo "fail";
             }
             $stmt->execute();
-            $stmt->bind_result($username, $email, $room);
+            $stmt->bind_result($username, $email, $room, $Svorname, $Snachname, $role, $OGpassword, $gender);
             $stmt->fetch();
             $stmt->close();
         }
-
-        include "test_input.php"; //use test_input() to call function
-        function checkEmail($input){
-            return filter_var($input, FILTER_VALIDATE_EMAIL) ? "" : "Adresse ungültig!";
-        }
-        function checkOnlyChars($input){
-            return preg_match("/^[a-zA-Z]*$/",$input) ? "" : "Nur Buchstaben erlaubt!";
-        }
-
-        function checkOnlyNumbers($input){
-            return preg_match("/^[0-9]*$/",$input) ? "" : "Nur Zahlen erlaubt!";
-        }
-
-        function checkOnlyCharsAndNumbers($input){
-            return preg_match("/^[a-zA-Z0-9]*$/",$input) ? "" : "Keine Sonderzeichen erlaubt!";
-        }
+    ?>
+    <h1>Manage Profile</h1>
+    <br><br><br><br>
+    <!--Ausgabe der aktuellen Informationen -->
+    <div class="input">
+        Username: <?php echo $username;?><br>
+        Gender: <?php echo $gender;?><br>
+        Full name: <?php echo $Svorname." ".$Snachname;?><br>
+        E-Mail: <?php echo $email;?><br>
+        Username: <?php echo $role;?><br>
+        Room: <?php echo $room;?><br>
+    </div>
+    <?php
+        include "test_input.php"; //test_input() nutzen um rohe Daten, für mehr siehe test_input.php
 
         $checkschecked = "Profile updated!";
         $errors = array();
@@ -68,7 +75,8 @@
 
         if(isset($_POST["ch_username"])){
             $ch_username = test_input($_POST["ch_username"]);
-            $errors["ch_username"] = checkOnlyCharsAndNumbers($ch_username);
+            $errors["ch_username"] = checkOnlyCharsAndNumbersNoSpace($ch_username);
+            //Hier wird geprüft ob es den usernamen bereits in der DB gibt
             $sql = "SELECT username FROM user WHERE username = '$ch_username'"; 
             $result = $db_obj->query($sql); 
             $count = mysqli_num_rows($result); 
@@ -78,45 +86,13 @@
             $result->close();
             if($errors["ch_username"] == "" && $ch_username != "")
             {
-            $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
-            $sql = "update user 
-                set username = ?
-                where userID = ?";
-            $stmt = $db_obj->prepare($sql);
-            $stmt->bind_param('si', $ch_username, $ID);
-            if ($stmt===false){
-                echo($db_obj->error);
-                echo "fail";
-            }
-            $stmt->execute();
-            $stmt->close();
-            }
-        }
-        
-        
-        if((isset($_POST["ch_pw"]) && !isset($_POST["ch_pw_c"])) || (!isset($_POST["ch_pw"]) && isset($_POST["ch_pw_c"])))
-        {
-            $errors["ch_pw"] = $errors["ch_pw_c"] = "Incomplete Data!";
-        }
-        else if(isset($_POST["ch_pw"]) && isset($_POST["ch_pw_c"])){
-            $ch_password = test_input($_POST["ch_pw"]);
-            $ch_password_c = test_input($_POST["ch_pw_c"]);
-            if($ch_password != $ch_password_c)
-            {
-                $errors["ch_pw"] = $errors["ch_pw_c"] = "Passwords don't match!";
-            }
-        else
-            {
-            if($ch_password != "")
-            {
+                //Wenn alles passt, werden die Daten in der DB aktualisiert
                 $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
-                    $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
-                    $sql = "update user 
-                        set password = ?,
-                        pw_notiz = ?
-                        where userID = ?";
+                $sql = "update user 
+                    set username = ?
+                    where userID = ?";
                 $stmt = $db_obj->prepare($sql);
-                $stmt->bind_param('ssi', $ch_password, $ch_password_c, $ID);
+                $stmt->bind_param('si', $ch_username, $ID);
                 if ($stmt===false){
                     echo($db_obj->error);
                     echo "fail";
@@ -124,8 +100,73 @@
                 $stmt->execute();
                 $stmt->close();
             }
-            }
         }
+        
+        
+        //zuerst wird geprüft ob das neue PW zweimal ident eingegeben wurde
+        if(isset($_POST["ch_pw"]) && isset($_POST["ch_pw_c"])){
+            $ch_password = test_input($_POST["ch_pw"]);
+            $ch_password_c = test_input($_POST["ch_pw_c"]);
+            if($ch_password != $ch_password_c)
+            {
+                $errors["ch_pw"] = $errors["ch_pw_c"] = "Passwords don't match!";
+            }
+
+            else if($ch_password != "" || ($ch_password != "" && isset($_POST["safety_pw"]) && $_SESSION["SessionWert"] == "Guest"))
+            {
+                if($_SESSION["SessionWert"] == "Guest")
+                {
+                    $safety_pw = test_input($_POST["safety_pw"]);
+                    if (password_verify($safety_pw, $OGpassword)){
+                        $ID = $_SESSION["ID"];
+                        $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
+                        $sql = "update user 
+                                set password = ?,
+                                pw_notiz = ?
+                                where userID = ?";
+                        $stmt = $db_obj->prepare($sql);
+                        $stmt->bind_param('ssi', $ch_password, $ch_password_c, $ID);
+                        if ($stmt===false){
+                            echo($db_obj->error);
+                            echo "fail";
+                        }
+                        $stmt->execute();
+                        $stmt->close();
+                    }
+                    else if(password_verify($safety_pw, $OGpassword) == FALSE && $safety_pw != "")
+                    {
+                        $verification = "Old password wrong";
+                        $errors["ch_pw"] = $errors["ch_pw_c"] = "Password NOT updated!";
+                    }
+                    else { 
+                        $verification = "Missing old password!";
+                        $errors["ch_pw"] = $errors["ch_pw_c"] = "Password NOT updated!";
+                    }
+                }
+                else
+                {
+                    $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
+                    $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
+                    $sql = "update user 
+                            set password = ?,
+                            pw_notiz = ?
+                            where userID = ?";
+                    $stmt = $db_obj->prepare($sql);
+                    $stmt->bind_param('ssi', $ch_password, $ch_password_c, $ID);
+                    if ($stmt===false){
+                        echo($db_obj->error);
+                        echo "fail";
+                    }
+                    $stmt->execute();
+                    $stmt->close();
+                }
+            }
+    }
+    else
+    {
+
+    }
+    
 
         if(isset($_POST["ch_email"]) && $_POST["ch_email"] != ""){
             $ch_email = test_input($_POST["ch_email"]);
@@ -148,7 +189,7 @@
             }
         }
 
-        if(isset($_POST["ch_vorname"]) && $_SESSION["SessionWert"] == "Admin")
+        if(isset($_POST["ch_vorname"]))
         {
             $vorname = test_input($_POST["ch_vorname"]);
             $errors["ch_vorname"] = checkOnlyChars($vorname);
@@ -170,7 +211,7 @@
             }
         }
 
-        if(isset($_POST["ch_nachname"]) && $_SESSION["SessionWert"] == "Admin")
+        if(isset($_POST["ch_nachname"]))
         {
             $nachname = test_input($_POST["ch_nachname"]);
             $errors["ch_nachname"] = checkOnlyChars($nachname);
@@ -212,7 +253,7 @@
             }
         }
 
-        if(isset($_POST["anrede"]) && $_SESSION["SessionWert"] == "Admin")
+        if(isset($_POST["anrede"]))
         {
             $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
             $sql = "update user 
@@ -228,14 +269,14 @@
             $stmt->close();
         }
 
-        if(isset($_POST["role"]) && $_SESSION["SessionWert"] == "Admin")
+        if(isset($_POST["ch_role"]) && $_SESSION["SessionWert"] == "Admin")
         {
             $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
             $sql = "update user 
                 set role = ?
                 where userID = ?";
             $stmt = $db_obj->prepare($sql);
-            $stmt->bind_param('ii', $_POST["role"], $ID);
+            $stmt->bind_param('ii', $_POST["ch_role"], $ID);
             if ($stmt===false){
                 echo($db_obj->error);
                 echo "fail";
@@ -272,20 +313,13 @@
         {
             $db_obj->close();
             unset($_SESSION['user_to_manage_ID']);
-            $_SESSION["SessionWert"] == "Admin" ? header("Refresh:0 , url=userVerwaltung.php") : header("Refresh:2 , url=manageUser.php");
+            $_SESSION["SessionWert"] == "Admin" ? header("Refresh:2 , url=userVerwaltung.php") : header("Refresh:2 , url=manageUser.php");
         }
 
         if($checkschecked == "Profile updated!" && isset($_POST["sent"])){
             echo $checkschecked;
         }
     ?>
-    <h1>Manage Profile</h1>
-    <br><br><br><br>
-    <div class="input">
-        Username: <?php echo $username;?><br>
-        E-Mail: <?php echo $email;?><br>
-        Room: <?php echo $room;?><br>
-    </div>
     <br><br>
     <div class="input">
     <form method="POST" action="manageUser.php">
@@ -293,46 +327,53 @@
         <label for="ch_username" required>Change username: </label><br>
         <span class="error"> <?php if(isset($errors["ch_username"])){ echo $errors["ch_username"];}?></span>
         <input type="text" name="ch_username"><br>
-        <label for="ch_pw" required>Change password: </label><br>
+        <?php
+            if($_SESSION["SessionWert"] == "Guest")
+            {
+                echo 
+                "<label for='safety_pw' required>Old password: </label><br>
+                <span class='error'>";
+                if(isset($verification)){ echo $verification;}
+                echo
+                "</span><input type='password' name='safety_pw'><br>";
+            }
+        ?>
+        <label for="ch_pw" required>New password: </label><br>
         <span class="error"> <?php if(isset($errors["ch_pw"])){ echo $errors["ch_pw"];}?></span>
         <input type="password" name="ch_pw"><br>
-        <label for="ch_pw_c" required>Confirm password: </label><br>
+        <label for="ch_pw_c" required>Confirm new password: </label><br>
         <span class="error"> <?php if(isset($errors["ch_pw_c"])){ echo $errors["ch_pw_c"];}?></span>
         <input type="password" name="ch_pw_c"><br>
         <label for="ch_email" required>Change E-Mail: </label><br>
         <span class="error"> <?php if(isset($errors["email"])){ echo $errors["email"];}?></span>
         <input type="email" name="ch_email"><br>
+        <label for='ch_vorname' required>First Name: </label><br>
+        <span class='error'> <?php if(isset($errors["ch_vorname"])){ echo $errors["ch_vorname"];}?> </span>
+        <input type='text' name='ch_vorname'><br>
+        <label for='ch_nachname' required>Last Name: </label><br>
+        <span class='error'> <?php if(isset($errors["ch_nachname"])){ echo $errors["ch_nachname"];}?></span>
+        <input type='text' name='ch_nachname'><br>
+        <div class='ersteClass'>
+            Gender:<br>
+                <input name='anrede' type='radio' value=1>Male
+                <input name='anrede' type='radio' value=2>Female
+                <input name='anrede' type='radio' value=3>Non-Binary
+                <input name='anrede' type='radio' value=4>NA<br>
+        </div>
         <?php
             if($_SESSION["SessionWert"] == "Admin")
             {
                 echo 
-                "<label for='ch_vorname' required>First Name: </label><br>
-                <span class='error'>"; 
-                if(isset($errors["ch_vorname"])){ echo $errors["ch_vorname"];} 
-                echo 
-                "</span><input type='text' name='ch_vorname'><br>
-                <label for='ch_nachname' required>Last Name: </label><br>
-                <span class='error'>"; 
-                if(isset($errors["ch_nachname"])){ echo $errors["ch_nachname"];} 
-                echo 
-                "</span><input type='text' name='ch_nachname'><br>
-                <label for='ch_room' required>Room: </label><br>
+                "<label for='ch_room' required>Room: </label><br>
                 <span class='error'>"; 
                 if(isset($errors["ch_room"])){ echo $errors["ch_room"];} 
                 echo 
                 "</span><input type='text' name='ch_room'><br>
                 <div class='ersteClass'>
-                Gender:<br>
-                <input name='anrede' type='radio' value=1>Male
-                <input name='anrede' type='radio' value=2>Female
-                <input name='anrede' type='radio' value=3>Non-Binary
-                <input name='anrede' type='radio' value=4>NA<br>
-                </div>
-                <div class='ersteClass'>
                 Role:
                 <br>
-                <input name='role' type='radio' value=2>Service
-                <input name='role' type='radio' value=3>Guest<br>
+                <input name='ch_role' type='radio' value=2>Service
+                <input name='ch_role' type='radio' value=3>Guest<br>
                 </div>
                 <div class='ersteClass'>
                 Active:
