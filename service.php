@@ -1,9 +1,11 @@
 <?php include "head.php"; ?>
 <body>
+<br><br><br>
     <?php 
         include "user_guest_check.php";
         require_once('dbaccess.php');
         include "nav.php";
+        include "user_indicator.php";
     ?>
     <br><br> <br><br>
     <div class="input">

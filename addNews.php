@@ -1,9 +1,10 @@
 <?php include "head.php"; ?>
 <body>
+<br><br><br>
     <?php
         require_once('dbaccess.php');
         include "nav.php";
-
+        include "user_indicator.php";
         include "test_input.php"; //use test_input() to call function
 
         $bildname = "";

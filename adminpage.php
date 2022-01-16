@@ -1,9 +1,12 @@
-<?php include "head.php"; 
-      include "user_admin_check.php";
+<?php 
+    include "head.php"; 
+    include "user_admin_check.php";
+    include "user_indicator.php";
 ?>
 
 <body>
     <h1>Hello Admin!</h1>
+    <br>
     <a href="registrierung.php">Add User</a>
     <a href="manageUser.php">Manage Users</a>
     <a href="addNews.php">Add News</a>

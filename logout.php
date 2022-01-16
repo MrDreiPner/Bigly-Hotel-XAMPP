@@ -1,5 +1,3 @@
-
-
 <?php 
     include ("head.php");
     session_unset();

@@ -1,7 +1,9 @@
 <?php include "head.php"; ?>
 <body>
+<br><br><br>
     <?php
         include "nav.php";
+        include "user_indicator.php";
         require_once ('dbaccess.php');
     ?>
     <div id="Header">
@@ -12,12 +14,7 @@
         if (isset($_COOKIE["inactiveLogout"])){
             echo "<br><h3>You have been logged out due to inactivity!</h3>";
         }
-        if (isset($_SESSION["SessionWert"])){
-            echo "<br>Session: ". $_SESSION["SessionWert"];
-        }
-        if (isset($_COOKIE["CookieWert"])){
-            echo "<br>Cookie: ". $_COOKIE["CookieWert"];
-        }
+        include "user_indicator.php";
         ?>
         <br>
         <h1><a href="https://www.youtube.com/watch?v=FfKWHtNDGKU" target="_blank">Quality content</a></h1>

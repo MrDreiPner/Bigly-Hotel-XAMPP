@@ -1,33 +1,34 @@
 <?php
     include "head.php";
-    require_once("dbaccess.php");
 ?>
 <body>
-<br><br>
+<br><br><br>
     <?php 
-    include "user_logged_check.php";
-    include "nav.php"; //Ticket wird angezeigt
-    if (isset($_GET["ticketID"])){
-        $sql = 'select text_guest, image_path, resolved, userID, Date, Time, room, title, text_service 
-                from tickets join user using(userID) 
-                where ticketid = ?';
-        $stmt = $db_obj->prepare($sql);
-        $stmt->bind_param('i', $_GET["ticketID"]);
-        if ($stmt===false){
-            echo($db_obj->error);
-            echo "fail";
-        }
-        $stmt->execute();
-        $stmt->bind_result($text_guest, $image_path, $resolved, $userID, $date, $time, $room, $title, $textS);
-        $stmt->fetch();
-        $stmt->close(); //$db_obj->close();
-        echo "<br><br><br><br><br><br><br><h2>". $title. "</h2><br><h3>". $date. " ". $time .
-        " "."Room: ".$room ."</h3><br>". $text_guest;
-        echo "<br><img src='". $image_path ."' alt ='Room: ". $room ."'>";
-        echo "<br><div>Service Response:<br>".$textS. "</div>";
+        require_once("dbaccess.php");
+        include "user_logged_check.php";
+        include "nav.php"; //Ticket wird angezeigt
+        include "user_indicator.php";
+        if (isset($_GET["ticketID"])){
+            $sql = 'select text_guest, image_path, resolved, userID, Date, Time, room, title, text_service 
+                    from tickets join user using(userID) 
+                    where ticketid = ?';
+            $stmt = $db_obj->prepare($sql);
+            $stmt->bind_param('i', $_GET["ticketID"]);
+            if ($stmt===false){
+                echo($db_obj->error);
+                echo "fail";
+            }
+            $stmt->execute();
+            $stmt->bind_result($text_guest, $image_path, $resolved, $userID, $date, $time, $room, $title, $textS);
+            $stmt->fetch();
+            $stmt->close(); //$db_obj->close();
+            echo "<br><br><br><br><br><br><br><h2>". $title. "</h2><br><h3>". $date. " ". $time .
+            " "."Room: ".$room ."</h3><br>". $text_guest;
+            echo "<br><img src='". $image_path ."' alt ='Room: ". $room ."'>";
+            echo "<br><div>Service Response:<br>".$textS. "</div>";
 
-        $_SESSION["ticketID"] = $_GET["ticketID"];
-    }
+            $_SESSION["ticketID"] = $_GET["ticketID"];
+        }
     ?>
     <?php //Ticket wird bearbeitet
         include "test_input.php"; //use test_input() to call function

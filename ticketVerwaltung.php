@@ -1,9 +1,11 @@
 <?php include "head.php"; ?>
 <body>
+<br><br><br>
     <?php
         include "user_service_check.php";
         require_once ('dbaccess.php');
         include "nav.php";
+        include "user_indicator.php";
     ?>
     <h1>Get to work you ungrateful git!</h1>
     <?php
