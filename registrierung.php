@@ -70,7 +70,7 @@
             $stmt = $db_obj->prepare($sql);
 
             if ($stmt===false){
-            echo($db_obj->error);
+                echo($db_obj->error);
             }
 
             $username = $data["email"];

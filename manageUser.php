@@ -21,6 +21,7 @@
             $stmt->execute();
             $stmt->bind_result($username, $email, $room);
             $stmt->fetch();
+            $_SESSION["user"] = $username;
             $stmt->close();
         }
 
@@ -46,6 +47,24 @@
         {
             $errors[$error] = "";
         }
+
+        if(isset($_POST["delete"]) && $_SESSION["SessionWert"] == "Admin")
+        {
+            $ID = $_GET["user_to_manage_ID"];
+            $sql = "delete 
+                   from user 
+                   where user_id = ?";
+            $stmt = $db_obj->prepare($sql);
+            $stmt->bind_param('i', $ID);
+            if ($stmt===false){
+            echo($db_obj->error);
+                echo "fail";
+            }
+            $stmt->execute();
+            $stmt->close(); $db_obj->close();
+            header("Refresh:0; url=userVerwaltung.php");
+        }
+
         if(isset($_POST["ch_username"])){
             $ch_username = test_input($_POST["ch_username"]);
             $errors["ch_username"] = checkOnlyCharsAndNumbers($ch_username);
@@ -58,61 +77,217 @@
             $result->close();
             if($errors["ch_username"] == "" && $ch_username != "")
             {
+            if(isset($_GET["user_to_manage_ID"]) && $_SESSION["user"] == "Admin")
+            {
+                $ID = $_GET["user_to_manage_ID"];
+                $sql = "update user 
+                    set username = ?
+                    where userID = $ID";
+            }
+            else{
                 $ID = $_SESSION["ID"];
                 $sql = "update user 
                     set username = ?
                     where userID = $ID";
-                $stmt = $db_obj->prepare($sql);
-                $stmt->bind_param('s', $ch_username);
-                if ($stmt===false){
-                    echo($db_obj->error);
-                    echo "fail";
-                }
-                $stmt->execute();
-                $stmt->close(); $db_obj->close();
-                unset($_SESSION['ticketID']);
-                header("Refresh:0; url=manageUser.php");
             }
-        }
-        /*if (isset($_POST["text_service"])){
-            $ID = $_SESSION["ticketID"];
-            $text_service = test_input($_POST["text_service"]);
-            $sql = "update tickets 
-                    set text_service = ?,
-                    resolved = $resolvInput
-                    where ticketID = $ID";
             $stmt = $db_obj->prepare($sql);
-            $stmt->bind_param('s', $text_service);
+            $stmt->bind_param('s', $ch_username);
             if ($stmt===false){
                 echo($db_obj->error);
                 echo "fail";
             }
             $stmt->execute();
-            $stmt->close(); $db_obj->close();
-            unset($_SESSION['ticketID']);
-            header("Refresh:0; url=ticketVerwaltung.php");
-         }*/
-
-    
+            $stmt->close();
+            }
+        }
+        
         
         if((isset($_POST["ch_pw"]) && !isset($_POST["ch_pw_c"])) || (!isset($_POST["ch_pw"]) && isset($_POST["ch_pw_c"])))
         {
             $errors["ch_pw"] = $errors["ch_pw_c"] = "Incomplete Data!";
         }
-        if(isset($_POST["ch_pw"]) && isset($_POST["ch_pw_c"])){
+        else if(isset($_POST["ch_pw"]) && isset($_POST["ch_pw_c"])){
             $ch_password = test_input($_POST["ch_pw"]);
             $ch_password_c = test_input($_POST["ch_pw_c"]);
             if($ch_password != $ch_password_c)
             {
                 $errors["ch_pw"] = $errors["ch_pw_c"] = "Passwords don't match!";
             }
+        else
+            {
+            if($ch_password != "")
+            {
+                if(isset($_GET["user_to_manage_ID"]) && $_SESSION["user"] == "Admin")
+                {
+                    $ID = $_GET["user_to_manage_ID"];
+                    $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
+                    $sql = "update user 
+                        set password = ?,
+                        pw_notiz = ?
+                        where userID = $ID";
+                }
+                else{
+                    $ID = $_SESSION["ID"];
+                    $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
+                    $sql = "update user 
+                        set password = ?,
+                        pw_notiz = ?
+                        where userID = $ID";
+                }
+                $stmt = $db_obj->prepare($sql);
+                $stmt->bind_param('ss', $ch_password, $ch_password_c);
+                if ($stmt===false){
+                    echo($db_obj->error);
+                    echo "fail";
+                }
+                $stmt->execute();
+                $stmt->close();
+            }
+            }
         }
-        if(isset($_POST["ch_username"])){
-            
+
+        if(isset($_POST["ch_email"]) && $_POST["ch_email"] != ""){
+            $ch_email = test_input($_POST["ch_email"]);
+            $errors["email"] = checkEmail($ch_email);
+            if($errors["email"] == "" && $ch_email != "")
+            {
+                if(isset($_GET["user_to_manage_ID"]) && $_SESSION["user"] == "Admin")
+                {
+                    $ID = $_GET["user_to_manage_ID"];
+                    $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
+                    $sql = "update user 
+                        set email = ?
+                        where userID = $ID";
+                }
+                else
+                {
+                    $ID = $_SESSION["ID"];
+                    $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
+                    $sql = "update user 
+                        set email = ?
+                        where userID = $ID";
+                }
+            $stmt = $db_obj->prepare($sql);
+            $stmt->bind_param('s', $ch_email);
+            if ($stmt===false){
+                echo($db_obj->error);
+                echo "fail";
+            }
+            $stmt->execute();
+            $stmt->close();     
+            }
         }
-        if(isset($_POST["email"])){
-            $ch_email = test_input($_POST["email"]);
-            $errors["email"] = checkEmail($ch_mail);
+
+        if(isset($_POST["ch_vorname"]) && $_SESSION["SessionWert"] == "Admin")
+        {
+            $vorname = test_input($_POST["ch_vorname"]);
+            $errors["ch_vorname"] = checkOnlyChars($vorname);
+            if($errors["ch_vorname"] == "" && $vorname != "")
+            {
+                $ID = isset($_GET["user_to_manage_ID"])?$_GET["user_to_manage_ID"] : $_SESSION["ID"];
+                $sql = "update user 
+                    set vorname = ?
+                    where userID = $ID";
+                $stmt = $db_obj->prepare($sql);
+                $stmt->bind_param('s', $vorname);
+                if ($stmt===false){
+                    echo($db_obj->error);
+                    echo "fail";
+                }
+                $stmt->execute();
+                $_SESSION["vorname"] = $vorname;
+                $stmt->close();
+            }
+        }
+
+        if(isset($_POST["ch_nachname"]) && $_SESSION["SessionWert"] == "Admin")
+        {
+            $nachname = test_input($_POST["ch_nachname"]);
+            $errors["ch_nachname"] = checkOnlyChars($nachname);
+            if($errors["ch_nachname"] == "" && $nachname != "")
+            {
+                $ID = isset($_GET["user_to_manage_ID"])?$_GET["user_to_manage_ID"] : $_SESSION["ID"];
+                $sql = "update user 
+                    set nachname = ?
+                    where userID = $ID";
+                $stmt = $db_obj->prepare($sql);
+                $stmt->bind_param('s', $nachname);
+                if ($stmt===false){
+                    echo($db_obj->error);
+                    echo "fail";
+                }
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
+
+        if(isset($_POST["ch_room"]) && $_SESSION["SessionWert"] == "Admin")
+        {
+            $room = test_input($_POST["ch_room"]);
+            $errors["ch_room"] = checkOnlyNumbers($room);
+            if($errors["ch_room"] == "" && $room != "")
+            {
+                $ID = isset($_GET["user_to_manage_ID"])?$_GET["user_to_manage_ID"] : $_SESSION["ID"];
+                $sql = "update user 
+                    set room = ?
+                    where userID = $ID";
+                $stmt = $db_obj->prepare($sql);
+                $stmt->bind_param('i', $room);
+                if ($stmt===false){
+                    echo($db_obj->error);
+                    echo "fail";
+                }
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
+
+        if(isset($_POST["anrede"]) && $_SESSION["SessionWert"] == "Admin")
+        {
+            $ID = isset($_GET["user_to_manage_ID"])?$_GET["user_to_manage_ID"] : $_SESSION["ID"];
+            $sql = "update user 
+                set anrede = ?
+                where userID = $ID";
+            $stmt = $db_obj->prepare($sql);
+            $stmt->bind_param('i', $_POST["anrede"]);
+            if ($stmt===false){
+                echo($db_obj->error);
+                echo "fail";
+            }
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        if(isset($_POST["role"]) && $_SESSION["SessionWert"] == "Admin")
+        {
+            $ID = isset($_GET["user_to_manage_ID"])?$_GET["user_to_manage_ID"] : $_SESSION["ID"];
+            $sql = "update user 
+                set role = ?
+                where userID = $ID";
+            $stmt = $db_obj->prepare($sql);
+            $stmt->bind_param('i', $_POST["role"]);
+            if ($stmt===false){
+                echo($db_obj->error);
+                echo "fail";
+            }
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        if(isset($_POST["active"]) && $_SESSION["SessionWert"] == "Admin")
+        {
+            $ID = isset($_GET["user_to_manage_ID"])?$_GET["user_to_manage_ID"] : $_SESSION["ID"];
+            $sql = "update user 
+                set active = ?
+                where userID = $ID";
+            $stmt = $db_obj->prepare($sql);
+            $stmt->bind_param('i', $_POST["active"]);
+            if ($stmt===false){
+                echo($db_obj->error);
+                echo "fail";
+            }
+            $stmt->execute();
+            $stmt->close();
         }
 
         foreach ($errors as $error) {
@@ -120,9 +295,15 @@
                 $checkschecked = "Profile NOT updated! Faulty input!";
             }
         }
-    
-        if($checkschecked == "Profile updated!"){
 
+        if(isset($_POST["sent"]))
+        {
+            header("Refresh:0 , url=manageUser.php");
+            $db_obj->close();
+        }
+
+        if($checkschecked == "Profile updated!" && isset($_POST["sent"])){
+            echo $checkschecked;
         }
     ?>
     <h1>Manage Profile</h1>
@@ -135,6 +316,7 @@
     <br><br>
     <div class="input">
     <form method="POST" action="manageUser.php">
+        <h3>Update Data</h3>
         <label for="ch_username" required>Change username: </label><br>
         <span class="error"> <?php if(isset($errors["ch_username"])){ echo $errors["ch_username"];}?></span>
         <input type="text" name="ch_username"><br>
@@ -147,6 +329,52 @@
         <label for="ch_email" required>Change E-Mail: </label><br>
         <span class="error"> <?php if(isset($errors["email"])){ echo $errors["email"];}?></span>
         <input type="email" name="ch_email"><br>
+        <?php
+            if($_SESSION["SessionWert"] == "Admin")
+            {
+                echo 
+                "<label for='ch_vorname' required>First Name: </label><br>
+                <span class='error'>"; 
+                if(isset($errors["ch_vorname"])){ echo $errors["ch_vorname"];} 
+                echo 
+                "</span><input type='text' name='ch_vorname'><br>
+                <label for='ch_nachname' required>Last Name: </label><br>
+                <span class='error'>"; 
+                if(isset($errors["ch_nachname"])){ echo $errors["ch_nachname"];} 
+                echo 
+                "</span><input type='text' name='ch_nachname'><br>
+                <label for='ch_room' required>Room: </label><br>
+                <span class='error'>"; 
+                if(isset($errors["ch_room"])){ echo $errors["ch_room"];} 
+                echo 
+                "</span><input type='text' name='ch_room'><br>
+                <div class='ersteClass'>
+                Gender:<br>
+                <input name='anrede' type='radio' value=1>Male
+                <input name='anrede' type='radio' value=2>Female
+                <input name='anrede' type='radio' value=3>Non-Binary
+                <input name='anrede' type='radio' value=4>NA<br>
+                </div>
+                <div class='ersteClass'>
+                Role:
+                <br>
+                <input name='role' type='radio' value=2>Service
+                <input name='role' type='radio' value=3>Guest<br>
+                </div>
+                <div class='ersteClass'>
+                Active:
+                <br>
+                <input name='active' type='radio' value=1>Active
+                <input name='active' type='radio' value=0>Inactive<br>
+                </div>
+                <div class='ersteClass'>
+                Delete User:
+                <br>
+                <input name='delete' type='checkbox' value=1>DELETE<br>
+                </div>";
+            }
+        ?>
+        <input type ='hidden' name ='sent' value = '1'/>
         <input type="submit" value="Update">
     </form>
     <?php

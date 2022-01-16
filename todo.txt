@@ -10,3 +10,10 @@ design
 
 User kann im Service bereich eine liste mit all seinen tickets sehen
 
+pw_notiz ENTFERNEN!!!
+
+
+Nice to have: 
+- user uodate -> password security
+- mass active/ inactive updates
+
