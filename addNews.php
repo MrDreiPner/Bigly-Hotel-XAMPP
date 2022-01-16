@@ -7,6 +7,7 @@
         include "user_indicator.php";
         include "test_input.php"; //use test_input() to call function
 
+        //Checkt die mit POST gesendeten Daten auf unerwünschte Inputs
         $bildname = "";
         function checkOnlyCharsAndNumbers($input){
             return preg_match("/^[a-zA-Z0-9_]*$/",$input) ? "" : "Keine Leerzeichen/ Sonderzeichen!";
@@ -46,9 +47,7 @@
             );
             //speichern des Thumbnails
             imagejpeg($thumb, $destimage);
-            echo "gespeichert<br>";
-            echo "<img src=$destimage><br>";
-            echo "<img src=$srcimage>";   
+            echo "Saved successfully<br>";
             return $destimage; 
         }
 
@@ -57,7 +56,7 @@
             $srcimage = "uploads/source/".$bildname.".png"; //Pfad vom original
             $destimage = "uploads/news/".$bildname."-thumb.png"; //Pfad vom resize
             list($width, $height) = getimagesize($srcimage);
-            $newwidth=720;
+            $newwidth=720; //Maße, die in den Unterlagen gegeben wurden
             $newheight=480;
             //resizing von originalimg wird in thumb hinterlegt
             $originalimg = imagecreatefrompng($srcimage);
@@ -70,14 +69,15 @@
             );
             //speichern des Thumbnails
             imagepng($thumb, $destimage);
-            echo "gespeichert<br>";
-            echo "<img src=$destimage><br>";
-            echo "<img src=$srcimage>";    
+            echo "Saved successfully<br>";    
             return $destimage;
         }
         ?>
         <br><br><br><br>
         <?php
+        //Erstellter News Beitrag wird in die Datenbank hochgeladen 
+        //Datum und Uhrezeit werden per Timestamp in der Datenbank eingetragen
+        //active State wird per Default auf true gesetzt -> neue News werden also sofort angezeigt 
             if (isset($_POST["newsText"]) && $errors == ""){
             $content = test_input($_POST["newsText"]);
             $headline = test_input($_POST["newsHeadline"]);
@@ -91,7 +91,10 @@
             $stmt->close(); $db_obj->close();
         }
         ?>
-    <div class="input">
+    <!--News Beiträge werden erstellt.
+        Beitrag besteht aus Titel, Text, Bild, Datum, Uhrzeit
+    -->
+    <div class="input"> 
     <form enctype="multipart/form-data" action="addNews.php" method = "post">
         Headline:<br>
         <input type="text" name="newsHeadline"><br>

@@ -5,7 +5,8 @@
         require_once('dbaccess.php');
         include "nav.php";
         include "user_admin_check.php";
-
+    //Select Statements für alle Sortier und Filteroptionen
+        //Filtern nach Aktivität und Rolle & sortieren 
         if(isset($_POST["filterActive"]) && $_POST["filterActive"] != 2 && $_POST["filterRole"] != 0){
             $filterActive = $_POST["filterActive"];
             $filterRole = $_POST["filterRole"];
@@ -16,6 +17,7 @@
                     where active = $filterActive AND role = $filterRole 
                     order by $orderGroup $orderby";
             $stmt = $db_obj->prepare($sql);
+        //Filtern nach Aktivität & sortieren
         } elseif(isset($_POST["filterActive"]) && $_POST["filterRole"] == 0 && $_POST["filterActive"] != 2) {
             $filterActive = $_POST["filterActive"];
             $orderGroup = $_POST["orderGroup"];
@@ -25,6 +27,7 @@
                     where active = $filterActive
                     order by $orderGroup $orderby";  
             $stmt = $db_obj->prepare($sql);  
+        //Filtern nach Rolle & sortieren
         } elseif(isset($_POST["filterRole"]) && $_POST["filterActive"] == 2 && $_POST["filterRole"] != 0){
             $filterRole = $_POST["filterRole"];
             $orderGroup = $_POST["orderGroup"];
@@ -34,6 +37,7 @@
                     where role = $filterRole
                     order by $orderGroup $orderby";
             $stmt = $db_obj->prepare($sql);
+        //Nur sortieren
         } elseif(isset($_POST["filterActive"]) && $_POST["filterActive"] == 2 && $_POST["filterRole"] == 0){
             $orderGroup = $_POST["orderGroup"];
             $orderby = $_POST["orderby"];
@@ -53,7 +57,12 @@
         $stmt->bind_result($username, $anrede, $vorname, $nachname, $room, $active, $role, $userID);
     ?>
     <div><br><br><br>
-        <form name="filters" method="POST" action="userVerwaltung.php">
+
+    <!--Filter- & Sortieroptionen für Userliste
+        Filtern möglich nach Aktiv/Inaktiv und/oder User Rolle
+        Sortieren möglich nach Username, Vorname, Nachname, Anrede, Zimmer, Aktiv, Rolle
+    -->
+         <form name="filters" method="POST" action="userVerwaltung.php">
             <label for="filterActive">Filter by:</label>
             <select name="filterActive">
                 <option value=2>No Filter</option>
@@ -104,6 +113,7 @@
             <th>Room</th>
         </tr>
         <?php
+        //Alle User werden in einer Liste ausgegeben
             while($stmt->fetch()){
                 echo "<tr>";
                 if($active == 1){echo "<td>Yes</td>";} else {echo "<td>No</td>";}

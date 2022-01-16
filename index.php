@@ -21,7 +21,10 @@
     </div>
     <br>
     <?php
-        $sql = 'select headline, imgpath, content, date from news where active = true';
+        //fetched die active gesetzten News aus der Datenbank
+        $sql = 'select headline, imgpath, content, date from news 
+                where active = true
+                order by date desc';
         $stmt = $db_obj->prepare($sql);
         if ($stmt===false){
             echo($db_obj->error);
@@ -32,6 +35,7 @@
     ?>
     <ul>
         <?php 
+            //Printet die News Beiträge
             while($stmt->fetch()){
                 echo "<li><p><h4>". $headline. "</h4>". $date ."<br>"
                  . $content . "<br><img src='". $imgpath ."' alt ='". $headline ."'>

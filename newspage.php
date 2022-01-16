@@ -107,29 +107,18 @@
     <form method="POST" action="newspage.php">
         <?php 
         if($_SESSION["SessionWert"] == "Admin"){ 
-            if(isset($active) && $active == 1){
+            if(isset($active)){
                 if(isset($content)){
                     echo "<textarea placeholder='news-content' required name='content'>".$content."</textarea>";
                 }
-                else
-                {
+                else{
                     echo "<textarea placeholder='news-content' required name='content'></textarea>";
                 }
-                echo "<br><input name='active' type='radio' value=0 >Don't Display";
-                echo "<br><input name='update_c' type='checkbox' checked value='yes'>Update";
-                echo "<br><input name='delete' type='checkbox' value='yes'>Delete";
-                echo "<br><input type ='hidden' name ='sent' value = '1'/>";
-                echo "<br><input type='submit'>";
-            }
-            else{
-                if(isset($content)){
-                    echo "<textarea placeholder='news-content' required name='content'>".$content."</textarea>";
+                if(isset($content) && $active == 1){
+                    echo "<br><input name='active' type='radio' value=0 >Don't Display";
+                } else{
+                    echo "<br><input name='active' type='radio' value=1 >Display";
                 }
-                else
-                {
-                    echo "<textarea placeholder='news-content' required name='content'></textarea>";
-                }
-                echo "<br><input name='active' type='radio' value=1 >Display"; 
                 echo "<br><input name='update_c' type='checkbox' checked value='yes'>Update";
                 echo "<br><input name='delete' type='checkbox' value='yes'>Delete";
                 echo "<br><input type ='hidden' name ='sent' value = '1'/>";

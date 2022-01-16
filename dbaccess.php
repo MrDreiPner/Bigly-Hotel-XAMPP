@@ -1,4 +1,5 @@
 <?php 
+    //Checkt User mit der vergebenen Rolle ab, um zu sehen welche Rechte gegeben sind
     if(isset($_SESSION["SessionWert"])){
         if ($_SESSION["SessionWert"] == "Admin"){
             $host = "localhost";
@@ -14,7 +15,7 @@
             $database = "bighotel_db";
             $db_obj = new mysqli($host, $user, $password, $database);
         }
-            else if ($_SESSION["SessionWert"] == "Guest"){
+        else if ($_SESSION["SessionWert"] == "Guest"){
             $host = "localhost";
             $user = "guest";
             $password = "guest";

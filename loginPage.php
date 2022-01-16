@@ -12,7 +12,7 @@
         if (isset($_POST["Username"])) {
             $PW_input = test_input($_POST["Password"]);
             $user_input = test_input($_POST["Username"]);
-
+            //selektiert den Datensatz der zum eingegebenen Username passt. Username ist unique
             $sql = 'select userID, username, password, vorname, role, active from user where username = ?';
 
             $stmt = $db_obj->prepare($sql);
@@ -30,6 +30,7 @@
             {
                 $verification = "Account inactive! Please contact Administrator.";
             }
+            //gleicht das eingegebene Passwort mit dem hinterlegten gehashten Passwort ab
             else if (password_verify($PW_input, $u_password)) {
                 setcookie("CookieWert", $u_username, time()+3600);
                 $_SESSION["SessionWert"] = $role;
@@ -54,6 +55,9 @@
         }
         echo "<br>";
 
+        //Der neu eingeloggte User wird auf eine andere Seite verlinkt, je nachdem welche Rolle er hat
+        //Admins werden auf adminpage verlinkt, die ihnen schnell Zugang zu ihren Hauptaufgaben verschafft
+        //Servicetechniker werden direkt zur Ticketverwaltung gelinkt, da das für sie der wichtigste Bereich ist
         if (isset($_SESSION["SessionWert"])){
             echo "<br>Session: ", $_SESSION["SessionWert"];
             switch ($_SESSION["SessionWert"]){
