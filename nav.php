@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="navstyle.css">
+<link rel="stylesheet" href="style.css">
 <nav class="navbar-header">    
     <nav name="navigation"  class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
