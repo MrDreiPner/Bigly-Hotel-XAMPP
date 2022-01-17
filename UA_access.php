@@ -1,5 +1,5 @@
-<?php include "head.php"; ?>
-<body id="ua_access">
+<?php include "head.php"; //Link auf UA Seite falls, jemand ungültigen Zugang hat ?>
+<body id="ua_access"> 
     <h1>
         ERROR 401<br>
         Unauthorized access!

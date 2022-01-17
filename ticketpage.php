@@ -21,7 +21,7 @@
             $stmt->execute();
             $stmt->bind_result($text_guest, $image_path, $resolved, $userID, $date, $time, $room, $title, $textS);
             $stmt->fetch();
-            $stmt->close(); //$db_obj->close();
+            $stmt->close();
             echo "<br><br><br><br><br><br><br><h3>". $title. "</h3><br><h4>". $date. " ". $time .
             " "."Room: ".$room ."</h4><br>". $text_guest;
             echo "<br><img src='". $image_path ."' alt ='Room: ". $room ."'>";
@@ -31,9 +31,9 @@
         }
     ?>
     <?php //Ticket wird bearbeitet
-        include "test_input.php"; //test_input() nutzen um rohe Daten, für mehr siehe test_input.php
-
-         if (isset($_POST["text_service"])){
+        include "test_input.php"; //test_input() nutzen um rohe Daten zu testen, für mehr siehe test_input.php
+        
+        if (isset($_POST["text_service"])){
             $resolvInput = $_POST["resolved"];
             $ID = $_SESSION["ticketID"];
             $text_service = test_input($_POST["text_service"]);
@@ -80,38 +80,33 @@
 
     <form method="POST" action="ticketpage.php">
         <?php 
-        if(/*$_SESSION["SessionWert"] == "Admin" ||*/ $_SESSION["SessionWert"] == "Service"){ 
-        if($resolved == "open")
-        {
-            echo "<textarea placeholder='Service Response' required name='text_service'>".$textS."</textarea>";
-            echo "<br><input name='resolved' type='radio' value=2 checked>Issue resolved";
-            echo "<input name='resolved' type='radio' value=3>Issue unresolved"; 
-            echo "<br><input type='submit' value='Reply'>";
+        if($_SESSION["SessionWert"] == "Service"){ 
+            if($resolved == "open"){
+                echo "<textarea placeholder='Service Response' required name='text_service'>".$textS."</textarea>";
+                echo "<br><input name='resolved' type='radio' value=2 checked>Issue resolved";
+                echo "<input name='resolved' type='radio' value=3>Issue unresolved"; 
+                echo "<br><input type='submit' value='Reply'>";
+            }
+            else{
+                echo "Ticket closed! Ticket ". $resolved; 
+            }
         }
-        else{
-            echo "Ticket closed! Ticket ". $resolved; 
-        }
-        }
-        if($_SESSION["SessionWert"] == "Admin" || $_SESSION["SessionWert"] == "Guest")
-        { 
-        if($resolved != "open")
-        {
-            echo "<br><input type='checkbox'name='resolved' value=1>Open Ticket"; 
-            echo "<br><input type='submit' value='Submit'> ";
-        }
-        else{
+        if($_SESSION["SessionWert"] == "Admin" || $_SESSION["SessionWert"] == "Guest"){ 
+            if($resolved != "open"){
+                echo "<br><input type='checkbox'name='resolved' value=1>Open Ticket"; 
+                echo "<br><input type='submit' value='Submit'> ";
+            }
+            else{
                 echo "Ticket open!"; 
             }
         }
         ?>
     </form>
     <?php
-    if($_SESSION["SessionWert"] == "Admin" || $_SESSION["SessionWert"] == "Service")
-    {
+    if($_SESSION["SessionWert"] == "Admin" || $_SESSION["SessionWert"] == "Service"){
         echo "<form action='ticketVerwaltung.php'><input type='submit' value='Back'></form>";
     }
-    else
-    {
+    else{
         echo "<form action='service.php'><input type='submit' value='Back'></form>";
     }
     ?>

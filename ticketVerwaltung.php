@@ -1,6 +1,6 @@
 <?php include "head.php"; ?>
 <body>
-<br><br><br>
+    <br><br><br>
     <?php
         include "user_service_check.php";
         require_once ('dbaccess.php');
@@ -8,7 +8,7 @@
         include "user_indicator.php";
     ?>
     <h1>Get to work you ungrateful git!</h1>
-    <?php
+    <?php //Selektieren , sortieren mit Filter
         if(isset($_POST["filter"]) && $_POST["filter"] != "4"){
             $filter = $_POST["filter"];
             $orderby = $_POST["orderby"];
@@ -17,9 +17,8 @@
                     where resolved = $filter 
                     order by Date $orderby";
             $stmt = $db_obj->prepare($sql);
-            //$stmt->bind_param('ss', $_POST["filter"], $_POST["orderby"]);
-        } else {
-            $orderby = "asc";
+        } else { //Selektieren mit Sortierung
+            $orderby = "desc";
             if(isset($_POST["orderby"])){
                 $orderby = $_POST["orderby"];
             }
@@ -33,21 +32,20 @@
             echo "fail";
         }
         $stmt->execute();
-        $stmt->bind_result($ticketid, $resolved, $userID, $date, $time, $username, $nachname, $room, $title);
-    
+        $stmt->bind_result($ticketid, $resolved, $userID, $date, $time, $username, $nachname, $room, $title);   
     ?>
     <br><br><br><br><br><br><br>
     <div class="input">
-    <table id="table">
-        <tr>
-            <th>Resolved</th>
-            <th>Username</th>
-            <th>Title</th>
-            <th>Nachname</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Room</th>
-        </tr>
+        <table id="table">
+            <tr>
+                <th>Resolved</th>
+                <th>Username</th>
+                <th>Title</th>
+                <th>Nachname</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Room</th>
+            </tr>
         <?php 
             while($stmt->fetch()){
                 echo "<tr>
@@ -62,7 +60,7 @@
             }
             $stmt->close(); $db_obj->close();
         ?>
-    </table>
+        </table>
     </div>
     <div>
         <form name="filters" method="POST" action="ticketVerwaltung.php">
@@ -81,7 +79,6 @@
             </select>
             <input type="submit">
         </form>
-    </div>
-    
+    </div>   
 </body>
 </html>

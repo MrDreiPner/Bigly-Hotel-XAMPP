@@ -21,7 +21,7 @@
     </form>
     </div>
     <?php 
-        include "test_input.php"; //use test_input() to call function
+        include "test_input.php"; //test_input() nutzen um rohe Daten zu testen, für mehr siehe test_input.php
         include "resizeImage.php";
         
         $bildname = "";
@@ -32,7 +32,7 @@
             $betreff = test_input($_POST["Betreff"]);
         }
 
-        if (isset($_FILES["Bildupload"]["name"])){
+        if (isset($_FILES["Bildupload"]["name"])){ //checkt Bildupload und lädt resized image auf die Datenbank
             $bildname = test_input($_FILES["Bildupload"]["name"])."_".uniqid();
             $errors = checkOnlyCharsAndNumbersNoSpace($_FILES["Bildupload"]["name"]);
             $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
@@ -46,7 +46,7 @@
         
         if (isset($_POST["serviceText"]) && $error == ""){
             $serviceText = test_input($_POST["serviceText"]);
-            $u_username = $_SESSION["ID"];//ENUM BEGINNT BEI 1
+            $u_username = $_SESSION["ID"];
             $sql = "INSERT INTO tickets (title, text_guest, image_path, userID, resolved) VALUES (?, ?, ?, ?, 1)";
             $stmt = $db_obj->prepare($sql);
             if ($stmt===false){
@@ -54,7 +54,6 @@
             }
             $stmt->bind_param("sssi",$betreff, $serviceText, $destimage, $u_username);
             $stmt->execute();
-            //$stmt->close(); $db_obj->close();
         }
     ?>
         <?php
@@ -67,7 +66,6 @@
                     where resolved = $filter and userID = $userID
                     order by Date $orderby";
             $stmt = $db_obj->prepare($sql);
-            //$stmt->bind_param('ss', $_POST["filter"], $_POST["orderby"]);
         } else {
             $userID = $_SESSION["ID"];
             $orderby = "asc";

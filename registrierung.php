@@ -110,7 +110,7 @@
             <div class="ersteClass">
                 <label for="nachname">Last Name:</label>
                 <span class="error"> <?php echo $errors["nachname"];?></span>
-                <input type="text" name="nachname" id="nachname" value="<?php echo $errors["nachname"] != "" ? "" : $data["nachname"];?>""><br>
+                <input type="text" name="nachname" id="nachname" value="<?php echo $errors["nachname"] != "" ? "" : $data["nachname"];?>"><br>
              </div>
             <div class="ersteClass">
                 <label>Room:</label>
