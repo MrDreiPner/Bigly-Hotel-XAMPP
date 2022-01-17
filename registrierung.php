@@ -1,6 +1,6 @@
 <?php include "head.php"; ?>
 <body>
-<br><br><br>
+    <br><br><br>
     <?php
         include "user_admin_check.php";
         require_once ('dbaccess.php');
@@ -20,7 +20,7 @@
             $errors[$input] = "";
         }
     
-        include "test_input.php"; //test_input() nutzen um rohe Daten, für mehr siehe test_input.php
+        include "test_input.php"; //test_input() nutzen um rohe Daten zu testen, für mehr siehe test_input.php
 
         $checkschecked = "Registrierung great success!";
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -30,7 +30,6 @@
             foreach($inputsOnlyChars as $input) {
                 $errors[$input] = checkOnlyChars($data[$input]);
             }
-        
             $errors["email"] = checkEmail($data["email"]);
             $errors["room_nr"] = checkOnlyNumbers($data["room_nr"]);
 
@@ -46,7 +45,7 @@
                 }
         }
         if($checkschecked == "Registrierung great success!")
-        {
+        {   //Neuer User wird in Datenbank aufgenommen
             $sql = "INSERT INTO user (username, Vorname, Nachname, pw_notiz, password, email, anrede, role, room, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, true)";
             $stmt = $db_obj->prepare($sql);
 
@@ -75,58 +74,55 @@
         <h1 id="Überschrift">User Registration</h1>
     </div>
     <div class="input">
-    <form enctype="multipart/form-data" method = "post">
-        <div class="ersteClass">
-            Gender:
-            <br> <!--Überlegung ob Anrede notwendig bzw wie man Anrede genderneutral angehen kann-->
+        <form enctype="multipart/form-data" method = "post">
+            <div class="ersteClass">
+                Gender:
+                <br>
                 <input name="anrede" type="radio" value=1>Male
                 <input name="anrede" type="radio" value=2>Female
                 <input name="anrede" type="radio" value=3>Non-Binary
                 <input name="anrede" type="radio" value=4 checked>NA
-
-
-        </div>
-        <br> 
-        <div class="ersteClass">
-            Role:
-            <br>
+            </div>
+            <br> 
+            <div class="ersteClass">
+                Role:
+                <br>
                 <input name="role" type="radio" value=1>Admin
-                <input name="role" type="radio" value=2 checked>Service
-                <input name="role" type="radio" value=3>Guest
-        </div>
-        <br>
-        <div class="ersteClass">
-            <label for="email">E-Mail/ Username:</label>
-            <span class="error">* <?php echo $errors["email"];?></span>
-            <input type="email" name="email" id="email" required value="<?php echo $errors["email"] != "" ? "" : $data["email"];?>"><br>
-        </div>
-        <div class="ersteClass">
-            <label for="password">Password:</label>
-            <span class="error">* <?php echo $errors["password"];?></span>
-            <input type="password" name="password" id="password" required value="<?php echo $errors["password"] != "" ? "" : $data["password"];?>">
-        </div>
-        <div class="ersteClass">
-            <label for="vorname">First Name:</label>
-            <span class="error"> <?php echo $errors["vorname"];?></span>
-            <input type="text" name="vorname" id="vorname" value="<?php echo $errors["vorname"] != "" ? "" : $data["vorname"];?>"><br>
-        </div>
-        <div class="ersteClass">
-            <label for="nachname">Last Name:</label>
-            <span class="error"> <?php echo $errors["nachname"];?></span>
-            <input type="text" name="nachname" id="nachname" value="<?php echo $errors["nachname"] != "" ? "" : $data["nachname"];?>""><br>
-        </div>
-        <div class="ersteClass">
-            <label>Room:</label>
-            <span class="error"> <?php echo $errors["room_nr"];?></span>
-            <input name="room_nr" type="text" id="room" value="<?php echo $errors["room_nr"] != "" ? "" : $data["room_nr"];?>"><br>
-        </div>
-        <br>
-        <button type="submit">Register</button>
-        <button type="reset">Reset page</button>
-    </form> 
+                <input name="role" type="radio" value=2>Service
+                <input name="role" type="radio" value=3 checked>Guest
+            </div>
+            <br>
+            <div class="ersteClass">
+                <label for="email">E-Mail/ Username:</label>
+                <span class="error">* <?php echo $errors["email"];?></span>
+                <input type="email" name="email" id="email" required value="<?php echo $errors["email"] != "" ? "" : $data["email"];?>"><br>
+            </div>
+            <div class="ersteClass">
+                <label for="password">Password:</label>
+                <span class="error">* <?php echo $errors["password"];?></span>
+                <input type="password" name="password" id="password" required value="<?php echo $errors["password"] != "" ? "" : $data["password"];?>">
+            </div>
+            <div class="ersteClass">
+                <label for="vorname">First Name:</label>
+                <span class="error"> <?php echo $errors["vorname"];?></span>
+                <input type="text" name="vorname" id="vorname" value="<?php echo $errors["vorname"] != "" ? "" : $data["vorname"];?>"><br>
+            </div>
+            <div class="ersteClass">
+                <label for="nachname">Last Name:</label>
+                <span class="error"> <?php echo $errors["nachname"];?></span>
+                <input type="text" name="nachname" id="nachname" value="<?php echo $errors["nachname"] != "" ? "" : $data["nachname"];?>""><br>
+             </div>
+            <div class="ersteClass">
+                <label>Room:</label>
+                <span class="error"> <?php echo $errors["room_nr"];?></span>
+                <input name="room_nr" type="text" id="room" value="<?php echo $errors["room_nr"] != "" ? "" : $data["room_nr"];?>"><br>
+            </div>
+            <br>
+            <button type="submit">Register</button>
+            <button type="reset">Reset page</button>
+        </form> 
     </div
-<?php
-
+    <?php
    echo "<h2>Your Input:</h2>";
    echo $data["anrede"],"<br>";
    echo $data["role"],"<br>";
@@ -135,8 +131,7 @@
    echo $data["password"], "<br>";
    echo $data["email"],"<br>";
    echo $data["room_nr"],"<br>";
-
-echo "<h1> $checkschecked </h1>";
-?>
+   echo "<h1> $checkschecked </h1>";
+    ?>
 </body>
 </html>

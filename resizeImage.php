@@ -1,9 +1,9 @@
 <?php 
-        
-    function resizeJpeg($bildname) {
+//Funktionen um JPG und PNG Dateien zu resizen. Original images werden nicht hinterlegt
+//Nur die resized Files werden im relevanten uploads Ordner gespeichert  
+    function resizeJpeg($bildname, $destimage) {
         //-----Thumbnail machen-----
         $srcimage = $_FILES["Bildupload"]["tmp_name"]; //Pfad vom original
-        $destimage = "uploads/news/".$bildname."-thumb.jpg"; //Pfad vom resize
         list($width, $height) = getimagesize($srcimage);
         $newwidth=720;
         $newheight=480;
@@ -22,10 +22,9 @@
         return $destimage; 
     }
 
-    function resizePng($bildname) {
+    function resizePng($bildname, $destimage) {
         //-----Thumbnail machen-----
         $srcimage = $bildname.".png"; //Pfad vom original
-        $destimage = "uploads/news/".$bildname."-thumb.png"; //Pfad vom resize
         list($width, $height) = getimagesize($srcimage);
         $newwidth=720; //Maße, die in den Unterlagen gegeben wurden
         $newheight=480;

@@ -36,9 +36,10 @@
             $bildname = test_input($_FILES["Bildupload"]["name"])."_".uniqid();
             $errors = checkOnlyCharsAndNumbers($_FILES["Bildupload"]["name"]);
             $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
+            $destimage = "uploads/service/".$bildname."-thumb.jpg";
             switch($path_parts["extension"]){
-                case "jpg" : $destimage = resizeJpeg($bildname); break;
-                case "png" : $destimage = resizePng($bildname); break;
+                case "jpg" : $destimage = resizeJpeg($bildname, $destimage); break;
+                case "png" : $destimage = resizePng($bildname, $destimage); break;
                 default: $error = "Bitte nur JPG oder PNG Files!!!!!";
             }
         }

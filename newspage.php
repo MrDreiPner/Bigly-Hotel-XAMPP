@@ -4,7 +4,7 @@
 ?>
 <body>
 <br><br><br>
-    <?php 
+    <?php //News Post wird angezeigt
     include "nav.php";
     include "user_admin_check.php";
     include "user_indicator.php";
@@ -21,15 +21,15 @@
         $stmt->execute();
         $stmt->bind_result($content, $headline, $imgpath, $date, $time, $active);
         $stmt->fetch();
-        $stmt->close(); //$db_obj->close();
+        $stmt->close(); $db_obj->close();
         echo "<br><br><br><br><br><br><br><div><h2>". $headline. "</h2><br><br><br><h3>Last Updated:". $date. " ". $time .
-        "</h3><br><p>". $content . "</p></div>";
+        "</h3><br><img src=".$imgpath." alt='No picture uploaded'><p>". $content . "</p></div>";
 
         $_SESSION["news_ID"] = $_GET["newsID"];
     }
     ?>
-    <?php //News wird bearbeitet
-        include "test_input.php"; //use test_input() to call function
+    <?php //News Post wird aus der Datenbank gelöscht 
+        include "test_input.php";
         if(isset($_POST["delete"]))
         {
             $ID = $_SESSION["news_ID"];
@@ -49,10 +49,11 @@
 
         }
 
-        if(isset($_POST["active"]))
+        //Veränderungen am News Post werden in der Datenbank hochgeladen
+        if(isset($_POST["active"]))  
         {
             if(isset($_POST["content"]) && isset($_POST["update_c"]))
-            {
+            { //Text und Active State(ob Post angezeigt wird) wird aktualisiert
                 $ID = $_SESSION["news_ID"];
                 $resolvInput = $_POST["active"];
                 $sql = "update news 
@@ -63,7 +64,7 @@
                 $stmt->bind_param('s', $_POST["content"]);
             }
             else
-            {
+            {//Nur Active State wird aktualisiert
                 $ID = $_SESSION["news_ID"];
                 $resolvInput = $_POST["active"];
                 $sql = "update news 
@@ -81,7 +82,7 @@
             header("Refresh:0; url=newsVerwaltung.php");
          }
          else if(isset($_POST["update_c"]))
-         {
+         {  //Nur Text wird aktualisiert
             $ID = $_SESSION["news_ID"];
             $sql = "update news 
                     set content = ?
@@ -97,7 +98,7 @@
             unset($_SESSION['news_ID']);
             header("Refresh:0; url=newsVerwaltung.php");
          }
-         else if(isset($_POST["sent"]))
+        else if(isset($_POST["sent"]))
          {
             setcookie("nothingHappened", 1, time()+5);
             header("Refresh:0; url=newsVerwaltung.php");

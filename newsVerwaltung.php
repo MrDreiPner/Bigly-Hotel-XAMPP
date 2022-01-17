@@ -7,10 +7,7 @@
         include "user_admin_check.php";
         include "user_indicator.php";
 
-        /*$sql = "select headline, date, time, active, news_id 
-                    from news
-                    order by date asc";
-            $stmt = $db_obj->prepare($sql);*/
+        //printet gefilterte, sortierte Liste der News Posts
         if(isset($_POST["filter"]) && $_POST["filter"] != "2"){
             $filter = $_POST["filter"];
             $orderby = $_POST["orderby"];
@@ -19,7 +16,6 @@
                     where active = $filter 
                     order by Date $orderby";
             $stmt = $db_obj->prepare($sql);
-            //$stmt->bind_param('ss', $_POST["filter"], $_POST["orderby"]);
         } else {
             $orderby = "asc";
             if(isset($_POST["orderby"])){
@@ -37,7 +33,7 @@
         $stmt->execute();
         $stmt->bind_result($headline, $date, $time, $active, $id);
     ?>
-    <div>
+    <div> <!--Filtermöglichkeit nach active state-->
         <form name="filters" method="POST" action="newsVerwaltung.php">
             <label for="filter">Filter by:</label>
             <select name="filter">
@@ -68,7 +64,7 @@
             <th>Date</th>
             <th>Time</th>
         </tr>
-        <?php
+        <?php //printet eine Liste aller News Posts
             while($stmt->fetch()){
                 echo "<tr>";
                 if($active == 1){echo "<td>Yes</td>";} else {echo "<td>No</td>";}

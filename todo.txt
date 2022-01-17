@@ -1,3 +1,5 @@
+
+
 ticketpage nach datum filtern/ordnen
 
 addNews zu manageNews machen:   
@@ -10,7 +12,7 @@ design
 
 User kann im Service bereich eine liste mit all seinen tickets sehen
 
-pw_notiz ENTFERNEN!!!
+pw_notiz ENTFERNEN!!! in registrierung.php
 
 
 Nice to have: 

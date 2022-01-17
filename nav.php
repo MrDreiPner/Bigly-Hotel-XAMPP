@@ -4,10 +4,11 @@
         <ul>
             <il><a href="index.php">Zur Homepage</a></il> 
             <?php 
+            //Jeder User sieht nur die Links, die für ihn relevant sind bzw für die er Berechtigungen hat
             if (isset ($_SESSION["SessionWert"])) {
                 if ($_SESSION["SessionWert"] == "Admin") {
-                    echo "<il><a href='addNews.php'>Neue News</a></il>";
-                    echo "<il><a href='registrierung.php'>Registrieren</a></il>";
+                    echo "<il><a href='addNews.php'>Post News</a></il>";
+                    echo "<il><a href='registrierung.php'>Register New User</a></il>";
                     echo "<il><a href='adminpage.php'>Admin Page</a></il>";
                 }
                 if ($_SESSION["SessionWert"] == "Guest" || $_SESSION["SessionWert"] == "Admin") {
