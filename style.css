@@ -1,3 +1,5 @@
-@media only screen and (max-width: 576px){
-
+nav{
+    position: fixed;
+    width: 100%;
+    top: 0;
 }
