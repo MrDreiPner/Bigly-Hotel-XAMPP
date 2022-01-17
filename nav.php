@@ -25,7 +25,7 @@
             }
             ?>
             <il><a href="impressum.php">Impressum</a></il>
-            <il><a href="hilfe.php">Hilfe</a></il>
+            <il><a href="hilfe.php">Help</a></il>
             
         </ul>
     </nav>
