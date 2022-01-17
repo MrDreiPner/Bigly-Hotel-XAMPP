@@ -32,7 +32,7 @@
                 echo "<li class='nav-item'><a class='nav-link' href='loginPage.php'>Login</a></li>";
             }
         ?>
-                    <li class="nav-item"><a class="nav-link" href="help.php">Help</a></li>
+                    <li class="nav-item"><a class="nav-link" href="hilfe.php">Help</a></li>
                     <li class="nav-item"><a class="nav-link" href="impressum.php">Impressum</a></li>
                     <li class="nav-item"><a class="nav-link disabled"></a></li>
                 </ul>
