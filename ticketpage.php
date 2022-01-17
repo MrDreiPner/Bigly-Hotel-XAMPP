@@ -29,6 +29,10 @@
 
             $_SESSION["ticketID"] = $_GET["ticketID"];
         }
+        if($_SESSION["SessionWert"] != "Admin" && $_SESSION["ID"] != $userID)
+        {
+            header("location: UA_access.php");
+        }
     ?>
     <?php //Ticket wird bearbeitet
         include "test_input.php"; //test_input() nutzen um rohe Daten zu testen, für mehr siehe test_input.php
