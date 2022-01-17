@@ -6,16 +6,16 @@ addNews zu manageNews machen:
     liste ausgeben mit allen news, mit checkboxen, welche news angezeigt werden
     checkboxen zum löschen von news
 
-userbearbeitung durch user ermöglichen
+userbearbeitung durch user ermöglichen - DONE
 
 design
 
-User kann im Service bereich eine liste mit all seinen tickets sehen
+User kann im Service bereich eine liste mit all seinen tickets sehen - DONE
 
 pw_notiz ENTFERNEN!!! in registrierung.php
 
 
 Nice to have: 
-- user uodate -> password security
+- user uodate -> password security - DONE
 - mass active/ inactive updates
 
