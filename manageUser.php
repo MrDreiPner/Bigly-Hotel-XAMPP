@@ -23,7 +23,7 @@
             //Je nachdem wie auf manageUser zugegriffen wird, werden entweder die eigenen
             //Daten geholt (Gast) oder die des zu bearbeitenden users (als Admin)
             $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
-            $sql = 'select username, email, room, vorname, nachname, role, password, anrede
+            $sql = 'select username, email, room, vorname, nachname, role, password, anrede, active
                     from user
                     where userid = ?';
             $stmt = $db_obj->prepare($sql);
@@ -33,7 +33,7 @@
                 echo "fail";
             }
             $stmt->execute();
-            $stmt->bind_result($username, $email, $room, $Svorname, $Snachname, $role, $OGpassword, $gender);
+            $stmt->bind_result($username, $email, $room, $Svorname, $Snachname, $role, $OGpassword, $gender, $Sactive);
             $stmt->fetch();
             $stmt->close();
         }
@@ -48,6 +48,11 @@
         E-Mail: <?php echo $email;?><br>
         Username: <?php echo $role;?><br>
         Room: <?php echo $room;?><br>
+        Active: <?php
+                if($_SESSION["SessionWert"] == "Admin"){ 
+                    if($Sactive == TRUE){echo "Active";}
+                    else{echo "Inactive";}}
+                ?><br>
     </div>
     <?php
         include "test_input.php"; //test_input() nutzen für rohe inputs, für mehr siehe test_input.php
@@ -70,7 +75,7 @@
                 echo "fail";
             }
             $stmt->execute();
-            $stmt->close(); $db_obj->close();
+            $stmt->close();
             header("Refresh:0; url=userVerwaltung.php");
         }
         //Der username wird aktualisiert - keine sonderzeichen erlaubt

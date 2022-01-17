@@ -39,6 +39,22 @@
             if ($count >= 1){ 
                 $errors["email"] = "This e-mail/ username is already used!"; 
             }
+            if($data["room_nr"] != "")
+            {
+                //Es wird geprüft ob das Zimmer bereits vergeben ist
+                $room_oc = $data["room_nr"];
+                $sql = "SELECT room FROM user 
+                        WHERE room = '$room_oc' 
+                        and active = 1
+                        and (role != 'Admin' 
+                        or 'Service')"; 
+                $result = $db_obj->query($sql); 
+                $count = mysqli_num_rows($result); 
+                if ($count >= 1){ 
+                    $errors["room_nr"] = "Room already occupied!"; 
+                }
+                $result->close();
+            }
             foreach ($errors as $error) {
                 if ($error != "") {
                     $checkschecked = "Registrierung big fail!";
@@ -66,6 +82,7 @@
             $stmt->bind_param("ssssssiii", $username, $vorname, $nachname, $pw_notiz, $password, $email, $anrede, $role, $room_nr);
             $stmt->execute();
             $stmt->close(); $db_obj->close();
+            header("Refresh:0; url=userVerwaltung.php");
         }
     }
         
@@ -122,16 +139,4 @@
             <button type="reset">Reset page</button>
         </form> 
     </div
-    <?php
-   echo "<h2>Your Input:</h2>";
-   echo $data["anrede"],"<br>";
-   echo $data["role"],"<br>";
-   echo $data["vorname"], "<br>";
-   echo $data["nachname"], "<br>";
-   echo $data["password"], "<br>";
-   echo $data["email"],"<br>";
-   echo $data["room_nr"],"<br>";
-   echo "<h1> $checkschecked </h1>";
-    ?>
-</body>
 </html>
