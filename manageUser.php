@@ -332,7 +332,7 @@
         else if(isset($_POST["sent"]) && $checkschecked != "Profile updated!")
         {
             $db_obj->close();
-            $_SESSION["SessionWert"] == "Admin" ? header("Refresh:3 , url=manageUser.php") : header("Refresh:3 , url=manageUser.php");
+            $_SESSION["SessionWert"] == "Admin" ? header("Refresh:5 , url=manageUser.php") : header("Refresh:5 , url=manageUser.php");
         }
 
 
@@ -342,8 +342,8 @@
     <form method="POST" action="manageUser.php">
         <h3>Update Data</h3>
         <label for="ch_username" required>Change username: </label><br>
-        <span class="error"> <?php if(isset($errors["ch_username"])){ echo $errors["ch_username"];}?></span>
-        <input type="text" name="ch_username"><br>
+        <input type="text" name="ch_username">
+        <span class="error"> <?php if(isset($errors["ch_username"])){ echo $errors["ch_username"];}?></span><br>
         <?php
             if($_SESSION["SessionWert"] == "Guest")
             {
@@ -356,20 +356,20 @@
             }
         ?>
         <label for="ch_pw" required>New password: </label><br>
-        <span class="error"> <?php if(isset($errors["ch_pw"])){ echo $errors["ch_pw"];}?></span>
-        <input type="password" name="ch_pw"><br>
+        <input type="password" name="ch_pw">
+        <span class="error"> <?php if(isset($errors["ch_pw"])){ echo $errors["ch_pw"];}?></span><br>
         <label for="ch_pw_c" required>Confirm new password: </label><br>
-        <span class="error"> <?php if(isset($errors["ch_pw_c"])){ echo $errors["ch_pw_c"];}?></span>
-        <input type="password" name="ch_pw_c"><br>
+        <input type="password" name="ch_pw_c">
+        <span class="error"> <?php if(isset($errors["ch_pw_c"])){ echo $errors["ch_pw_c"];}?></span><br>
         <label for="ch_email" required>Change E-Mail: </label><br>
-        <span class="error"> <?php if(isset($errors["email"])){ echo $errors["email"];}?></span>
-        <input type="email" name="ch_email"><br>
+        <input type="email" name="ch_email">
+        <span class="error"> <?php if(isset($errors["email"])){ echo $errors["email"];}?></span><br>
         <label for='ch_vorname' required>First Name: </label><br>
-        <span class='error'> <?php if(isset($errors["ch_vorname"])){ echo $errors["ch_vorname"];}?> </span>
-        <input type='text' name='ch_vorname'><br>
+        <input type='text' name='ch_vorname'>
+        <span class='error'> <?php if(isset($errors["ch_vorname"])){ echo $errors["ch_vorname"];}?> </span><br>
         <label for='ch_nachname' required>Last Name: </label><br>
-        <span class='error'> <?php if(isset($errors["ch_nachname"])){ echo $errors["ch_nachname"];}?></span>
-        <input type='text' name='ch_nachname'><br>
+        <input type='text' name='ch_nachname'>
+        <span class='error'> <?php if(isset($errors["ch_nachname"])){ echo $errors["ch_nachname"];}?></span><br>
         <div class='ersteClass'>
             Gender:<br>
                 <input name='anrede' type='radio' value=1>Male
@@ -386,11 +386,10 @@
             {
                 echo 
                 "<label for='ch_room' required>Room: </label><br>
-                <span class='error'>"; 
+                <span class='error'></span><input type='text' name='ch_room'>";
                 if(isset($errors["ch_room"])){ echo $errors["ch_room"];} 
                 echo 
-                "</span><input type='text' name='ch_room'><br>
-                <div class='ersteClass'>
+                "<br><div class='ersteClass'>
                 Role:
                 <br>
                 <input name='ch_role' type='radio' value=2>Service
