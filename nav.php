@@ -1,32 +1,42 @@
-<html>
 <link rel="stylesheet" href="navstyle.css">
-<nav name="navigation">
-        <ul>
-            <il><a href="index.php">Zur Homepage</a></il> 
-            <?php 
-            //Jeder User sieht nur die Links, die für ihn relevant sind bzw für die er Berechtigungen hat
+<nav class="navbar-header">    
+    <nav name="navigation"  class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.php">BIGLY HOTEL</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page"></a></a></li>
+        <?php 
+        //Jeder User sieht nur die Links, die für ihn relevant sind bzw für die er Berechtigungen hat
             if (isset ($_SESSION["SessionWert"])) {
                 if ($_SESSION["SessionWert"] == "Admin") {
-                    echo "<il><a href='addNews.php'>Post News</a></il>";
-                    echo "<il><a href='registrierung.php'>Register New User</a></il>";
-                    echo "<il><a href='adminpage.php'>Admin Page</a></il>";
-                }
-                if ($_SESSION["SessionWert"] == "Guest" || $_SESSION["SessionWert"] == "Admin") {
-                    echo "<il><a href='service.php'>Service</a></il>";
-                    echo "<il><a href='manageUser.php'>Profile</a></il>";
+                    echo "<li class='nav-item'><a class='nav-link' href='adminpage.php'>Admin Duties</a></li>";
+                    echo "<li class='nav-item'><a class='nav-link' href='newsVerwaltung.php'>Manage News</a></li>";
+                    echo "<li class='nav-item'><a class='nav-link' href='userverwaltung.php'>Manage Users</a></li>";
                 }
                 if ($_SESSION["SessionWert"] == "Service" || $_SESSION["SessionWert"] == "Admin") {
-                    echo "<il><a href='ticketVerwaltung.php'>Service-Tickets</a></il>";
+                    echo "<li class='nav-item'><a class='nav-link' href='ticketVerwaltung.php'>Service-Tickets</a></li>";
                 }
-                echo "<il><a href='logout.php'>Logout</a></il>";
-            }
+                if ($_SESSION["SessionWert"] == "Guest" || $_SESSION["SessionWert"] == "Admin") {
+                    if($_SESSION["SessionWert"] != "Admin"){
+                        echo "<li class='nav-item'><a class='nav-link' href='service.php'>Service</a></li>";
+                    }
+                    echo "<li class='nav-item'><a class='nav-link' href='manageUser.php'>Profile</a></li>";
+                }
+                echo "<li class='nav-item'><a class='nav-link' href='logout.php'>Logout</a></li>";
+            } 
             else {
-                echo "<il><a href='loginPage.php'>Login</a></il>"; 
+                echo "<li class='nav-item'><a class='nav-link' href='loginPage.php'>Login</a></li>";
             }
-            ?>
-            <il><a href="impressum.php">Impressum</a></il>
-            <il><a href="hilfe.php">Help</a></il>
-            
-        </ul>
+        ?>
+                    <li class="nav-item"><a class="nav-link" href="help.php">Help</a></li>
+                    <li class="nav-item"><a class="nav-link" href="impressum.php">Impressum</a></li>
+                    <li class="nav-item"><a class="nav-link disabled"></a></li>
+                </ul>
+            </div>
+        </div>
     </nav>
-</html>
+</nav>

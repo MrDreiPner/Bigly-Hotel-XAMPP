@@ -1,6 +1,5 @@
 <?php include "head.php"; ?>
 <body>
-<br><br><br>
     <?php
         include "nav.php";
         include "user_indicator.php";

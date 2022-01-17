@@ -102,6 +102,7 @@
         ?>
     </div>
     <br><br><br>
+    <a class='navbar-brand' href='registrierung.php'>Register New User</a>
         <table id="table">
         <tr>
             <th>Active</th>

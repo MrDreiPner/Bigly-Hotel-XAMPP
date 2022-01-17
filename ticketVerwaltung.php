@@ -32,7 +32,11 @@
             echo "fail";
         }
         $stmt->execute();
-        $stmt->bind_result($ticketid, $resolved, $userID, $date, $time, $username, $nachname, $room, $title);   
+        $stmt->bind_result($ticketid, $resolved, $userID, $date, $time, $username, $nachname, $room, $title); 
+        if($_SESSION["SessionWert"] == "Admin")
+        {
+            echo "<a class='navbar-brand' href='service.php'>Service</a>";
+        }  
     ?>
     <br><br><br><br><br><br><br>
     <div class="input">

@@ -57,6 +57,7 @@
         ?>
     </div>
     <br><br><br>
+    <a class='navbar-brand' href='addNews.php'>Post News</a>
         <table id="table">
         <tr>
             <th>Active</th>
