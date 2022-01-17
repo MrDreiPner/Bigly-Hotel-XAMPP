@@ -13,9 +13,9 @@
         $errors = "";
         if (isset($_POST["Bildname"])) {
             $bildname = test_input($_POST["Bildname"])."_".uniqid();
-            $errors = checkOnlyCharsAndNumbers($_POST["Bildname"]);
+            $errors = checkOnlyCharsAndNumbersNoSpace($_POST["Bildname"]);
             $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
-            $destimage = "uploads/news/".$bildname."-thumb.jpg";
+            $destimage = "uploads/news/".$bildname."-thumb";
             switch($path_parts["extension"]){
                 case "jpg" : $destimage = resizeJpeg($bildname, $destimage); break;
                 case "png" : $destimage = resizePng($bildname, $destimage); break;

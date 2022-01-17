@@ -34,9 +34,9 @@
 
         if (isset($_FILES["Bildupload"]["name"])){
             $bildname = test_input($_FILES["Bildupload"]["name"])."_".uniqid();
-            $errors = checkOnlyCharsAndNumbers($_FILES["Bildupload"]["name"]);
+            $errors = checkOnlyCharsAndNumbersNoSpace($_FILES["Bildupload"]["name"]);
             $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
-            $destimage = "uploads/service/".$bildname."-thumb.jpg";
+            $destimage = "uploads/service/".$bildname."-thumb";
             switch($path_parts["extension"]){
                 case "jpg" : $destimage = resizeJpeg($bildname, $destimage); break;
                 case "png" : $destimage = resizePng($bildname, $destimage); break;
