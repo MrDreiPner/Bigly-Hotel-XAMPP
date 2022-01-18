@@ -400,12 +400,17 @@
                 <input name='ch_role' type='radio' value=2>Service
                 <input name='ch_role' type='radio' value=3>Guest<br>
                 </div>
-                <div class='ersteClass'>Active:
-                <br>
-                <input name='active' type='radio' value=1>Active
-                <input name='active' type='radio' value=0>Inactive<br>
-                </div>
-                <div class='ersteClass'>Delete User:
+                <div class='ersteClass'>Set Status:
+                <br>";
+                if($Sactive == 0)
+                {
+                    echo "<input name='active' type='radio' value=1>Active<br>";
+                }
+                else
+                {
+                    echo "<input name='active' type='radio' value=0>Inactive<br>";
+                }
+                "</div><div class='ersteClass'>Delete User:
                 <br><input name='delete' type='checkbox' value=1>DELETE<br></div>";
             }
         ?>

@@ -16,7 +16,7 @@
             //Printet die News Beiträge
             while($stmt->fetch()){
                 echo "<li><p><h4>". $headline. "</h4>". $date ."<br>"
-                 . $content . "<br><div id='image'><img class'img-fluid' src='". $imgpath ."' alt ='". $headline ."'></div>
+                 . $content . "<br><div id='image'><img src='". $imgpath ."' alt ='". $headline ."'></div>
                  </p>
                 </li>";
             }

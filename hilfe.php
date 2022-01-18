@@ -10,7 +10,7 @@
         <h1>Do you need support?</h1>  
     </div>      
     <div id="harold">
-        <img src="Werbebilder/harold1.jpg" alt="Hide the Pain" id="haroldbild"> 
+    <div id='image'><img src="Werbebilder/harold1.jpg" alt="Hide the Pain" id="haroldbild"> </div>
     </div>     
 
     <div class="input">

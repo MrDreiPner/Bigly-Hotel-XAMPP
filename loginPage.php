@@ -24,6 +24,7 @@
             $stmt->bind_result($u_id, $u_username, $u_password, $vorname, $role, $active);
             $stmt->fetch();
             $stmt->close(); 
+            //Es wird geprüft ob es den User in der DB gibt
             $sql = "SELECT username FROM user WHERE username = '$u_username'"; 
             $result = $db_obj->query($sql); 
             $count = mysqli_num_rows($result); 
@@ -47,11 +48,12 @@
                 $_SESSION['LAST_ACTIVITY'] = time();
                 }
             }
+            //Wenn das PW nicht übereinstimmt, wird diese message ausgegeben
             else 
             {
                 $verification = "Wrong credentials! Try again!";
             }
-
+            //Der Cookie zum tracken der inactivity wird gesetzt
             if (isset($_SESSION["SessionWert"])) {
                 setcookie("CookieWert", $user_input, time()+3600);
             }
