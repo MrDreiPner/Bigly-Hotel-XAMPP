@@ -6,7 +6,7 @@
     ?>
     <?php
     include "test_input.php"; //use test_input() to call function
-        $verification = "Please Log In";
+        $verification = "";
         if (isset($_POST["Username"])) {
             $PW_input = test_input($_POST["Password"]);
             $user_input = test_input($_POST["Username"]);
@@ -23,28 +23,38 @@
 
             $stmt->bind_result($u_id, $u_username, $u_password, $vorname, $role, $active);
             $stmt->fetch();
-
-            if($active != 1)
+            $stmt->close(); 
+            $sql = "SELECT username FROM user WHERE username = '$u_username'"; 
+            $result = $db_obj->query($sql); 
+            $count = mysqli_num_rows($result); 
+            $result->close(); $db_obj->close();
+            if ($count == 0)
             {
-                $verification = "Account inactive! Please contact Administrator.";
+                $verification = "Wrong credentials! Try again!";
             }
             //gleicht das eingegebene Passwort mit dem hinterlegten gehashten Passwort ab 
             else if (password_verify($PW_input, $u_password)) {
+                if($active != 1)
+                {
+                    $verification = "Account inactive! Please contact Administrator!";
+                }
+                else{
                 setcookie("CookieWert", $u_username, time()+3600);
                 $_SESSION["SessionWert"] = $role;
                 $_SESSION["User"] = $u_username;
                 $_SESSION["ID"] = $u_id;
                 $_SESSION["vorname"] = $vorname;
                 $_SESSION['LAST_ACTIVITY'] = time();
+                }
             }
-            else {
-                $verification = "<br>Wrong credentials! Try again!";
+            else 
+            {
+                $verification = "Wrong credentials! Try again!";
             }
 
             if (isset($_SESSION["SessionWert"])) {
                 setcookie("CookieWert", $user_input, time()+3600);
             }
-            $stmt->close(); $db_obj->close();
             
         }
         
@@ -72,7 +82,7 @@
     <div id="login-form">
         <div id="inner-login">
             <h1 id="Überschrift">User Log In</h1><br>
-            <?php echo $verification;?>  
+            <span class="error"> <?php echo $verification;?></span> 
             <form enctype="multipart/form-data" action="loginPage.php" method="POST">
                 <div id="mb-3">
                     <label class="form-label" for="Username">Username</label>
