@@ -1,0 +1,16 @@
+
+
+ticketpage nach datum filtern/ordnen
+
+design
+
+User kann im Service bereich eine liste mit all seinen tickets sehen
+
+pw_notiz ENTFERNEN!!! in registrierung.php & manageUser
+
+
+Nice to have: 
+- user uodate -> password security
+- mass active/ inactive updates
+
+ 

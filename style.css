@@ -1,10 +1,46 @@
+@media only screen and (width <= 1200px){
+    
+    .form-label{
+        margin-top: 1rem;
+    }
+    
+    #login-form{
+        height: 95vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    #Überschrift{
+        text-align: center;
+        margin: 0;
+        margin-bottom: 20px;
+        font-size: 2.0em;
+        font-weight: normal;
+    }
+    
+    #mb-3{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+    
+    #submit{
+        margin-top: 1rem;
+        width:100%;
+    }
+}
+
 
 nav{
     position: fixed;
     width: 100%;
     top: 0;
+    margin-bottom: 2rem;
 }
-
+/*----Image Styling---*/
 #image{
     display: flex;
     flex-direction: column;
@@ -15,46 +51,71 @@ img{
     max-width: 45rem;
     max-height: 30rem;
 }
+/*---------------------*/
+@media only screen and (width > 1200px){
+    .form-control:focus{
+        border: 1px solid black;
+    }
 
-.form-control:focus{
-    border: 1px solid black;
+    .form-label{
+        margin-top: 1rem;
+    }
+
+    #login-form{
+        height: 95vh;
+        width: 99vw;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #inner-login{
+        padding: 60px 30px;
+        width: 20%;
+        border-radius: 10px;
+    }
+
+    #Überschrift{
+        text-align: center;
+        margin: 0;
+        margin-bottom: 20px;
+        font-size: 2.0em;
+        font-weight: normal;
+    }
+
+    #mb-3{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+
+    #submit{
+        margin-top: 1rem;
+        width:100%;
+    }
 }
 
-#login-form{
-    height: 100vh;
-    width: 100vw;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.error{
+    color: red;
 }
 
-#inner-login{
-    padding: 60px 30px;
-    width: 20%;
-    background: rgba( 255, 255, 255, 0.7 );
-    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-    backdrop-filter: blur( 3.5px );
-    -webkit-backdrop-filter: blur( 3.5px );
-    border-radius: 10px;
-}
-
-#Überschrift{
-    text-align: center;
-    margin: 0;
-    margin-bottom: 40px;
-    font-size: 2.0em;
-    font-weight: normal;
-}
-
-#mb-3{
+/*---help page---*/
+#help{
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    justify-content: flex-start;
+    align-self: center;
 }
 
-#submit{
-    margin-top: 1rem;
-    width:100%;
+#inner-help{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-self: center;
 }
+#inner-help li{
+    list-style-type: none;
+}
+/*---------------*/

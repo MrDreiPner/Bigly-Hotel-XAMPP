@@ -3,8 +3,9 @@
     include "user_admin_check.php";
     include "user_indicator.php";
 ?>
-_
+
 <body>
+    <?php include "nav.php"; ?>
     <h1>Hello Admin!</h1>
     <br>
     <a href="registrierung.php">Add User</a>
