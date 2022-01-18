@@ -71,7 +71,8 @@
     ?>
     <div id="login-form">
         <div id="inner-login">
-            <h1 id="Überschrift">User Log In</h1>
+            <h1 id="Überschrift">User Log In</h1><br>
+            <?php echo $verification;?>  
             <form enctype="multipart/form-data" action="loginPage.php" method="POST">
                 <div id="mb-3">
                     <label class="form-label" for="Username">Username</label>
@@ -81,7 +82,7 @@
                     <label class="form-label" for="Password">Password</label>
                     <input type="password" class="form-control" required name="Password"><br>
                 </div>    
-                <input type="submit" id="submit" class="btn btn-primary">   
+                <input type="submit" id="submit" class="btn btn-primary"> 
             </form>
         </div>
     </div>

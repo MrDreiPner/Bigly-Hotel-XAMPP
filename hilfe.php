@@ -55,7 +55,7 @@
     </ul></p>
     <p> As Service you can: <br>
     <ul>
-        <li>View all Service-Tickets</li>>
+        <li>View all Service-Tickets</li>
         <li>Respond to open Service-Tickets</li>
         <li>Close Service Tickets (un/successfully)</li>
         <li>Log Out</li>
