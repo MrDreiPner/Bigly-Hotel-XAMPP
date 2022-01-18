@@ -1,5 +1,6 @@
 <?php
         //selektiert die active gesetzten News aus der Datenbank
+
         $sql = 'select news_id, headline, imgpath, content, date from news 
                 where active = true
                 order by date desc, time desc';
