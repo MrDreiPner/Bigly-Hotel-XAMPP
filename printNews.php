@@ -26,6 +26,7 @@
                             <h4 class='card-title'>".$headline."</h4>
                             <p class='card-text'>".$content."</p>
                             <p class='card-text'><small class='text-muted'>".$date."</small></p>
+                            <a id='news-button' href='showNews.php/?news_id='".$id."'' class='btn btn-primary'>Read more</a>
                         </div>
                     </div>
                 </div>
@@ -34,5 +35,3 @@
             $stmt->close(); $db_obj->close();
         ?>
     </ul>
-
-    <!--<a href='showNews.php/?news_id='".$id."'' class='btn btn-primary'>Read more</a>-->
