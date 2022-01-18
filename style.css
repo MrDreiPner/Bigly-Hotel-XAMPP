@@ -64,6 +64,10 @@ nav{
     box-shadow: 0 8px 32px 0 rgba(200, 203, 240, 0.37);
 }
 
+#news-center{
+    margin-top: 4rem;
+}
+
 /*----Image Styling----*/
 #image{
     display: flex;
