@@ -1,6 +1,7 @@
 <?php
         //selektiert die active gesetzten News aus der Datenbank
-        $sql = 'select headline, imgpath, content, date from news 
+        $sql = 'select headline, imgpath, content, date, news_id
+                from news 
                 where active = true
                 order by date desc, time desc';
         $stmt = $db_obj->prepare($sql);
@@ -17,7 +18,7 @@
             while($stmt->fetch()){
                 echo "<li><p><h4>". $headline. "</h4>". $date ."<br>"
                  . $content . "<br><div id='image'><img src='". $imgpath ."' alt ='". $headline ."'></div>
-                 </p>
+                </p>
                 </li>";
             }
             $stmt->close(); $db_obj->close();
