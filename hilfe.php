@@ -1,13 +1,15 @@
 <?php include "head.php"; ?>
-<body>
+<body >
     <?php
         include "nav.php";
         include "user_indicator.php";
     ?>   
-<div id='image'><img src="Werbebilder/harold1.jpg" alt="Hide the Pain"></div>    
+    <div id="image">
+        <img id="harold" src="Werbebilder/harold1.jpg" alt="Hide the Pain">
+    </div>    
 <div class="text-wrap text-start" id="help">
     <div id="inner-help">
-        <p> As Admin you can: <br>
+        <p><h4>As Admin you can:</h4><br>
             <ul>
                 <li>Manage News</li>
                 <li>Add News</li>
@@ -21,7 +23,7 @@
                 <li>Log Out</li>
             </ul>
         </p>
-        <p> As Service you can: <br>
+        <p><h4>As Service you can:</h4><br>
             <ul>
                 <li>View all Service-Tickets</li>
                 <li>Respond to open Service-Tickets</li>
@@ -29,7 +31,7 @@
                 <li>Log Out</li>
             </ul>
         </p>
-        <p> As Guest you can: <br>
+        <p><h4>As Guest you can:</h4><br>
             <ul>
                 <li>Manage your own Profile</li>
                 <li>Submit Service-Tickets</li>
@@ -38,7 +40,7 @@
                 <li>Log Out</li>
             </ul>
         </p>
-        <p> As Anonymous you can: <br>
+        <p><h4>As Anonymous you can:</h4><br>
             <ul>
                 <li>See News</li>
                 <li>See Help</li>

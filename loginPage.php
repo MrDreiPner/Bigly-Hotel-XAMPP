@@ -1,5 +1,5 @@
 <?php include "head.php"; ?>
-<body>
+<body id="login-body">
     <?php 
     require_once('dbaccess.php');
     include "nav.php"; 
