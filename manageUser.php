@@ -394,24 +394,21 @@
                 <span class='error'></span><input type='text' name='ch_room'>";
                 if(isset($errors["ch_room"])){ echo $errors["ch_room"];} 
                 echo 
-                "<br><div class='ersteClass'>
-                Role:
-                <br>
-                <input name='ch_role' type='radio' value=2>Service
+                "<div class='ersteClass'>Delete User:
+                <input name='delete' type='checkbox' value=1><br></div>
+                <div class='ersteClass'>
+                Role: <input name='ch_role' type='radio' value=2>Service
                 <input name='ch_role' type='radio' value=3>Guest<br>
                 </div>
-                <div class='ersteClass'>Set Status:
-                <br>";
+                <div class='ersteClass'>Set Status: ";
                 if($Sactive == 0)
                 {
-                    echo "<input name='active' type='radio' value=1>Active<br>";
+                    echo "<input name='active' type='radio' value=1>Active<br></div>";
                 }
                 else
                 {
-                    echo "<input name='active' type='radio' value=0>Inactive<br>";
+                    echo "<input name='active' type='radio' value=0>Inactive<br></div>";
                 }
-                "</div><div class='ersteClass'>Delete User:
-                <br><input name='delete' type='checkbox' value=1>DELETE<br></div>";
             }
         ?>
         <input type ='hidden' name ='sent' value = '1'/>
@@ -420,7 +417,7 @@
     <?php
         if(isset($_SESSION['update']))
         {
-            echo $checkschecked;
+            echo "<br>". $checkschecked;
             unset($_SESSION['update']);
         }
     if($_SESSION["SessionWert"] == "Admin")
