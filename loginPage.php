@@ -81,7 +81,7 @@
                     <label class="form-label" for="Password">Password</label>
                     <input type="password" class="form-control" required name="Password"><br>
                 </div>    
-                <input type="submit" class="btn btn-primary">   
+                <input type="submit" id="submit" class="btn btn-primary">   
             </form>
         </div>
     </div>
