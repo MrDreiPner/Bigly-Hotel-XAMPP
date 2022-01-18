@@ -1,11 +1,9 @@
 <?php include "head.php"; ?>
 <body>
-<br><br><br>
     <?php 
     require_once('dbaccess.php');
     include "nav.php"; 
     ?>
-<br><br><br><br>
     <?php
     include "test_input.php"; //use test_input() to call function
         $verification = "Please Log In";
@@ -30,7 +28,7 @@
             {
                 $verification = "Account inactive! Please contact Administrator.";
             }
-            //gleicht das eingegebene Passwort mit dem hinterlegten gehashten Passwort ab
+            //gleicht das eingegebene Passwort mit dem hinterlegten gehashten Passwort ab 
             else if (password_verify($PW_input, $u_password)) {
                 setcookie("CookieWert", $u_username, time()+3600);
                 $_SESSION["SessionWert"] = $role;
@@ -71,16 +69,21 @@
             }
         }
     ?>
-    <div id="Header">
-        <h1 id="Überschrift">User Log In</h1>
+    <div id="login-form">
+        <div id="inner-login">
+            <h1 id="Überschrift">User Log In</h1>
+            <form enctype="multipart/form-data" action="loginPage.php" method="POST">
+                <div id="mb-3">
+                    <label class="form-label" for="Username">Username</label>
+                    <input type="text" class="form-control" name="Username" required placeholder="Username" value="<?php echo isset($_COOKIE["CookieWert"]) ? $_COOKIE["CookieWert"] : "";?>"><br>
+                </div>
+                <div id="mb-3">    
+                    <label class="form-label" for="Password">Password</label>
+                    <input type="password" class="form-control" required name="Password"><br>
+                </div>    
+                <input type="submit" class="btn btn-primary">   
+            </form>
+        </div>
     </div>
-    <form enctype="multipart/form-data" action="loginPage.php" method="POST">
-        <label for="Username">Username</label>
-        <input type="text" name="Username" required placeholder="Username" value="<?php echo isset($_COOKIE["CookieWert"]) ? $_COOKIE["CookieWert"] : "";?>"><br>
-        <label for="Password">Password</label>
-        <input type="password" required name="Password"><br>
-        <input type="submit">
-    </form>
-
     </body>
 </html>
