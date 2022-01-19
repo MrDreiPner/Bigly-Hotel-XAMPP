@@ -38,7 +38,7 @@
             if ($count >= 1){ 
                 $errors["email"] = "This e-mail/ username is already used!"; 
             }
-            if($data["room_nr"] != "")
+            if($data["room_nr"] != "" && $errors["room_nr"] == "")
             {
                 //Es wird geprüft ob das Zimmer bereits vergeben ist
                 $room_oc = $data["room_nr"];
@@ -61,7 +61,7 @@
         }
         if($checkschecked == "Registrierung great success!")
         {   //Neuer User wird in Datenbank aufgenommen
-            $sql = "INSERT INTO user (username, Vorname, Nachname, pw_notiz, password, email, anrede, role, room, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, true)";
+            $sql = "INSERT INTO user (username, Vorname, Nachname, password, email, anrede, role, room, active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, true)";
             $stmt = $db_obj->prepare($sql);
 
             if ($stmt===false){
@@ -71,14 +71,14 @@
             $username = $data["email"];
             $vorname= $data["vorname"];
             $nachname = $data["nachname"];
-            $pw_notiz = $data["password"];
-            //Passwort wird sofort gehasht
-            $password = password_hash($pw_notiz, PASSWORD_DEFAULT);
+            $password_checked = $data["password"];
+            //Passwort wird gehasht
+            $password = password_hash($password_checked, PASSWORD_DEFAULT);
             $email = $data["email"];
             $anrede = $data["anrede"];
             $role = $data["role"];
             $room_nr = $data["room_nr"];
-            $stmt->bind_param("ssssssiii", $username, $vorname, $nachname, $pw_notiz, $password, $email, $anrede, $role, $room_nr);
+            $stmt->bind_param("sssssiii", $username, $vorname, $nachname, $password, $email, $anrede, $role, $room_nr);
             $stmt->execute();
             $stmt->close(); $db_obj->close();
             header("Refresh:0; url=userVerwaltung.php");

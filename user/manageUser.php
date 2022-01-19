@@ -128,12 +128,10 @@
                         $ID = $_SESSION["ID"];
                         $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
                         $sql = "update user 
-                                set password = ?,
-                                pw_notiz = ?
+                                set password = ?
                                 where userID = ?";
-                                //PW_Notiz LÖSCHEN vor ABGABE!!!
                         $stmt = $db_obj->prepare($sql);
-                        $stmt->bind_param('ssi', $ch_password, $ch_password_c, $ID);
+                        $stmt->bind_param('ssi', $ch_password, $ID);
                         if ($stmt===false){
                             echo($db_obj->error);
                             echo "fail";
@@ -156,11 +154,10 @@
                     $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
                     $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
                     $sql = "update user 
-                            set password = ?,
-                            pw_notiz = ?
+                            set password = ?
                             where userID = ?";
                     $stmt = $db_obj->prepare($sql);
-                    $stmt->bind_param('ssi', $ch_password, $ch_password_c, $ID);
+                    $stmt->bind_param('ssi', $ch_password, $ID);
                     if ($stmt===false){
                         echo($db_obj->error);
                         echo "fail";
