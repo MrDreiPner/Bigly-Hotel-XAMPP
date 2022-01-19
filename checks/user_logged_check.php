@@ -1,5 +1,5 @@
 <?php
     if(!isset($_SESSION["SessionWert"])){
-        header("location: UA_access.php");
+        header("location: ../checks/UA_access.php");
     }
 ?>

@@ -30,10 +30,7 @@
 
             $_SESSION["ticketID"] = $_GET["ticketID"];
         }
-        if($_SESSION["SessionWert"] != "Admin" && $_SESSION["ID"] != $userID)
-        {
-            header("location: UA_access.php");
-        }
+
     ?>
     <?php //Ticket wird bearbeitet
         
@@ -56,7 +53,7 @@
             unset($_SESSION['ticketID']);
             header("Refresh:0; url=ticketVerwaltung.php");
          }
-         if(isset($_POST["resolved"]))
+         if(isset($_POST["resolved"]) && $_SESSION["SessionWert"] != "Service")
          {
             $resolvInput = $_POST["resolved"];
             $ID = $_SESSION["ticketID"];

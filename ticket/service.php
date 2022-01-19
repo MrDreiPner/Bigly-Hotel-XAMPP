@@ -38,8 +38,14 @@
             $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
             $destimage = "../uploads/service/".$bildname."-thumb";
             switch($path_parts["extension"]){
-                case "jpg" : $destimage = resizeJpeg($bildname, $destimage); break;
-                case "png" : $destimage = resizePng($bildname, $destimage); break;
+                case "jpg" : 
+                    $destimage = "../uploads/service/".$bildname."-thumb.jpg"; 
+                    $destimage = resizeJpeg($bildname, $destimage); 
+                    break;
+                case "png" : 
+                    $destimage = "../uploads/service/".$bildname."-thumb.png"; 
+                    $destimage = resizePng($bildname, $destimage); 
+                    break;
                 default: $error = "Bitte nur JPG oder PNG Files!!!!!";
             }
         }
