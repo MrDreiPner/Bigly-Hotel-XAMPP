@@ -25,7 +25,7 @@
                     if($_SESSION["SessionWert"] != "Admin"){
                         echo "<li class='nav-item'><a class='nav-link' href='/webtech/Bigly-Hotel-XAMPP/ticket/service.php'>Service</a></li>";
                     }
-                    echo "<li class='nav-item'><a class='nav-link' href='/webtech/Bigly-Hotel-XAMPP/user/manageUser.php'>Profile</a></li>";
+                    echo "<li class='nav-item'><a class='nav-link' href='/webtech/Bigly-Hotel-XAMPP/user/userProfile.php'>Profile</a></li>";
                 }
                 echo "<li class='nav-item'><a class='nav-link' href='/webtech/Bigly-Hotel-XAMPP/user/logout.php'>Logout</a></li>";
             } 
