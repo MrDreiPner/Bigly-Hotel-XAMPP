@@ -24,6 +24,7 @@
     }
 
     #inner-form{
+        margin-bottom: 2rem; 
         padding: 60px 30px;
         border-radius: 10px;
         background: rgba( 255, 255, 255, 0.7 );
@@ -82,13 +83,35 @@
         margin-top: 3rem;
     }
 }
+/* table design------*/
+#table-sort{
 
+}
+
+#filter{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: auto;
+}
+
+#addNews-button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+#filter div{
+    max-width: 15%;
+}
+/*-------------------*/
 nav{
     z-index: 1;
     position: fixed;
     width: 100%;
     top: 0;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
 }
 
 #news-card{
@@ -171,7 +194,8 @@ body{
     }
 
     #user-data{
-        padding-left: 12rem;
+        padding-left: 10rem;
+        padding-right: 6rem;
         font-size: 1.4rem;
         z-index: 0;
     }
@@ -197,6 +221,17 @@ body{
  
     #news-button{
         display: none;
+    }
+
+    #inner-form-ch{
+        overflow: hidden;
+        z-index: 1;
+        padding: 60px 30px;
+        border-radius: 10px;
+        background: rgba( 255, 255, 255, 0.7 );
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+        backdrop-filter: blur( 3.5px );
+        -webkit-backdrop-filter: blur( 3.5px );
     }
 }
 

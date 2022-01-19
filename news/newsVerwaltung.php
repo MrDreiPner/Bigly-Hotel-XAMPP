@@ -32,22 +32,28 @@
         $stmt->execute();
         $stmt->bind_result($headline, $date, $time, $active, $id);
     ?>
-    <div> <!--Filtermöglichkeit nach active state-->
-        <form name="filters" method="POST" action="newsVerwaltung.php">
-            <label for="filter">Filter by:</label>
-            <select name="filter">
-                <option value=2>No Filter</option>
-                <option value=1>active</option>
-                <option value=0>inactive</option>
-            </select>
-            <br>
-            <label for="orderby">Order by Date:</label>
-            <select name="orderby">
-                <option value="asc">ascending</option>
-                <option value="desc">descending</option>
-            </select>
-            <input type="submit">
+    <div id="table-sort">
+        <h3>News List</h3><br> <!--Filtermöglichkeit nach active state-->
+        <form name="filters" id="filter" method="POST" action="newsVerwaltung.php">
+            <div>
+                <label for="filter">Filter by:</label>
+                <select  name="filter" class="form-select-sm form-select">
+                    <option value=2>No Filter</option>
+                    <option value=1>active</option>
+                    <option value=0>inactive</option>
+                </select>
+            </div>
+            <div>
+                <label for="orderby">Order by Date:</label>
+                <select name="orderby" class="form-select-sm form-select">
+                    <option value="asc">ascending</option>
+                    <option value="desc">descending</option>
+                </select>
+            </div>
+            <input type="submit" id="filter-submit" class="btn btn-primary">
+            <a class='btn btn-primary' id="addNews-button" href='addNews.php'>Post News</a>
         </form>
+        
         <?php
             if(isset($_COOKIE["nothingHappened"]))
             {
@@ -55,9 +61,8 @@
             }
         ?>
     </div>
-    <br><br><br>
-    <a class='navbar-brand' href='addNews.php'>Post News</a>
-        <table id="table">
+
+        <table id="table" class="table table-striped table-hover">
         <tr>
             <th>Active</th>
             <th>Title</th>
