@@ -48,11 +48,12 @@
                 E-Mail: <?php echo $email;?><br>
                 Username: <?php echo $role;?><br>
                 Room: <?php echo $room;?><br>
-                Active: <?php
-                        if($_SESSION["SessionWert"] == "Admin"){ 
-                            if($Sactive == TRUE){echo "Active";}
-                            else{echo "Inactive";}}
-                        ?><br>
+                <?php
+                    if($_SESSION["SessionWert"] == "Admin"){ 
+                        echo "Active: ";
+                        if($Sactive == TRUE){echo "Active";}
+                        else{echo "Inactive";}}
+                ?><br>
             </div>
         </div>
     </div>
