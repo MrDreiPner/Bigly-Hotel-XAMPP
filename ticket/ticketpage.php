@@ -2,11 +2,11 @@
     include ("../head.php");
 ?>
 <body>
-<br><br><br>
+    <?php include ("../nav.php"); ?>
+
     <?php 
         require_once('../dbaccess.php');
         include ("../checks/user_logged_check.php");
-        include ("../nav.php");
         include ("../checks/test_input.php");//test_input() nutzen um rohe Daten zu testen, für mehr siehe test_input.php
         if (isset($_GET["ticketID"])){
             $sql = 'select text_guest, image_path, resolved, userID, Date, Time, room, title, text_service 
@@ -22,14 +22,19 @@
             $stmt->bind_result($text_guest, $image_path, $resolved, $userID, $date, $time, $room, $title, $textS);
             $stmt->fetch();
             $stmt->close();
-            echo "<br><br><br><br><br><br><br><h3>". $title. "</h3><br><h4>". $date. " ". $time .
-            " "."Room: ".$room ."</h4><br>". $text_guest;
-            echo "<br><img src='". $image_path ."' alt ='Room: ". $room ."'>";
-            echo "<br><div>Service Response:<br>".$textS. "</div>";
+            echo "<br><img class='img-fluid rounded-start' src='". $image_path ."' alt ='Room: ". $room ."'>";
+            echo "<div id='form'>
+                    <div id='inner-form'>
+                        <h4 class='card-title'>". $title. "</h4>
+                        <p class='card-text'><small class='text-muted'>". $date. " ". $time ." "."Room: ".$room ."</small></p>
+                        <p class='card-text'>". $text_guest."</p>";
+            echo "<br><div><p class='card-text'>Service Response:<br>".$textS. "</p>
+                        </div>
+                    </div>
+                </div>";
 
             $_SESSION["ticketID"] = $_GET["ticketID"];
         }
-
     ?>
     <?php //Ticket wird bearbeitet
         
@@ -82,10 +87,12 @@
         <?php 
         if($_SESSION["SessionWert"] == "Service" && isset($resolved)){ 
             if($resolved == "open"){
-                echo "<textarea placeholder='Service Response' required name='text_service'>".$textS."</textarea>";
-                echo "<br><input name='resolved' type='radio' value=2 checked>Issue resolved";
-                echo "<input name='resolved' type='radio' value=3>Issue unresolved"; 
-                echo "<br><input type='submit' value='Reply'>";
+                echo "<textarea class='form-control' placeholder='Service Response' required name='text_service'>".$textS."</textarea>";
+                echo "<br><input class='form-check-input' name='resolved' type='radio' value=2 checked>
+                    <label class='form-check-label' for='resolved'>Issue resolved</label>";
+                echo "<input class='form-check-input' name='resolved' type='radio' value=3>
+                    <label class='form-check-label' for='resolved'>Issue unresolved</label>"; 
+                echo "<br><input type='submit' id='submit' class='btn btn-primary' value='Reply'>";
             }
             else{
                 echo "Ticket closed! Ticket ". $resolved; 
@@ -94,7 +101,7 @@
         if(($_SESSION["SessionWert"] == "Admin" || $_SESSION["SessionWert"] == "Guest") && isset($resolved)){ 
             if($resolved != "open"){
                 echo "<br><input type='checkbox'name='resolved' value=1>Open Ticket"; 
-                echo "<br><input type='submit' value='Submit'> ";
+                echo "<br><input type='submit' id='submit' class='btn btn-primary' value='Submit'> ";
             }
             else{
                 echo "Ticket open!"; 
@@ -104,10 +111,10 @@
     </form>
     <?php
     if($_SESSION["SessionWert"] == "Admin" || $_SESSION["SessionWert"] == "Service"){
-        echo "<form action='ticketVerwaltung.php'><input type='submit' value='Back'></form>";
+        echo "<form action='ticketVerwaltung.php'><input type='submit' id='submit' class='btn btn-primary' value='Back'></form>";
     }
     else{
-        echo "<form action='service.php'><input type='submit' value='Back'></form>";
+        echo "<form action='service.php'><input type='submit' id='submit' class='btn btn-primary' value='Back'></form>";
     }
     ?>
 </body>
