@@ -21,9 +21,9 @@
     <p>
         <br>Geschäftsführung:
         <br>Patrick Faltas
-        <br><img src="Werbebilder/Faltas.jpg" alt="Patrick" class='img-fluid rounded-start'>
+        <br><img src="Werbebilder/Faltas.jpg" alt="Patrick" id="imps" class='img-fluid rounded-start'>
         <br>Matus Porubsky
-        <br><img src="Werbebilder/Matus_imp.jpg" alt="Matus" class='img-fluid rounded-start'>
+        <br><img src="Werbebilder/Matus_imp.jpg" alt="Matus" id="imps" class='img-fluid rounded-start'>
     </p>
     <p><br>Externe Beratung:
     <br>Genius</p>

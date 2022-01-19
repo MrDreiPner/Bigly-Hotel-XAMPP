@@ -130,6 +130,11 @@ img{
     margin-right: auto;
     height: auto;
 }
+
+#imps{
+    max-width: 239px;
+    max-height: 320px;
+}
 /*---------------------*/
 
 body{
@@ -239,6 +244,8 @@ body{
 /*---help page---*/
 #harold{
     margin-top: 4rem;
+    max-width: 720px;
+    max-height: 480.15px;
 }
 
 #help{
