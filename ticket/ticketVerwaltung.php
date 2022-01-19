@@ -1,12 +1,10 @@
 <?php include ("../head.php"); ?>
 <body>
-    <br><br><br>
     <?php
         include ("../checks/user_service_check.php");
         require_once('../dbaccess.php');
         include ("../nav.php");
     ?>
-    <h1>Get to work you ungrateful git!</h1>
     <?php //Selektieren , sortieren mit Filter
         if(isset($_POST["filter"]) && $_POST["filter"] != "4"){
             $filter = $_POST["filter"];
@@ -14,7 +12,7 @@
             $sql = "select ticketID, resolved, userID, Date, Time, username, nachname, room, title 
                     from tickets join user using(userID)
                     where resolved = $filter 
-                    order by Date $orderby";
+                    order by Date $orderby, Time $orderby";
             $stmt = $db_obj->prepare($sql);
         } else { //Selektieren mit Sortierung
             $orderby = "desc";
@@ -23,7 +21,7 @@
             }
             $sql = "select ticketID, resolved, userID, Date, Time, username, nachname, room, title 
                     from tickets join user using(userID)
-                    order by Date $orderby";
+                    order by Date $orderby, time $orderby";
             $stmt = $db_obj->prepare($sql);
         }
         if ($stmt===false){
@@ -32,14 +30,33 @@
         }
         $stmt->execute();
         $stmt->bind_result($ticketid, $resolved, $userID, $date, $time, $username, $nachname, $room, $title); 
-        if($_SESSION["SessionWert"] == "Admin")
-        {
-            echo "<a class='navbar-brand' href='service.php'>Open Service Ticket</a>";
-        }  
-    ?>
-    <br><br><br><br><br><br><br>
-    <div class="input">
-        <table id="table">
+    ?> <div><br><br><br>
+        <div id="table-sort">
+            <h3>Ticket List</h3><br>
+            <form name="filters" id="filter" method="POST" action="ticketVerwaltung.php">
+                <div>
+                    <label for="filter">Filter by:</label>
+                    <select name="filter" class="form-select-sm form-select">
+                        <option value=4>No Filter</option>
+                        <option value=1>open</option>
+                        <option value=2>resolved</option>
+                        <option value=3>unresolved</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="orderby">Order by Date:</label>
+                    <select name="orderby" class="form-select-sm form-select">
+                        <option value="asc">ascending</option>
+                        <option value="desc">descending</option>
+                    </select>
+                </div>
+                <input type="submit" id="filter-submit" class="btn btn-primary">
+                <?php  if($_SESSION["SessionWert"] == "Admin"){
+                            echo "<a class='btn btn-primary' id='addNews-button' href='service.php'>Open Service Ticket</a>";
+                }  ?>
+            </form>
+        </div> 
+        <table id="table" class="table table-striped table-hover">
             <tr>
                 <th>Resolved</th>
                 <th>Username</th>
@@ -63,25 +80,6 @@
             }
             $stmt->close(); $db_obj->close();
         ?>
-        </table>
-    </div>
-    <div>
-        <form name="filters" method="POST" action="ticketVerwaltung.php">
-            <label for="filter">Filter by:</label>
-            <select name="filter">
-                <option value=4>No Filter</option>
-                <option value=1>open</option>
-                <option value=2>resolved</option>
-                <option value=3>unresolved</option>
-            </select>
-            <br>
-            <label for="orderby">Order by Date:</label>
-            <select name="orderby">
-                <option value="asc">ascending</option>
-                <option value="desc">descending</option>
-            </select>
-            <input type="submit">
-        </form>
-    </div>   
+        </table>  
 </body>
 </html>

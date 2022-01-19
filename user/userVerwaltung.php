@@ -64,7 +64,7 @@
     -->
     <div id="table-sort">
         <h3>User List</h3><br>
-         <form name="filters" id="filter" method="POST" action="userVerwaltung.php">
+        <form name="filters" id="filter" method="POST" action="userVerwaltung.php">
              <div>
                 <label for="filterActive">Filter by:</label>
                 <select name="filterActive" class="form-select-sm form-select">
