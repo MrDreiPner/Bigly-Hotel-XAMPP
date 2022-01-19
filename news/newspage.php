@@ -22,9 +22,6 @@
         $stmt->bind_result($content, $headline, $imgpath, $date, $time, $active);
         $stmt->fetch();
         $stmt->close(); $db_obj->close();
-        echo "<br><br><br><br><br><br><br><div><h2>". $headline. "</h2><br><br><br><h3>Last Updated:". $date. " ". $time .
-        "</h3><br><img src=".$imgpath." alt='No picture uploaded'><p>". $content . "</p></div>";
-
         $_SESSION["news_ID"] = $_GET["newsID"];
     }
     ?>
@@ -124,36 +121,61 @@
             setcookie("nothingHappened", 1, time()+5);
             header("Refresh:0; url=newsVerwaltung.php");
         }
-        ?>
-
-    <form method="POST" action="newspage.php">
+        ?><div><br><br><br>
+    <?php echo"<img src=".$imgpath." id='harold' alt='No picture uploaded'>"; ?>
+    <div id="form">
+        <div id="inner-form-service">
+            <h1 id="Überschrift"><?php echo $headline; ?></h1><br>
+            <small class='text-muted'><?php echo"Last Updated: ". $date. " ". $time; ?></small>
+            <form method="POST" action="newspage.php">
         <?php 
         if($_SESSION["SessionWert"] == "Admin"){ 
             if(isset($active)){
-                echo "<label class='form-label' for='updateHeadline'>Update Headline</label><br>
-                <input type='text' name='updateHeadline'><br>";
+                echo "<div class='mb-3'>    
+                        <label class='form-label' for='updateHeadline'>Update Headline</label>
+                        <input type='text' class='form-control' name='updateHeadline'>
+                    </div>";
                 if(isset($content)){
-                    echo "<label class='form-label' for='content'>Update content</label><br>
-                    <textarea placeholder='news-content' required name='content'>".$content."</textarea>";
+                    echo "<div class='mb-3'> 
+                    <label class='form-label' for='content'>Update content</label>
+                    <textarea placeholder='news-content' class='form-control' required name='content'>".$content."</textarea>
+                    </div>";
                 }
                 else{
-                    echo "<label class='form-label' for='content'>Update content</label><br>
-                    <textarea placeholder='news-content' required name='content'></textarea>";
+                    echo "<div class='mb-3'>
+                    <label class='form-label' for='content'>Update content</label>
+                    <textarea placeholder='news-content' class='form-control' required name='content'></textarea>
+                    </div>";
                 }
                 if(isset($content) && $active == 1){
-                    echo "<br><input name='active' type='radio' value=0 >Don't Display";
+                    echo "<div class='form-check form-check-inline'>
+                            <input class='form-check-input' type='radio' name='active' id='inlineRadio1' value=0>
+                            <label class='form-check-label' for='active'>Don't Display</label>
+                        </div>";
                 } else{
-                    echo "<br><input name='active' type='radio' value=1 >Display";
+                    echo "<div class='form-check form-check-inline'>
+                            <input class='form-check-input' type='radio' name='active' id='inlineRadio1' value=1>
+                            <label class='form-check-label' for='active'>Display</label>
+                        </div>";
                 }
-                echo "<br><input name='update_c' type='checkbox' checked value='yes'>Update";
-                echo "<br><input name='delete' type='checkbox' value='yes'>Delete";
+                echo "<div class='form-check'>
+                        <input class='form-check-input' type='checkbox' checked name='update_c' value='yes' id='defaultCheck1'>
+                        <label class='form-check-label' for='defaultCheck1'>Update</label>
+                        </div>";
+                echo "<div class='form-check'>
+                        <input class='form-check-input' type='checkbox' name='delete' value='yes' id='defaultCheck1'>
+                        <label class='form-check-label' for='defaultCheck1'>Delete</label>
+                    </div>";
                 echo "<br><input type ='hidden' name ='sent' value = '1'/>";
-                echo "<br><input type='submit'>";
+                echo "<br><input type='submit' id='submit' class='btn btn-primary'>";
             }
         }
-        echo "<form action='newsVerwaltung.php'><input type='submit' value='Back'></form>";
+        echo "<form action='newsVerwaltung.php'><input type='submit' id='submit' class='btn btn-primary' value='Back'></form>";
         ?>
     </form>
+ 
+    
 
+                
 </body>
 </html>

@@ -19,11 +19,13 @@
         <br>Handelsregisternummer: XXX XXXX
     </p>
     <p>
-        <br>Geschäftsführung:
-        <br>Patrick Faltas
-        <br><img src="Werbebilder/Faltas.jpg" alt="Patrick" id="imps" class='img-fluid rounded-start'>
-        <br>Matus Porubsky
-        <br><img src="Werbebilder/Matus_imp.jpg" alt="Matus" id="imps" class='img-fluid rounded-start'>
+        <div id="peeps">
+            <br>Geschäftsführung:
+            <br>Patrick Faltas
+            <br><img src="Werbebilder/Faltas.jpg" alt="Patrick" id="imps" class='img-fluid rounded-start'>
+            <br>Matus Porubsky
+            <br><img src="Werbebilder/Matus_imp.jpg" alt="Matus" id="imps" class='img-fluid rounded-start'>
+        </div>
     </p>
     <p><br>Externe Beratung:
     <br>Genius</p>

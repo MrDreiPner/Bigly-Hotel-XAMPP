@@ -120,16 +120,6 @@
                 </div>
                 <input type="submit" id="filter-submit" class="btn btn-primary">
             </form>
-            <?php
-                if($_SESSION["SessionWert"] != "Guest")
-                {
-                    echo "<form name='filters' id='filter-box' action='ticketVerwaltung.php'><input type='submit' value='Back'></form>";
-                }
-                else
-                {
-                    echo "<form name='filters' id='filter-box' action='../main/index.php'><input type='submit' value='Back'></form>";
-                }
-                ?>
         </div>
         <div>
             <table id="table" class="table table-striped table-hover">
