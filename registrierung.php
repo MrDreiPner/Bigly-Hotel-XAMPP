@@ -90,9 +90,10 @@
     <div id="Header">
         <h1 id="Überschrift">User Registration</h1>
     </div>
-    <div class="input">
-        <form enctype="multipart/form-data" method = "post">
-            <div class="ersteClass">
+    <div id="form">
+        <div id="inner-form">
+            <form enctype="multipart/form-data" method = "post">
+                <div class="form-check">
                 Gender:
                 <br>
                 <input name="anrede" type="radio" value=1>Male

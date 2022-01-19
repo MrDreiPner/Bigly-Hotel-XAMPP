@@ -90,6 +90,7 @@ body{
 #header{
     margin-top: 4rem;
     text-align: center;
+    margin-bottom: 2rem;
 }
 @media only screen and (width > 1200px){
     .form-control:focus{
@@ -100,7 +101,7 @@ body{
         margin-top: 1rem;
     }
 
-    #login-form{
+    #form{
         height: 95vh;
         width: 99vw;
         background-size: cover;
@@ -110,7 +111,7 @@ body{
         align-items: center;
     }
 
-    #inner-login{
+    #inner-form{
         padding: 60px 30px;
         width: 20%;
         border-radius: 10px;
@@ -166,5 +167,20 @@ body{
 
 #inner-help li{
     list-style-type: square;
+}
+/*---------------*/
+/*---adminpage---*/
+#admin-links{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+#admin-links a{
+    margin: .5rem 0.5rem 0.5rem 0.5rem;
+    color: white;
+    text-decoration: none;
+    text-align:center;
 }
 /*---------------*/

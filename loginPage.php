@@ -81,8 +81,8 @@
             }
         }
     ?>
-    <div id="login-form">
-        <div id="inner-login">
+    <div id="form">
+        <div id="inner-form">
             <h1 id="Überschrift">User Log In</h1><br>
             <span class="error"> <?php echo $verification;?></span> 
             <form enctype="multipart/form-data" action="loginPage.php" method="POST">
