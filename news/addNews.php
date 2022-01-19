@@ -5,7 +5,6 @@
         require_once('../dbaccess.php');
         include ("../nav.php");
         include ("../checks/user_admin_check.php");
-        include ("../checks/user_indicator.php");
         include ("../checks/test_input.php"); //use test_input() to call function
         include ("../resizeImage.php");
 

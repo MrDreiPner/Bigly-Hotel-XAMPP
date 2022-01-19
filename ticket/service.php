@@ -68,8 +68,8 @@
             $stmt->bind_param("sssi",$betreff, $serviceText, $destimage, $u_username);
             $stmt->execute();
         }
-    ?>
-        <?php
+        
+        //Hier wird nach diversen Kriterien gefiltert wobei 4 "No Filter" bedeutet
         if(isset($_POST["filter"]) && $_POST["filter"] != "4"){
             $filter = $_POST["filter"];
             $orderby = $_POST["orderby"];

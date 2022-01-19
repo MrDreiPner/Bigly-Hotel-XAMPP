@@ -7,7 +7,6 @@
         require_once('../dbaccess.php');
         include ("../checks/user_logged_check.php");
         include ("../nav.php");
-        include ("../checks/user_indicator.php");
         include ("../checks/test_input.php");//test_input() nutzen um rohe Daten zu testen, für mehr siehe test_input.php
         if (isset($_GET["ticketID"])){
             $sql = 'select text_guest, image_path, resolved, userID, Date, Time, room, title, text_service 
