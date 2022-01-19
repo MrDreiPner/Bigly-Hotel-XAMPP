@@ -34,5 +34,4 @@
             }
             $stmt->close(); $db_obj->close();
         ?>
-        <form action='../main/index.php'><input type='submit' value='Back'></form>
     </ul>
