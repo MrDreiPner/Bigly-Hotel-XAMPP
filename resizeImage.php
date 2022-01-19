@@ -18,7 +18,6 @@
         );
         //speichern des Thumbnails
         imagejpeg($thumb, $destimage);
-        echo "Saved successfully<br>";
         return $destimage; 
     }
 
@@ -38,8 +37,7 @@
             $width, $height
         );
         //speichern des Thumbnails
-        imagepng($thumb, $destimage);
-        echo "Saved successfully<br>";    
+        imagepng($thumb, $destimage);  
         return $destimage;
     }
 ?>

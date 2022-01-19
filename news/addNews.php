@@ -61,16 +61,16 @@
                     <input type="text" class="form-control" required name="newsHeadline">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="newsText">Write your news here:</label>
-                    <textarea name="newsText" class="form-label"></textarea>
+                    <label class="form-label" for="newsText">Write your news here</label>
+                    <textarea name="newsText" class="form-control"></textarea>
                 </div>
-                <div class="input-group mb-3">
-                    <span class="error"><?php echo $errors;?></span>
-                    <label for="Bildname">Picture Title</label>
-                    <input type="text" class="form-control" name="Bildname"  aria-describedby="button-addon2">
-                    <input type="file" accept=".jpg, .png" name="Bildupload" class="btn btn-outline-secondary" id="button-addon2">
+                <div class="mb-3">
+                    <label for="Bildname">Picture Title</label>      
+                    <span class="error"><?php echo $errors;?></span> 
+                    <input type="text" class="form-control" name="Bildname"><br>
+                    <input type="file" id="img-upload" accept=".jpg, .png" name="Bildupload" class="btn btn-primary btn-sm form-control">
                 </div>
-            <input type="submit" class="btn btn-primary">
+                <input type="submit" id="submit" class="btn btn-primary">
             </form>
         </div>
     </div>

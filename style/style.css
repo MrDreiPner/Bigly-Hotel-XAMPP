@@ -47,6 +47,14 @@
         white-space: nowrap;
         overflow: hidden;
     }
+
+    #filter-box{
+        margin-bottom: 2rem;
+    }
+
+    #table{
+        margin-top: 3rem;
+    }
 }
 
 nav{
@@ -79,8 +87,6 @@ img{
     display: block;
     margin-left: auto;
     margin-right: auto;
-    height: 480px;
-    width: 720px;
     height: auto;
 }
 /*---------------------*/
@@ -189,6 +195,20 @@ body{
 }
 /*---------------*/
 
-textarea{
-    width: 20.009rem;
+#filter-box{
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
 }
+
+#filter-box div{
+    margin-right: 3rem;
+}
+
+#option-select{
+    max-height: 10%;
+}
+
+filter-submit{
+
+}   

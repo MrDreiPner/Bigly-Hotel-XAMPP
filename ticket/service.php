@@ -1,6 +1,6 @@
 <?php include ("../head.php"); ?>
 <body>
-<br><br><br>
+
     <?php 
         include ("../checks/user_guest_check.php");
         require_once('../dbaccess.php');
@@ -8,17 +8,25 @@
         include ("../checks/user_indicator.php");
         include ("../checks/test_input.php");//test_input() nutzen um rohe Daten zu testen, für mehr siehe test_input.php
     ?>
-    <br><br> <br><br>
-    <div class="input">
-    <form enctype="multipart/form-data" method="POST">
-        <label for="Betreff" required>Betreff</label><br>
-        <span class="error"> <?php if(isset($errors)){ echo $errors;}?></span>
-        <input type="text" name="Betreff"><br>
-        Please describe the issues:<br>
-        <textarea name="serviceText" required></textarea><br><br>
-        <span class="error"><?php if(isset($error)){ echo $error;}?></span>
-        <input type="file" accept=".jpg, .png"  name="Bildupload"><br>
-        <input type="submit">
+    
+    <div id="form">
+        <div id="inner-form">
+            <h1 id="Überschrift">File new Ticket</h1><br>
+            <form enctype="multipart/form-data" method="POST">
+            <div class="mb-3">        
+                <label for="Betreff" class="form-label">Betreff</label><br>
+                <span class="error"> <?php if(isset($errors)){ echo $errors;}?></span>
+                <input type="text" class="form-control" required name="Betreff"><br>
+            </div>
+            <div class="mb-3">
+                <label for="serviceText" class="form-label">Please describe the issue</label>
+                <textarea name="serviceText" class="form-control" required></textarea>
+            </div>
+            <div class="mb-3">
+                <span class="error"><?php if(isset($error)){ echo $error;}?></span>
+                <input type="file"  id="img-upload" class="btn btn-primary btn-sm form-control" accept=".jpg, .png"  name="Bildupload">
+            </div>
+        <input type="submit" id="submit" class="btn btn-primary">
     </form>
     </div>
     <?php 
@@ -70,18 +78,18 @@
             $sql = "select ticketID, resolved, userID, Date, Time, room, title 
                     from tickets join user using(userID)
                     where resolved = $filter and userID = $userID
-                    order by Date $orderby";
+                    order by Date $orderby, time $orderby";
             $stmt = $db_obj->prepare($sql);
         } else {
             $userID = $_SESSION["ID"];
-            $orderby = "asc";
+            $orderby = "desc";
             if(isset($_POST["orderby"])){
                 $orderby = $_POST["orderby"];
             }
             $sql = "select ticketID, resolved, userID, Date, Time, room, title 
                     from tickets join user using(userID)
                     where userID = $userID
-                    order by Date $orderby";
+                    order by Date $orderby, time $orderby";
             $stmt = $db_obj->prepare($sql);
         }
         if ($stmt===false){
@@ -92,48 +100,52 @@
         $stmt->bind_result($ticketid, $resolved, $userID, $date, $time, $room, $title);
     
     ?>
-    <br><br><br><br><br><br><br>
-    <div class="input">
+    <div id="table-sort">
         <h3>Your Service-Tickets</h3><br>
-    <table id="table">
-        <tr>
-            <th>Resolved</th>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Room</th>
-        </tr>
-        <?php 
-            while($stmt->fetch()){
-                echo "<tr>
-                <td>". $resolved.
-                "</td><td><a href='ticketpage.php?ticketID=" . $ticketid ."'>" .$title.
-                "</a></td><td>". $date.
-                "</td><td>". $time.
-                "</td><td>". $room.
-                "</td></tr>";
-            }
-            $stmt->close(); $db_obj->close();
-        ?>
-    </table>
-    </div>
-    <div>
-        <form name="filters" method="POST" action="service.php">
-            <label for="filter">Filter by:</label>
-            <select name="filter">
-                <option value=4>No Filter</option>
-                <option value=1>open</option>
-                <option value=2>resolved</option>
-                <option value=3>unresolved</option>
-            </select>
-            <br>
-            <label for="orderby">Order by Date:</label>
-            <select name="orderby">
-                <option value="asc">ascending</option>
-                <option value="desc">descending</option>
-            </select>
-            <input type="submit">
-        </form>
+        <div id="option-select">
+            <form name="filters" id="filter-box" method="POST" action="service.php">
+                <div>
+                    <label for="filter">Filter by:</label>
+                    <select name="filter" class="form-select-sm form-select">
+                        <option value=4>No Filter</option>
+                        <option value=1>open</option>
+                        <option value=2>resolved</option>
+                        <option value=3>unresolved</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="orderby">Order by Date:</label>
+                    <select name="orderby" class="form-select-sm form-select">
+                        <option value="asc">ascending</option>
+                        <option value="desc">descending</option>
+                    </select>
+                </div>
+                <input type="submit" id="filter-submit" class="btn btn-primary">
+            </form>
+        </div>
+        <div>
+            <table id="table" class="table table-striped table-hover">
+                <tr>
+                    <th>Resolved</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Room</th>
+                </tr>
+                <?php 
+                    while($stmt->fetch()){
+                        echo "<tr>
+                        <td>". $resolved.
+                        "</td><td><a href='ticketpage.php?ticketID=" . $ticketid ."'>" .$title.
+                        "</a></td><td>". $date.
+                        "</td><td>". $time.
+                        "</td><td>". $room.
+                        "</td></tr>";
+                    }
+                    $stmt->close(); $db_obj->close();
+                ?>
+            </table>
+        </div>
     </div>
 </body>
 </html>
