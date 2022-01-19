@@ -188,3 +188,7 @@ body{
     text-align:center;
 }
 /*---------------*/
+
+textarea{
+    width: 20.009rem;
+}

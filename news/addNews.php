@@ -16,12 +16,16 @@
             $bildname = test_input($_POST["Bildname"])."_".uniqid();
             $errors = checkOnlyCharsAndNumbersNoSpace($_POST["Bildname"]);
             $path_parts = pathinfo($_FILES["Bildupload"]["name"]);
-            $destimage = "../uploads/news/".$bildname."-thumb";
+            ;
             if (isset($path_parts["extension"]))
             {
                 switch($path_parts["extension"]){
-                    case "jpg" : $destimage = resizeJpeg($bildname, $destimage); break;
-                    case "png" : $destimage = resizePng($bildname, $destimage); break;
+                    case "jpg" :
+                        $destimage = "../uploads/news/".$bildname."-thumb.jpg"; 
+                        $destimage = resizeJpeg($bildname, $destimage); break;
+                    case "png" :
+                        $destimage = "../uploads/news/".$bildname."-thumb.png"; 
+                        $destimage = resizePng($bildname, $destimage); break;
                     default: $error = "Bitte nur JPG oder PNG Files!!!!!";
                 }
             }
@@ -51,23 +55,24 @@
     <div id="form">
         <div id="inner-form">
             <h1 id="Überschrift">Add News Post</h1><br>
-        <form enctype="multipart/form-data" action="addNews.php" method = "post">
-        <div class="mb-3">
-            <label class="form-label" for="newsHeadline">Headline</label>
-            <input type="text" class="form-control" required name="newsHeadline">
+            <form enctype="multipart/form-data" action="addNews.php" method = "post">
+                <div class="mb-3">
+                    <label class="form-label" for="newsHeadline">Headline</label>
+                    <input type="text" class="form-control" required name="newsHeadline">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="newsText">Write your news here:</label>
+                    <textarea name="newsText" class="form-label"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="error"><?php echo $errors;?></span>
+                    <label for="Bildname">Picture Title</label>
+                    <input type="text" class="form-control" name="Bildname"  aria-describedby="button-addon2">
+                    <input type="file" accept=".jpg, .png" name="Bildupload" class="btn btn-outline-secondary" id="button-addon2">
+                </div>
+            <input type="submit" class="btn btn-primary">
+            </form>
         </div>
-        <div class="mb-3">
-            <label class="form-label" for="newsText">Write your news here:</label>
-            <textarea name="newsText" class="form-label"></textarea>
-        </div>
-        <div class="input-group mb-3">
-            <span class="error"><?php echo $errors;?></span>
-            <label for="Bildname">Picture Title</label>
-            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-            <input type="file" accept=".jpg, .png" name="Bildupload" class="btn btn-outline-secondary" id="button-addon2">
-        </div>
-        <input type="submit" class="btn btn-primary">
-    </form>
     </div>
 </body>
 </html>
