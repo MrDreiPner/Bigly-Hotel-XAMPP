@@ -2,7 +2,6 @@
 <body>
 <?php
     include ("../nav.php");
-    include ("../checks/user_indicator.php");
     require_once('../dbaccess.php');
     if(isset($_GET["news_id"]))
     {
@@ -36,7 +35,7 @@
     }
     else
     {
-        header("location: UA_access.php");
+        header("location: ../checks/UA_access.php");
     }
 ?>
 <form action='../main/index.php'><input type='submit' value='Back'></form>

@@ -5,7 +5,6 @@
         require_once('../dbaccess.php');
         include ("../nav.php");
         include ("../checks/user_admin_check.php");
-        include ("../checks/user_indicator.php");
     //Select Statements für alle Sortier und Filteroptionen
         //Filtern nach Aktivität und Rolle & sortieren 
         if(isset($_POST["filterActive"]) && $_POST["filterActive"] != 2 && $_POST["filterRole"] != 0){

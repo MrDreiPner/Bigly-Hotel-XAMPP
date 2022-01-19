@@ -5,7 +5,6 @@
         include ("../checks/user_service_check.php");
         require_once('../dbaccess.php');
         include ("../nav.php");
-        include ("../checks/user_indicator.php");
     ?>
     <h1>Get to work you ungrateful git!</h1>
     <?php //Selektieren , sortieren mit Filter

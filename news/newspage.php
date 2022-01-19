@@ -7,7 +7,6 @@
     <?php //News Post wird angezeigt
     include ("../nav.php");
     include ("../checks/user_admin_check.php");
-    include ("../checks/user_indicator.php");
     include ("../checks/test_input.php");
     if (isset($_GET["newsID"])){
         $sql = 'select content, headline, imgpath, date, time, active

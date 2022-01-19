@@ -4,7 +4,6 @@
         include ("../checks/user_guest_check.php");
         require_once('../dbaccess.php');
         include ("../nav.php");
-        include ("../checks/user_indicator.php");
         include ("../checks/test_input.php");//test_input() nutzen um rohe Daten zu testen, für mehr siehe test_input.php
     ?>
     <?php
@@ -17,7 +16,7 @@
         }
         else if (isset($_GET["user_to_manage_ID"]) && $_SESSION["SessionWert"] != "Admin")
         {
-            header("location: UA_access.php");
+            header("location: ../checks/UA_access.php");
         }
         if (isset($_SESSION["ID"])){
             //Je nachdem wie auf manageUser zugegriffen wird, werden entweder die eigenen

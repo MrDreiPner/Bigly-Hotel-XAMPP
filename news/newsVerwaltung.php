@@ -5,7 +5,6 @@
         require_once('../dbaccess.php');
         include ("../nav.php");
         include ("../checks/user_admin_check.php");
-        include ("../checks/user_indicator.php");
 
         //printet gefilterte, sortierte Liste der News Posts
         if(isset($_POST["filter"]) && $_POST["filter"] != "2"){

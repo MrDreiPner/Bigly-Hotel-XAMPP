@@ -1,7 +1,6 @@
 <?php 
     include "head.php"; 
     include ("checks/user_admin_check.php");
-    include ("checks/user_indicator.php");
 ?>
 
 <body>
