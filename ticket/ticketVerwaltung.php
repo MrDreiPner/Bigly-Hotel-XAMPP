@@ -35,7 +35,7 @@
         $stmt->bind_result($ticketid, $resolved, $userID, $date, $time, $username, $nachname, $room, $title); 
         if($_SESSION["SessionWert"] == "Admin")
         {
-            echo "<a class='navbar-brand' href='service.php'>Service</a>";
+            echo "<a class='navbar-brand' href='service.php'>Open Service Ticket</a>";
         }  
     ?>
     <br><br><br><br><br><br><br>

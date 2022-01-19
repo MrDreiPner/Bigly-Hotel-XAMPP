@@ -14,16 +14,16 @@
             $sql = "select headline, date, time, active, news_id  
                     from news
                     where active = $filter 
-                    order by Date $orderby";
+                    order by Date $orderby, time $orderby";
             $stmt = $db_obj->prepare($sql);
         } else {
-            $orderby = "asc";
+            $orderby = "desc";
             if(isset($_POST["orderby"])){
             $orderby = $_POST["orderby"];
             }
             $sql = "select headline, date, time, active, news_id  
                     from news
-                    order by Date $orderby";
+                    order by Date $orderby, time $orderby";
             $stmt = $db_obj->prepare($sql);
         }
         if ($stmt===false){

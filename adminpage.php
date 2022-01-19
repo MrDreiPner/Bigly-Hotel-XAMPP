@@ -12,7 +12,7 @@
         <a class="btn btn-primary" href="user/userVerwaltung.php">Manage Users</a>
         <a class="btn btn-primary" href="news/addNews.php">Add News</a>
         <a class="btn btn-primary" href="news/newsVerwaltung.php">Manage News</a>
-        <a class="btn btn-primary" href="ticket/ticketVerwaltung.php">Ticket Verwaltung</a>
+        <a class="btn btn-primary" href="ticket/ticketVerwaltung.php">Service-Tickets</a>
         <a class="btn btn-primary" href="user/manageUser.php">Admin Profile</a>
     </div>
 </body>
