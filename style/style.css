@@ -14,6 +14,16 @@
         align-items: center;
     }
 
+    #peeps{
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 2rem;
+        flex-direction: column;
+    }
+
     #form{
         height: 95vh;
         width: 100vw;
@@ -43,7 +53,8 @@
         backdrop-filter: blur( 3.5px );
         -webkit-backdrop-filter: blur( 3.5px );
     }
-   
+    
+
 
     #inner-form-addUser{
         padding: 60px 30px;
@@ -97,6 +108,15 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
+}
+
+#peeps{
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
 }
 
 #filter div{

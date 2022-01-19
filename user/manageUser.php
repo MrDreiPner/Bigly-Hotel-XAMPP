@@ -130,7 +130,7 @@
                                 set password = ?
                                 where userID = ?";
                         $stmt = $db_obj->prepare($sql);
-                        $stmt->bind_param('ssi', $ch_password, $ID);
+                        $stmt->bind_param('si', $ch_password, $ID);
                         if ($stmt===false){
                             echo($db_obj->error);
                             echo "fail";
@@ -154,7 +154,7 @@
                             set password = ?
                             where userID = ?";
                     $stmt = $db_obj->prepare($sql);
-                    $stmt->bind_param('ssi', $ch_password, $ID);
+                    $stmt->bind_param('si', $ch_password, $ID);
                     if ($stmt===false){
                         echo($db_obj->error);
                         echo "fail";

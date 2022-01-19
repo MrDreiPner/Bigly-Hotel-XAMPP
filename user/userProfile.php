@@ -39,7 +39,7 @@
         <?php
             if($_SESSION["SessionWert"] != "Service")
             {
-                echo "<a class='btn btn-primary' href='/webtech/Bigly-Hotel-XAMPP/user/manageUser.php'>Manage Profile</a>";
+                echo "<a class='btn btn-primary' href='/Hotelverwaltung_Faltas_Porubsky/Bigly-Hotel-XAMPP/user/manageUser.php'>Manage Profile</a>";
             }
         ?>
 
