@@ -8,6 +8,38 @@
     </div>    
 <div class="text-wrap text-start" id="help">
     <div id="inner-help">
+    <p class="card"><h4>Setting up the database:</h4><br>
+            <ul class="card-body">
+                <li id="help-list">Run these <a href="DB/bighotel_db.sql">SQL-Statements</a></li>
+                <li id="help-list">Set up the following <a href="DB/DB_Profiles.txt" target="_blank">Profiles</a></li>
+            </ul>
+            <br>
+            The database is preloaded with news, tickets and users.
+            Passwords are role specific and role identical.
+            <table>
+                <tr>
+                    <th>Role</th>
+                    <th>User</th>
+                    <th>Password</th>
+                </tr>
+                <tr>
+                    <td>Admin</td>
+                    <td>admin</td>
+                    <td>admin</td>
+                </tr>
+                <tr>
+                    <td>Service</td>
+                    <td>service</td>
+                    <td>service123</td>
+                </tr>
+                <tr>
+                    <td>Guest</td>
+                    <td>guest</td>
+                    <td>guest123</td>
+                </tr>
+
+            </table>
+        </p>
     <p class="card"><h4>As Anonymous you can:</h4><br>
             <ul class="card-body">
                 <li id="help-list">See News</li>
