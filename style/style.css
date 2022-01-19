@@ -249,6 +249,14 @@ body{
     width: 100%;
     height: auto;
 }
+.ticket-card{
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
 
 #help{
     margin-top: 2rem;

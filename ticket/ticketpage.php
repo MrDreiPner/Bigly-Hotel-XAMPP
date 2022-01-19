@@ -22,13 +22,13 @@
             $stmt->bind_result($text_guest, $image_path, $resolved, $userID, $date, $time, $room, $title, $textS);
             $stmt->fetch();
             $stmt->close();
-            echo "<br><img class='img-fluid rounded-start' src='". $image_path ."' alt ='Room: ". $room ."'>";
-            echo "<div id='form'>
-                    <div id='inner-form'>
+            echo "<div class='ticket-card'>
+                    <div id='inner-form2'>";
+            echo "<img class='img-fluid rounded-start' src='". $image_path ."' alt ='Room: ". $room ."'>
                         <h4 class='card-title'>". $title. "</h4>
                         <p class='card-text'><small class='text-muted'>". $date. " ". $time ." "."Room: ".$room ."</small></p>
                         <p class='card-text'>". $text_guest."</p>";
-            echo "<br><div><p class='card-text'>Service Response:<br>".$textS. "</p>
+            echo "<div><p class='card-text'>Service Response:<br>".$textS. "</p>
                         </div>
                     </div>
                 </div>";
@@ -82,40 +82,35 @@
             }
          }
         ?>
-
-    <form method="POST" action="ticketpage.php">
-        <?php 
-        if($_SESSION["SessionWert"] == "Service" && isset($resolved)){ 
-            if($resolved == "open"){
-                echo "<textarea class='form-control' placeholder='Service Response' required name='text_service'>".$textS."</textarea>";
-                echo "<br><input class='form-check-input' name='resolved' type='radio' value=2 checked>
-                    <label class='form-check-label' for='resolved'>Issue resolved</label>";
-                echo "<input class='form-check-input' name='resolved' type='radio' value=3>
-                    <label class='form-check-label' for='resolved'>Issue unresolved</label>"; 
-                echo "<br><input type='submit' id='submit' class='btn btn-primary' value='Reply'>";
-            }
-            else{
-                echo "Ticket closed! Ticket ". $resolved; 
-            }
-        }
-        if(($_SESSION["SessionWert"] == "Admin" || $_SESSION["SessionWert"] == "Guest") && isset($resolved)){ 
-            if($resolved != "open"){
-                echo "<br><input type='checkbox'name='resolved' value=1>Open Ticket"; 
-                echo "<br><input type='submit' id='submit' class='btn btn-primary' value='Submit'> ";
-            }
-            else{
-                echo "Ticket open!"; 
-            }
-        }
-        ?>
-    </form>
-    <?php
-    if($_SESSION["SessionWert"] == "Admin" || $_SESSION["SessionWert"] == "Service"){
-        echo "<form action='ticketVerwaltung.php'><input type='submit' id='submit' class='btn btn-primary' value='Back'></form>";
-    }
-    else{
-        echo "<form action='service.php'><input type='submit' id='submit' class='btn btn-primary' value='Back'></form>";
-    }
-    ?>
+    <div class="ticket-card">
+        <div id='inner-form'>
+            <form method="POST" action="ticketpage.php">
+                <?php 
+                if($_SESSION["SessionWert"] == "Service" && isset($resolved)){ 
+                    if($resolved == "open"){
+                        echo "<textarea class='form-control' placeholder='Service Response' required name='text_service'>".$textS."</textarea>";
+                        echo "<br><input class='form-check-input' name='resolved' type='radio' value=2 checked>
+                            <label class='form-check-label' for='resolved'>Issue resolved</label>";
+                        echo "<input class='form-check-input' name='resolved' type='radio' value=3>
+                            <label class='form-check-label' for='resolved'>Issue unresolved</label>"; 
+                        echo "<br><input type='submit' id='submit' class='btn btn-primary' value='Reply'>";
+                    }
+                    else{
+                        echo "Ticket closed! Ticket ". $resolved; 
+                    }
+                }
+                if(($_SESSION["SessionWert"] == "Admin" || $_SESSION["SessionWert"] == "Guest") && isset($resolved)){ 
+                    if($resolved != "open"){
+                        echo "<br><input type='checkbox'name='resolved' value=1>Open Ticket"; 
+                        echo "<br><input type='submit' id='submit' class='btn btn-primary' value='Submit'> ";
+                    }
+                    else{
+                        echo "Ticket open!"; 
+                    }
+                }
+                ?>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
