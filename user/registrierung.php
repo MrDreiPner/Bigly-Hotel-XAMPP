@@ -32,27 +32,33 @@
             $errors["email"] = checkEmail($data["email"]);
             $errors["room_nr"] = checkOnlyNumbers($data["room_nr"]);
 
+            $sql = "SELECT email FROM user WHERE email = '$data[email]'"; 
+            $result = $db_obj->query($sql); 
+            $count1 = mysqli_num_rows($result); 
             $sql = "SELECT username FROM user WHERE username = '$data[email]'"; 
             $result = $db_obj->query($sql); 
             $count = mysqli_num_rows($result); 
-            if ($count >= 1){ 
+            if ($count >= 1 || $count1 >= 1){ 
                 $errors["email"] = "This e-mail/ username is already used!"; 
             }
             if($data["room_nr"] != "" && $errors["room_nr"] == "")
             {
                 //Es wird geprüft ob das Zimmer bereits vergeben ist
                 $room_oc = $data["room_nr"];
-                $sql = "SELECT room FROM user 
-                        WHERE room = '$room_oc' 
-                        and active = 1
-                        and (role != 'Admin' 
-                        or 'Service')"; 
-                $result = $db_obj->query($sql); 
-                $count = mysqli_num_rows($result); 
-                if ($count >= 1){ 
-                    $errors["room_nr"] = "Room already occupied!"; 
+                if($data["role"] == 3)
+                {
+                    $sql = "SELECT room FROM user 
+                            WHERE room = '$room_oc' 
+                            and active = 1
+                            and (role != 'Admin' 
+                            or 'Service')"; 
+                    $result = $db_obj->query($sql); 
+                    $count = mysqli_num_rows($result); 
+                    if ($count >= 1){ 
+                        $errors["room_nr"] = "Room already occupied!"; 
+                    }
+                    $result->close();
                 }
-                $result->close();
             }
             foreach ($errors as $error) {
                 if ($error != "") {
