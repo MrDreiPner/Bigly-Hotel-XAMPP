@@ -14,7 +14,7 @@
         align-items: center;
     }
 
-    #login-form{
+    #form{
         height: 95vh;
         width: 100vw;
         display: flex;

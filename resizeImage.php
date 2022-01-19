@@ -24,7 +24,7 @@
 
     function resizePng($bildname, $destimage) {
         //-----Thumbnail machen-----
-        $srcimage = $bildname.".png"; //Pfad vom original
+        $srcimage = $_FILES["Bildupload"]["tmp_name"]; //Pfad vom original
         list($width, $height) = getimagesize($srcimage);
         $newwidth=720; //Maße, die in den Unterlagen gegeben wurden
         $newheight=480;

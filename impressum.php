@@ -3,7 +3,7 @@
 <br><br><br>
     <?php
         include "nav.php";
-        include "user_indicator.php";
+        include ("checks/user_indicator.php");
     ?>
     <div class="div">
         <div id="Header">

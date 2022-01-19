@@ -2,7 +2,7 @@
 <body >
     <?php
         include "nav.php";
-        include "user_indicator.php";
+        include ("checks/user_indicator.php");
     ?>   
     <div id="image">
         <img id="harold" src="Werbebilder/harold1.jpg" alt="Hide the Pain">
