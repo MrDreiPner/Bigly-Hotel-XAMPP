@@ -48,18 +48,25 @@
     <!--News Beiträge werden erstellt.
         Beitrag besteht aus Titel, Text, Bild, Datum, Uhrzeit
     -->
-    <div class="input"> 
-    <form enctype="multipart/form-data" action="addNews.php" method = "post">
-        Headline:<br>
-        <input type="text" required name="newsHeadline"><br>
-        Write your news here:<br>
-        <textarea name="newsText"></textarea><br>
-        <span class="error"><?php echo $errors;?></span>
-        <label for="Bildname">Picture Title</label><br>
-        <input type="text" name="Bildname"><br>
-        <input type="file" accept=".jpg, .png" name="Bildupload"><br>
-        <input type="submit">
-
+    <div id="form">
+        <div id="inner-form">
+            <h1 id="Überschrift">Add News Post</h1><br>
+        <form enctype="multipart/form-data" action="addNews.php" method = "post">
+        <div class="mb-3">
+            <label class="form-label" for="newsHeadline">Headline</label>
+            <input type="text" class="form-control" required name="newsHeadline">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="newsText">Write your news here:</label>
+            <textarea name="newsText" class="form-label"></textarea>
+        </div>
+        <div class="input-group mb-3">
+            <span class="error"><?php echo $errors;?></span>
+            <label for="Bildname">Picture Title</label>
+            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <input type="file" accept=".jpg, .png" name="Bildupload" class="btn btn-outline-secondary" id="button-addon2">
+        </div>
+        <input type="submit" class="btn btn-primary">
     </form>
     </div>
 </body>
