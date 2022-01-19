@@ -185,6 +185,16 @@ body{
         border-radius: 10px;
     }
 
+    #inner-form2{
+        margin-bottom: 2rem; 
+        padding: 60px 30px;
+        border-radius: 10px;
+        background: rgba( 255, 255, 255, 0.7 );
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+        backdrop-filter: blur( 3.5px );
+        -webkit-backdrop-filter: blur( 3.5px );
+    }
+
     #inner-form{
         padding: 60px 30px;
         width: 35%;

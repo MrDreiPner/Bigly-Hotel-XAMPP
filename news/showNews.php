@@ -19,18 +19,16 @@
         $stmt->execute();
         $stmt->bind_result($headline, $imgpath, $content, $date);
         $stmt->fetch();
-        echo "<div class='row g-0' id='news-card news-center'>
-        <div class='col-md-4'>
-            <img src='".$imgpath."' class='img-fluid rounded-start' alt='".$headline."'>
+        echo "<div id='news-card news-center'>
+            <img src='".$imgpath."' id='harold' class='img-fluid rounded-start' alt='".$headline."'>
             </div>
-            <div class='col-md-8'>
-                <div class='card-body' id='news-text'>
+            <div>
+                <div class='card-body center' id='inner-form2'>
                     <h4 class='card-title'>".$headline."</h4>
                     <p>".$content."</p>
-                    ".$date."
+                    <p class='card-text'><small class='text-muted'>".$date."</small></p>
                 </div>
-            </div>
-        </div>";
+                </div>";
         $stmt->close(); $db_obj->close();
     }
     else
@@ -38,6 +36,5 @@
         header("location: ../checks/UA_access.php");
     }
 ?>
-<form action='../main/index.php'><input type='submit' value='Back'></form>
 </body>
 </html>
