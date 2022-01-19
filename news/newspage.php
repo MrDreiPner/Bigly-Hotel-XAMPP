@@ -45,12 +45,11 @@
             $stmt->execute();
             $stmt->close(); $db_obj->close();
             unset($_SESSION['news_ID']);
-            header("Refresh:0; url=newsVerwaltung.php");
-
+            header("location: newsVerwaltung.php");
         }
 
         //Veränderungen am News Post werden in der Datenbank hochgeladen
-        if(isset($_POST["active"]))  
+        if(isset($_POST["active"]) && isset($_SESSION["news_ID"]))  
         {
             if(isset($_POST["updateHeadline"]) && $_POST["updateHeadline"] != ""  && isset($_POST["update_c"]))
             {
@@ -93,7 +92,7 @@
             unset($_SESSION['news_ID']);
             header("Refresh:0; url=newsVerwaltung.php");
          }
-         else if(isset($_POST["update_c"]))
+         else if(isset($_POST["update_c"]) && isset($_SESSION["news_ID"]))
          { 
             if(isset($_POST["updateHeadline"]) && $_POST["updateHeadline"] != "")
             {
@@ -121,11 +120,11 @@
             unset($_SESSION['news_ID']);
             header("Refresh:0; url=newsVerwaltung.php");
          }
-        else if(isset($_POST["sent"]))
-         {
+        else if(isset($_POST["sent"]) && !isset($_POST["delete"]))
+        {
             setcookie("nothingHappened", 1, time()+5);
             header("Refresh:0; url=newsVerwaltung.php");
-         }
+        }
         ?>
 
     <form method="POST" action="newspage.php">
