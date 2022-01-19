@@ -31,7 +31,7 @@
         }
         $stmt->execute();
         $stmt->bind_result($headline, $date, $time, $active, $id);
-    ?>
+    ?><div><br><br><br>
     <div id="table-sort">
         <h3>News List</h3><br> <!--Filtermöglichkeit nach active state-->
         <form name="filters" id="filter" method="POST" action="newsVerwaltung.php">

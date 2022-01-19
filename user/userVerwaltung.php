@@ -62,38 +62,49 @@
         Filtern möglich nach Aktiv/Inaktiv und/oder User Rolle
         Sortieren möglich nach Username, Vorname, Nachname, Anrede, Zimmer, Aktiv, Rolle
     -->
-         <form name="filters" method="POST" action="userVerwaltung.php">
-            <label for="filterActive">Filter by:</label>
-            <select name="filterActive">
-                <option value=2>No Filter</option>
-                <option value=1>active</option>
-                <option value=0>inactive</option>
-            </select>
-            <br>
-            <label for="filterRole">Filter by:</label>
-            <select name="filterRole">
-                <option value=0>No Filter</option>
-                <option value=1>Admin</option>
-                <option value=2>Service</option>
-                <option value=3>Guest</option>
-            </select>
-            <br>
-            <label for="orderby">Order by:</label>
-            <select name="orderGroup">
-                <option value="active">Active</option>
-                <option value="role">Role</option>
-                <option value="username">Username</option>
-                <option value="anrede">Gender</option>
-                <option value="vorname">First Name</option>
-                <option value="nachname">Last Name</option>
-                <option value="room">Room</option>
-            </select>
-            <select name="orderby">
-                <option value="asc">ascending</option>
-                <option value="desc">descending</option>
-            </select>
-            <input type="submit">
+    <div id="table-sort">
+        <h3>User List</h3><br>
+         <form name="filters" id="filter" method="POST" action="userVerwaltung.php">
+             <div>
+                <label for="filterActive">Filter by:</label>
+                <select name="filterActive" class="form-select-sm form-select">
+                    <option value=2>No Filter</option>
+                    <option value=1>active</option>
+                    <option value=0>inactive</option>
+                </select>
+            </div>
+            <div>
+                <label for="filterRole">Filter by:</label>
+                <select name="filterRole" class="form-select-sm form-select">
+                    <option value=0>No Filter</option>
+                    <option value=1>Admin</option>
+                    <option value=2>Service</option>
+                    <option value=3>Guest</option>
+                </select>
+            </div>
+            <div>
+                <label for="orderby">Order by:</label>
+                <select name="orderGroup" class="form-select-sm form-select">
+                    <option value="active">Active</option>
+                    <option value="role">Role</option>
+                    <option value="username">Username</option>
+                    <option value="anrede">Gender</option>
+                    <option value="vorname">First Name</option>
+                    <option value="nachname">Last Name</option>
+                    <option value="room">Room</option>
+                </select>
+            </div>
+            <div>
+                <label for="orderby">Order by:</label>
+                <select name="orderby" class="form-select-sm form-select">
+                    <option value="asc">ascending</option>
+                    <option value="desc">descending</option>
+                </select>
+            </div>
+            <input type="submit" id="filter-submit" class="btn btn-primary">
+            <a class='btn btn-primary' id="addNews-button" href='registrierung.php'>Register New User</a>
         </form>
+
         <?php
             if(isset($_COOKIE["nothingHappened"]))
             {
@@ -102,8 +113,8 @@
         ?>
     </div>
     <br><br><br>
-    <a class='navbar-brand' href='registrierung.php'>Register New User</a>
-        <table id="table">
+    
+    <table id="table" class="table table-striped table-hover">
         <tr>
             <th>Active</th>
             <th>Role</th>
