@@ -26,7 +26,7 @@
                             <h4 class='card-title'>".$headline."</h4>
                             <p class='card-text'>".$content."</p>
                             <p class='card-text'><small class='text-muted'>".$date."</small></p>
-                            <a id='news-button' href='news/showNews.php?news_id=".$id."' class='btn btn-primary'>Read more</a>
+                            <a id='news-button' href='../news/showNews.php?news_id=".$id."' class='btn btn-primary'>Read more</a>
                         </div>
                     </div>
                 </div>

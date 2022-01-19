@@ -8,7 +8,6 @@
         include ("../checks/user_indicator.php");
         include ("../checks/test_input.php");//test_input() nutzen um rohe Daten zu testen, für mehr siehe test_input.php
     ?>
-    
     <div id="form">
         <div id="inner-form">
             <h1 id="Überschrift">File new Ticket</h1><br>

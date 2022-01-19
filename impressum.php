@@ -16,11 +16,16 @@
         <br>Tel.: 0680-xxxx-xxxx-4242
         <br>E-Mail: info@bigklyhotel.at
         <br>UID-Nr: ATxxxxxxxxxx1
+        <br>Registergericht: Amtsgericht XXXXX
+        <br>Handelsregisternummer: XXX XXXX
     </p>
-    <p><br>Geschäftsführer:
-    <br>Patrick Faltas
-    <br>Matus Porubsky</p>
-    
+    <p>
+        <br>Geschäftsführung:
+        <br>Patrick Faltas
+        <br><img src="Werbebilder/Faltas.jpg" alt="Patrick" class='img-fluid rounded-start'>
+        <br>Matus Porubsky
+        <br><img src="Werbebilder/Matus_imp.jpg" alt="Matus" class='img-fluid rounded-start'>
+    </p>
     <p><br>Externe Beratung:
     <br>Genius</p>
 </body>
