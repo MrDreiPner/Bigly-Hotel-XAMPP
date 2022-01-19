@@ -25,7 +25,7 @@
                 <span class="error"><?php if(isset($error)){ echo $error;}?></span>
                 <input type="file"  id="img-upload" class="btn btn-primary btn-sm form-control" accept=".jpg, .png"  name="Bildupload">
             </div>
-        <input type="submit" id="submit" class="btn btn-primary">
+        <input type="submit" id="submit" value="Submit" class="btn btn-primary">
     </form>
     </div>
     <?php 
