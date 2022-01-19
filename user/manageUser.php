@@ -110,8 +110,7 @@
         if(isset($_POST["ch_pw"]) && isset($_POST["ch_pw_c"])){
             $ch_password = test_input($_POST["ch_pw"]);
             $ch_password_c = test_input($_POST["ch_pw_c"]);
-            if($ch_password != $ch_password_c)
-            {
+            if($ch_password != $ch_password_c){
                 $errors["ch_pw"] = $errors["ch_pw_c"] = "Passwords don't match!";
             }
             //Hier wird unabhängig vom user (verschiedene Inputs) der zugriff auf den weiteren Prozess zugelassen
@@ -119,12 +118,10 @@
             //Der Admin muss KEIN Passwort zur Aktualisierung eingeben - Der Gast schon
             else if(($ch_password != "" && $_SESSION["SessionWert"] == "Admin") || ($ch_password != "" && isset($_POST["safety_pw"]) && $_SESSION["SessionWert"] == "Guest"))
             {
-                if($_SESSION["SessionWert"] == "Guest")
-                {
+                if($_SESSION["SessionWert"] == "Guest"){
                     //Hier wird die Richtigkeit des alten PW geprüft
                     $safety_pw = test_input($_POST["safety_pw"]);
-                    if (password_verify($safety_pw, $OGpassword) && $safety_pw != "")
-                    {
+                    if (password_verify($safety_pw, $OGpassword) && $safety_pw != ""){
                         $ID = $_SESSION["ID"];
                         $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
                         $sql = "update user 
@@ -139,8 +136,7 @@
                         $stmt->execute();
                         $stmt->close();
                     }
-                    else if(password_verify($safety_pw, $OGpassword) == FALSE && $safety_pw != "")
-                    {
+                    else if(password_verify($safety_pw, $OGpassword) == FALSE && $safety_pw != ""){
                         $verification = "Old password wrong";
                         $errors["ch_pw"] = $errors["ch_pw_c"] = "Password NOT updated!";
                     }
@@ -149,8 +145,7 @@
                         $errors["ch_pw"] = $errors["ch_pw_c"] = "Password NOT updated!";
                     }
                 }
-                else
-                {
+                else{
                     $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
                     $ch_password = password_hash($ch_password, PASSWORD_DEFAULT);
                     $sql = "update user 
@@ -171,8 +166,7 @@
         if(isset($_POST["ch_email"]) && $_POST["ch_email"] != ""){
             $ch_email = test_input($_POST["ch_email"]);
             $errors["email"] = checkEmail($ch_email);
-            if($errors["email"] == "" && $ch_email != "")
-            {
+            if($errors["email"] == "" && $ch_email != ""){
                 $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
                 $sql = "update user 
                     set email = ?
@@ -187,12 +181,10 @@
                 $stmt->close();     
             }
         }
-        if(isset($_POST["ch_vorname"]))
-        {
+        if(isset($_POST["ch_vorname"])){
             $vorname = test_input($_POST["ch_vorname"]);
             $errors["ch_vorname"] = checkOnlyChars($vorname);
-            if($errors["ch_vorname"] == "" && $vorname != "")
-            {
+            if($errors["ch_vorname"] == "" && $vorname != ""){
                 $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
                 $sql = "update user 
                     set vorname = ?
@@ -209,12 +201,10 @@
             }
         }
 
-        if(isset($_POST["ch_nachname"]))
-        {
+        if(isset($_POST["ch_nachname"])){
             $nachname = test_input($_POST["ch_nachname"]);
             $errors["ch_nachname"] = checkOnlyChars($nachname);
-            if($errors["ch_nachname"] == "" && $nachname != "")
-            {
+            if($errors["ch_nachname"] == "" && $nachname != ""){
                 $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
                 $sql = "update user 
                     set nachname = ?
@@ -230,12 +220,10 @@
             }
         }
 
-        if(isset($_POST["ch_room"]) && $_SESSION["SessionWert"] == "Admin")
-        {
+        if(isset($_POST["ch_room"]) && $_SESSION["SessionWert"] == "Admin"){
             $ch_room = test_input($_POST["ch_room"]);
             $errors["ch_room"] = checkOnlyNumbers($ch_room);
-            if($ch_room != "")
-            {
+            if($ch_room != ""){
                 //Es wird geprüft ob das Zimmer bereits vergeben ist
                 $sql = "SELECT room FROM user 
                         WHERE room = '$ch_room' 
@@ -249,8 +237,7 @@
                 }
                 $result->close();
             }
-            if($errors["ch_room"] == "" && $ch_room != "")
-            {
+            if($errors["ch_room"] == "" && $ch_room != ""){
                 $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
                 $sql = "update user 
                     set room = ?
@@ -266,8 +253,7 @@
             }
         }
 
-        if(isset($_POST["anrede"]))
-        {
+        if(isset($_POST["anrede"])){
             $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
             $sql = "update user 
                 set anrede = ?
@@ -282,8 +268,7 @@
             $stmt->close();
         }
 
-        if(isset($_POST["ch_role"]) && $_SESSION["SessionWert"] == "Admin")
-        {
+        if(isset($_POST["ch_role"]) && $_SESSION["SessionWert"] == "Admin"){
             $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
             $sql = "update user 
                 set role = ?
@@ -298,8 +283,7 @@
             $stmt->close();
         }
 
-        if(isset($_POST["active"]) && $_SESSION["SessionWert"] == "Admin")
-        {
+        if(isset($_POST["active"]) && $_SESSION["SessionWert"] == "Admin"){
             $ID = isset($_SESSION["user_to_manage_ID"])?$_SESSION["user_to_manage_ID"] : $_SESSION["ID"];
             $sql = "update user 
                 set active = ?
@@ -321,8 +305,7 @@
             }
         }
         //Wenn alle updates erfolgreich waren wird der admin zurück in die user verwaltung geschickt, der gast bleibt
-        if(isset($_POST["sent"]) && $checkschecked == "Profile updated!")
-        {
+        if(isset($_POST["sent"]) && $checkschecked == "Profile updated!"){
             $db_obj->close();
             unset($_SESSION['user_to_manage_ID']);
             $_SESSION["update"] = 1;
@@ -330,24 +313,23 @@
         }
         //Wenn 1 oder mehrere updates fehlgeschlagen sind, werden Gast und admin 3 Sekunden die Fehler angezeigt, dann
         //wird die Seite neu geladen, die erfolgreichen updates werden geladen
-        else if(isset($_POST["sent"]) && $checkschecked != "Profile updated!")
-        {
+        else if(isset($_POST["sent"]) && $checkschecked != "Profile updated!"){
             $db_obj->close();
             $_SESSION["SessionWert"] == "Admin" ? header("Refresh:5 , url=manageUser.php") : header("Refresh:5 , url=manageUser.php");
         }
 
-
     ?>
-    <br><br>
-    <div class="input">
-    <form method="POST" action="manageUser.php">
-        <h3>Update Data</h3>
-        <label for="ch_username" required>Change username: </label><br>
-        <input type="text" name="ch_username">
-        <span class="error"> <?php if(isset($errors["ch_username"])){ echo $errors["ch_username"];}?></span><br>
+
+    <div id="form">
+        <div id="inner-form">
+            <h1 id="Überschrift">Update User Data</h1><br>
+            <form method="POST" action="manageUser.php">
+                <div id="mb-3">
+                    <label for="ch_username" required>Change username: </label><br>
+                    <input type="text" name="ch_username">
+                    <span class="error"> <?php if(isset($errors["ch_username"])){ echo $errors["ch_username"];}?></span><br>
         <?php
-            if($_SESSION["SessionWert"] == "Guest")
-            {
+            if($_SESSION["SessionWert"] == "Guest"){
                 echo 
                 "<label for='safety_pw' required>Old password: </label><br>
                 <span class='error'>";
@@ -383,8 +365,7 @@
         //Die nachfolgenden Optionen sind nur für Admins nutzbar
         //Falls der Admin sich selbst bearbeitet, soll er diese Daten ebenfalls nicht bearbeiten können, damit er sich nicht selbst
         //die Rechte nimmt oder sich löscht
-            if($_SESSION["SessionWert"] == "Admin" && isset($_SESSION["user_to_manage_ID"]) && $role != "Admin")
-            {
+            if($_SESSION["SessionWert"] == "Admin" && isset($_SESSION["user_to_manage_ID"]) && $role != "Admin"){
                 echo 
                 "<label for='ch_room' required>Room: </label><br>
                 <span class='error'></span><input type='text' name='ch_room'>";
@@ -397,12 +378,10 @@
                 <input name='ch_role' type='radio' value=3>Guest<br>
                 </div>
                 <div class='ersteClass'>Set Status: ";
-                if($Sactive == 0)
-                {
+                if($Sactive == 0){
                     echo "<input name='active' type='radio' value=1>Active<br></div>";
                 }
-                else
-                {
+                else{
                     echo "<input name='active' type='radio' value=0>Inactive<br></div>";
                 }
             }
@@ -411,21 +390,17 @@
         <input type="submit" value="Update">
     </form>
     <?php
-        if(isset($_SESSION['update']))
-        {
+        if(isset($_SESSION['update'])){
             echo "<br>". $checkschecked;
             unset($_SESSION['update']);
         }
-    if($_SESSION["SessionWert"] == "Admin")
-    {
+    if($_SESSION["SessionWert"] == "Admin"){
         echo "<form action='userVerwaltung.php'><input type='submit' value='Back'></form>";
     }
-    else
-    {
+    else{
         echo "<form action='../main/index.php'><input type='submit' value='Back'></form>";
     }
     ?>
     </div>
-
 </body>
 </html>

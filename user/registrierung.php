@@ -84,59 +84,69 @@
             header("Refresh:0; url=userVerwaltung.php");
         }
     }
-        
     ?>
-    <div id="Header">
-        <h1 id="Überschrift">User Registration</h1>
-    </div>
-    <div id="form">
-        <div id="inner-form">
+   <div id="form">
+        <div id="inner-form-addUser">
+            <h1 id="Überschrift">User Registration</h1><br>
             <form enctype="multipart/form-data" method = "post">
-                <div class="form-check">
-                Gender:
-                <br>
-                <input name="anrede" type="radio" value=1>Male
-                <input name="anrede" type="radio" value=2>Female
-                <input name="anrede" type="radio" value=3>Non-Binary
-                <input name="anrede" type="radio" value=4 checked>NA
-            </div>
-            <br> 
-            <div class="ersteClass">
-                Role:
-                <br>
-                <input name="role" type="radio" value=1>Admin
-                <input name="role" type="radio" value=2>Service
-                <input name="role" type="radio" value=3 checked>Guest
-            </div>
+            Gender:<!--radios-->
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="anrede" id="inlineRadio1" value=1>
+                    <label class="form-check-label" for="anrede">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="anrede" id="inlineRadio1" value=2>
+                    <label class="form-check-label" for="anrede">Female</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="anrede" id="inlineRadio1" value=3>
+                    <label class="form-check-label" for="anrede">Non-Binary</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" checked name="anrede" id="inlineRadio1" value=4>
+                    <label class="form-check-label" for="anrede">NA</label>
+                </div>
+            <br>Role:
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="role" id="inlineRadio1" value=1>
+                    <label class="form-check-label" for="role">Admin</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="role" id="inlineRadio1" value=2>
+                    <label class="form-check-label" for="role">Service</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="role" id="inlineRadio1" checked value=3>
+                    <label class="form-check-label" for="role">Guest</label>
+                </div><!--radio end-->
+                <div id="mb-3">
+                    <label for="email" class="form-label">E-Mail/ Username:</label>
+                    <span class="error">* <?php echo $errors["email"];?></span>
+                    <input type="email" class="form-control" name="email" id="email" required value="<?php echo $errors["email"] != "" ? "" : $data["email"];?>"><br>
+                </div>
+                <div id="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <span class="error">* <?php echo $errors["password"];?></span>
+                    <input type="password" class="form-control" name="password" id="password" required value="<?php echo $errors["password"] != "" ? "" : $data["password"];?>">
+                </div>
+                <div id="mb-3">
+                    <label for="vorname" class="form-label">First Name:</label>
+                    <span class="error"> <?php echo $errors["vorname"];?></span>
+                    <input type="text" class="form-control" name="vorname" id="vorname" value="<?php echo $errors["vorname"] != "" ? "" : $data["vorname"];?>"><br>
+                </div>
+                <div id="mb-3">
+                    <label for="nachname" class="form-label">Last Name:</label>
+                    <span class="error"> <?php echo $errors["nachname"];?></span>
+                    <input type="text" class="form-control" name="nachname" id="nachname" value="<?php echo $errors["nachname"] != "" ? "" : $data["nachname"];?>"><br>
+                </div>
+                <div id="mb-3">
+                    <label class="form-label" for="room_nr">Room:</label>
+                    <span class="error"> <?php echo $errors["room_nr"];?></span>
+                    <input name="room_nr" class="form-control" type="text" id="room" value="<?php echo $errors["room_nr"] != "" ? "" : $data["room_nr"];?>"><br>
+                </div>
             <br>
-            <div class="ersteClass">
-                <label for="email">E-Mail/ Username:</label>
-                <span class="error">* <?php echo $errors["email"];?></span>
-                <input type="email" name="email" id="email" required value="<?php echo $errors["email"] != "" ? "" : $data["email"];?>"><br>
-            </div>
-            <div class="ersteClass">
-                <label for="password">Password:</label>
-                <span class="error">* <?php echo $errors["password"];?></span>
-                <input type="password" name="password" id="password" required value="<?php echo $errors["password"] != "" ? "" : $data["password"];?>">
-            </div>
-            <div class="ersteClass">
-                <label for="vorname">First Name:</label>
-                <span class="error"> <?php echo $errors["vorname"];?></span>
-                <input type="text" name="vorname" id="vorname" value="<?php echo $errors["vorname"] != "" ? "" : $data["vorname"];?>"><br>
-            </div>
-            <div class="ersteClass">
-                <label for="nachname">Last Name:</label>
-                <span class="error"> <?php echo $errors["nachname"];?></span>
-                <input type="text" name="nachname" id="nachname" value="<?php echo $errors["nachname"] != "" ? "" : $data["nachname"];?>"><br>
-             </div>
-            <div class="ersteClass">
-                <label>Room:</label>
-                <span class="error"> <?php echo $errors["room_nr"];?></span>
-                <input name="room_nr" type="text" id="room" value="<?php echo $errors["room_nr"] != "" ? "" : $data["room_nr"];?>"><br>
-            </div>
-            <br>
-            <button type="submit">Register</button>
-            <button type="reset">Reset page</button>
+            <button type="submit" id="submit" class="btn btn-primary">Register</button>
+            <button type="reset" id="submit" class="btn btn-primary">Reset page</button>
         </form> 
     </div
 </html>

@@ -151,3 +151,13 @@ background-image: url("Werbebilder/background.png");
 
         high quality content
 <h1><a href="https://www.youtube.com/watch?v=FfKWHtNDGKU" target="_blank">Quality content</a></h1>
+
+
+    <input name="anrede" type="radio" value=1>Male
+    <input name="anrede" type="radio" value=2>Female
+    <input name="anrede" type="radio" value=3>Non-Binary
+    <input name="anrede" type="radio" value=4 checked>NA
+
+    <input name="role" type="radio" value=1>Admin
+    <input name="role" type="radio" value=2>Service
+    <input name="role" type="radio" value=3 checked>Guest

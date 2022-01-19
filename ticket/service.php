@@ -9,7 +9,7 @@
         include ("../checks/test_input.php");//test_input() nutzen um rohe Daten zu testen, für mehr siehe test_input.php
     ?>
     <div id="form">
-        <div id="inner-form">
+        <div id="inner-form-service">
             <h1 id="Überschrift">File new Ticket</h1><br>
             <form enctype="multipart/form-data" method="POST">
             <div class="mb-3">        
