@@ -2,13 +2,11 @@
 <body>
 <br><br><br><br><br>
     <?php 
-        include ("../checks/user_guest_check.php");
+        include ("../checks/user_logged_check.php");
         require_once('../dbaccess.php');
         include ("../nav.php");
         
         if (isset($_SESSION["ID"])){
-            //Je nachdem wie auf manageUser zugegriffen wird, werden entweder die eigenen
-            //Daten geholt (Gast) oder die des zu bearbeitenden users (als Admin)
             $ID =$_SESSION["ID"];
             $sql = 'select username, email, room, vorname, nachname, role, anrede
                     from user
@@ -31,14 +29,19 @@
             <div id="user-data">    
                 Username: <?php echo $username;?><br>
                 Gender: <?php echo $gender;?><br>
-                Full name: <?php echo $Svorname." ".$Snachname;?><br>
+                Full name:<br> <?php echo $Svorname." ".$Snachname;?><br>
                 E-Mail: <?php echo $email;?><br>
                 Username: <?php echo $role;?><br>
                 Room: <?php echo $room;?><br>
             </div>
         </div>
         </div>
-        <a class="btn btn-primary" href='/webtech/Bigly-Hotel-XAMPP/user/manageUser.php'>Manage Profile</a>
+        <?php
+            if($_SESSION["SessionWert"] != "Service")
+            {
+                echo "<a class='btn btn-primary' href='/webtech/Bigly-Hotel-XAMPP/user/manageUser.php'>Manage Profile</a>";
+            }
+        ?>
 
 
 

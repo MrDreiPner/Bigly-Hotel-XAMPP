@@ -44,7 +44,7 @@
             <div id="user-data">    
                 Username: <?php echo $username;?><br>
                 Gender: <?php echo $gender;?><br>
-                Full name: <?php echo $Svorname." ".$Snachname;?><br>
+                Full name:<br> <?php echo $Svorname." ".$Snachname;?><br>
                 E-Mail: <?php echo $email;?><br>
                 Username: <?php echo $role;?><br>
                 Room: <?php echo $room;?><br>
