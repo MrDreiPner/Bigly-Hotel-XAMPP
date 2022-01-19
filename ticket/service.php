@@ -11,9 +11,9 @@
     <br><br> <br><br>
     <div class="input">
     <form enctype="multipart/form-data" method="POST">
-        <label for="Betreff" required>Betreff</label><br>
+        <label for="Betreff">Betreff</label><br>
         <span class="error"> <?php if(isset($errors)){ echo $errors;}?></span>
-        <input type="text" name="Betreff"><br>
+        <input type="text" required name="Betreff"><br>
         Please describe the issues:<br>
         <textarea name="serviceText" required></textarea><br><br>
         <span class="error"><?php if(isset($error)){ echo $error;}?></span>
@@ -132,7 +132,7 @@
                 <option value="asc">ascending</option>
                 <option value="desc">descending</option>
             </select>
-            <input type="submit">
+            <input value ="Submit" type="submit">
         </form>
     </div>
 </body>

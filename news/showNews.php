@@ -39,5 +39,6 @@
         header("location: UA_access.php");
     }
 ?>
+<form action='../main/index.php'><input type='submit' value='Back'></form>
 </body>
 </html>
