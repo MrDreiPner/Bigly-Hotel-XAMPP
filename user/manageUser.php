@@ -1,6 +1,5 @@
 <?php include ("../head.php"); ?>
 <body>
-<br><br><br><br><br>
     <?php 
         include ("../checks/user_guest_check.php");
         require_once('../dbaccess.php');
@@ -39,21 +38,24 @@
             $stmt->close();
         }
     ?>
-    <h1>Manage Profile</h1>
-    <br><br><br><br>
-    <!--Ausgabe der aktuellen Informationen -->
-    <div class="input">
-        Username: <?php echo $username;?><br>
-        Gender: <?php echo $gender;?><br>
-        Full name: <?php echo $Svorname." ".$Snachname;?><br>
-        E-Mail: <?php echo $email;?><br>
-        Username: <?php echo $role;?><br>
-        Room: <?php echo $room;?><br>
-        Active: <?php
-                if($_SESSION["SessionWert"] == "Admin"){ 
-                    if($Sactive == TRUE){echo "Active";}
-                    else{echo "Inactive";}}
-                ?><br>
+
+    <div id="form">    <!--Ausgabe der aktuellen Informationen -->
+        <div id="inner-form">
+            <h1 id="Überschrift">Manage Profile</h1>
+            <div id="user-data">    
+                Username: <?php echo $username;?><br>
+                Gender: <?php echo $gender;?><br>
+                Full name: <?php echo $Svorname." ".$Snachname;?><br>
+                E-Mail: <?php echo $email;?><br>
+                Username: <?php echo $role;?><br>
+                Room: <?php echo $room;?><br>
+                Active: <?php
+                        if($_SESSION["SessionWert"] == "Admin"){ 
+                            if($Sactive == TRUE){echo "Active";}
+                            else{echo "Inactive";}}
+                        ?><br>
+            </div>
+        </div>
     </div>
     <?php
         $checkschecked = "Profile updated!";
@@ -321,86 +323,121 @@
     ?>
 
     <div id="form">
-        <div id="inner-form">
+        <div id="inner-form-ch">
             <h1 id="Überschrift">Update User Data</h1><br>
             <form method="POST" action="manageUser.php">
                 <div id="mb-3">
-                    <label for="ch_username" required>Change username: </label><br>
-                    <input type="text" name="ch_username">
-                    <span class="error"> <?php if(isset($errors["ch_username"])){ echo $errors["ch_username"];}?></span><br>
-        <?php
+                    <label for="ch_username" class="form-label" required>Change username: </label>
+                    <span class="error"> <?php if(isset($errors["ch_username"])){ echo $errors["ch_username"];}?></span>
+                    <input type="text" class="form-control" name="ch_username">
+                </div>
+            <?php
             if($_SESSION["SessionWert"] == "Guest"){
                 echo 
-                "<label for='safety_pw' required>Old password: </label><br>
-                <span class='error'>";
+                "<div id='mb-3'>
+                    <label for='safety_pw' class='form-label' required>Old password: </label>
+                    <span class='error'>";
                 if(isset($verification)){ echo $verification;}
                 echo
-                "</span><input type='password' name='safety_pw'><br>";
+                "<input type='password' class='form-control' name='safety_pw'></div>";
             }
-        ?>
-        <label for="ch_pw" required>New password: </label><br>
-        <input type="password" name="ch_pw">
-        <span class="error"> <?php if(isset($errors["ch_pw"])){ echo $errors["ch_pw"];}?></span><br>
-        <label for="ch_pw_c" required>Confirm new password: </label><br>
-        <input type="password" name="ch_pw_c">
-        <span class="error"> <?php if(isset($errors["ch_pw_c"])){ echo $errors["ch_pw_c"];}?></span><br>
-        <label for="ch_email" required>Change E-Mail: </label><br>
-        <input type="email" name="ch_email">
-        <span class="error"> <?php if(isset($errors["email"])){ echo $errors["email"];}?></span><br>
-        <label for='ch_vorname' required>First Name: </label><br>
-        <input type='text' name='ch_vorname'>
-        <span class='error'> <?php if(isset($errors["ch_vorname"])){ echo $errors["ch_vorname"];}?> </span><br>
-        <label for='ch_nachname' required>Last Name: </label><br>
-        <input type='text' name='ch_nachname'>
-        <span class='error'> <?php if(isset($errors["ch_nachname"])){ echo $errors["ch_nachname"];}?></span><br>
-        <div class='ersteClass'>
-            Gender:<br>
-                <input name='anrede' type='radio' value=1>Male
-                <input name='anrede' type='radio' value=2>Female
-                <input name='anrede' type='radio' value=3>Non-Binary
-                <input name='anrede' type='radio' value=4>NA
-                <br>
-        </div>
-        <?php
-        //Die nachfolgenden Optionen sind nur für Admins nutzbar
-        //Falls der Admin sich selbst bearbeitet, soll er diese Daten ebenfalls nicht bearbeiten können, damit er sich nicht selbst
-        //die Rechte nimmt oder sich löscht
-            if($_SESSION["SessionWert"] == "Admin" && isset($_SESSION["user_to_manage_ID"]) && $role != "Admin"){
-                echo 
-                "<label for='ch_room' required>Room: </label><br>
-                <span class='error'></span><input type='text' name='ch_room'>";
-                if(isset($errors["ch_room"])){ echo $errors["ch_room"];} 
-                echo 
-                "<div class='ersteClass'>Delete User:
-                <input name='delete' type='checkbox' value=1><br></div>
-                <div class='ersteClass'>
-                Role: <input name='ch_role' type='radio' value=2>Service
-                <input name='ch_role' type='radio' value=3>Guest<br>
+            ?>
+                <div id="mb-3">
+                    <label for="ch_pw" class="form-label" required>New password: </label>
+                    <span class="error"> <?php if(isset($errors["ch_pw"])){ echo $errors["ch_pw"];}?></span>
+                    <input type="password" class="form-control" name="ch_pw">
                 </div>
-                <div class='ersteClass'>Set Status: ";
-                if($Sactive == 0){
-                    echo "<input name='active' type='radio' value=1>Active<br></div>";
+                <div id="mb-3">
+                    <label for="ch_pw_c" class="form-label" required>Confirm new password: </label>
+                    <span class="error"> <?php if(isset($errors["ch_pw_c"])){ echo $errors["ch_pw_c"];}?></span>
+                    <input type="password" class="form-control" name="ch_pw_c">
+                </div>
+                <div id="mb-3">
+                    <label for="ch_email" class="form-label" required>Change E-Mail: </label>
+                    <span class="error"> <?php if(isset($errors["email"])){ echo $errors["email"];}?></span>
+                    <input type="email" class="form-control" name="ch_email">
+                </div>
+                <div id="mb-3">
+                    <label for='ch_vorname' class="form-label" required>First Name: </label>
+                    <span class='error'> <?php if(isset($errors["ch_vorname"])){ echo $errors["ch_vorname"];}?></span>
+                    <input type='text' class="form-control" name='ch_vorname'>
+                </div>
+                <div id="mb-3">
+                    <label for='ch_nachname' class="form-label" required>Last Name: </label>
+                    <span class='error'> <?php if(isset($errors["ch_nachname"])){ echo $errors["ch_nachname"];}?></span>
+                    <input type='text' class="form-control" name='ch_nachname'>   
+                </div>
+                Gender:<!--radios-->
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="anrede" id="inlineRadio1" value=1>
+                    <label class="form-check-label" for="anrede">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="anrede" id="inlineRadio1" value=2>
+                    <label class="form-check-label" for="anrede">Female</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="anrede" id="inlineRadio1" value=3>
+                    <label class="form-check-label" for="anrede">Non-Binary</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" checked name="anrede" id="inlineRadio1" value=4>
+                    <label class="form-check-label" for="anrede">NA</label>
+                </div>
+            <?php
+            //Die nachfolgenden Optionen sind nur für Admins nutzbar
+            //Falls der Admin sich selbst bearbeitet, soll er diese Daten ebenfalls nicht bearbeiten können, damit er sich nicht selbst
+            //die Rechte nimmt oder sich löscht
+                if($_SESSION["SessionWert"] == "Admin" && isset($_SESSION["user_to_manage_ID"]) && $role != "Admin"){
+                    echo 
+                    "<div id='mb-3'>
+                        <label for='ch_room' class='form-label' required>Room: </label><br>
+                        <span class='error'></span>
+                        <input type='text' class='form-control' name='ch_room'>
+                    </div>";
+                    if(isset($errors["ch_room"])){ echo $errors["ch_room"];} 
+                    echo 
+                    "<div class='form-check form-check-inline'>
+                        <input class='form-check-input' type='checkbox' name='delete' id='inlineCheckbox1' value=1>
+                        <label class='form-check-label' for='delete'>Delete User</label>
+                    </div>
+                    <div class='ersteClass'>Set Status: ";
+                    if($Sactive == 0){
+                        echo "<div class='form-check form-check-inline'>
+                                <input class='form-check-input' type='radio' name='active' id='inlineRadio1' value=1>
+                                <label class='form-check-label' for='active'>Active</label>
+                            </div>";
+                    }
+                    else{
+                        echo "<div class='form-check form-check-inline'>
+                                <input class='form-check-input' type='radio' name='active' id='inlineRadio1' value=0>
+                                <label class='form-check-label' for='active'>Inactive</label>
+                            </div>";
+                    }
+                    echo "Role: 
+                    <div class='form-check form-check-inline'>
+                        <input class='form-check-input' type='radio' name='ch_role' id='inlineRadio1' value=2>
+                        <label class='form-check-label' for='ch_role'>Service</label>
+                    </div>
+                    <div class='form-check form-check-inline'>
+                        <input class='form-check-input' type='radio' name='ch_role' id='inlineRadio1' value=3>
+                        <label class='form-check-label' for='ch_role'>Guest</label>
+                    </div>";
                 }
-                else{
-                    echo "<input name='active' type='radio' value=0>Inactive<br></div>";
-                }
-            }
-        ?>
-        <input type ='hidden' name ='sent' value = '1'/>
-        <input type="submit" value="Update">
-    </form>
+            ?>
+                <input type ='hidden' name ='sent' value = '1'/>
+                <input type="submit" id="submit" class="btn btn-primary" value="Update">
+            </form>
+        </div>
     <?php
         if(isset($_SESSION['update'])){
             echo "<br>". $checkschecked;
             unset($_SESSION['update']);
         }
-    if($_SESSION["SessionWert"] == "Admin"){
-        echo "<form action='userVerwaltung.php'><input type='submit' value='Back'></form>";
-    }
-    else{
-        echo "<form action='../main/index.php'><input type='submit' value='Back'></form>";
-    }
     ?>
     </div>
 </body>
 </html>
+
+
+

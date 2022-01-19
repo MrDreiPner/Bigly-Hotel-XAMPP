@@ -5,7 +5,7 @@
         include ("checks/user_indicator.php");
     ?>   
     <div id="image">
-        <img id="harold" src="Werbebilder/harold1.jpg" alt="Hide the Pain">
+        <img id="harold"  class="img-fluid rounded-start" src="Werbebilder/harold1.jpg" alt="Hide the Pain">
     </div>    
 <div class="text-wrap text-start" id="help">
     <div id="inner-help">

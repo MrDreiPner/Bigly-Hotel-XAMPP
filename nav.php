@@ -10,6 +10,7 @@
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link active" aria-current="page"></a></a></li>
         <?php 
+            include ("user_indicator.php");
         //Jeder User sieht nur die Links, die für ihn relevant sind bzw für die er Berechtigungen hat
             if (isset ($_SESSION["SessionWert"])) {
                 if ($_SESSION["SessionWert"] == "Admin") {

@@ -1,5 +1,5 @@
 <?php //Printet Namen der eingeloggten Person
         if (isset($_SESSION["SessionWert"])){
-            echo "<br>Hello ". $_SESSION["vorname"];
+            echo "<li class='nav-item nav-link'>Hello ". $_SESSION["vorname"]."!</li>";
         }
 ?>

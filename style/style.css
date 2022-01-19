@@ -32,6 +32,18 @@
         -webkit-backdrop-filter: blur( 3.5px );
     }
     
+    #inner-form-ch{
+        overflow: hidden;
+        z-index: 1;
+        padding: 60px 30px;
+        border-radius: 10px;
+        background: rgba( 255, 255, 255, 0.7 );
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+        backdrop-filter: blur( 3.5px );
+        -webkit-backdrop-filter: blur( 3.5px );
+    }
+   
+
     #inner-form-addUser{
         padding: 60px 30px;
         border-radius: 10px;
@@ -91,11 +103,6 @@ nav{
 }
 
 /*----Image Styling----*/
-#image{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
 
 img{
     display: block;
@@ -161,6 +168,12 @@ body{
         box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
         backdrop-filter: blur( 3.5px );
         -webkit-backdrop-filter: blur( 3.5px );
+    }
+
+    #user-data{
+        padding-left: 12rem;
+        font-size: 1.4rem;
+        z-index: 0;
     }
 
     #Überschrift{
