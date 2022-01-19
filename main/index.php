@@ -2,7 +2,6 @@
     <body>
         <?php
             include ("../nav.php");
-            include ("../checks/user_indicator.php");
             require_once ('../dbaccess.php');
         ?>
         <div id="header">
