@@ -1,4 +1,4 @@
-<?php //Checkt ob Gast eingeloggt ist
+<?php //Checkt ob Gast/Admin eingeloggt ist
     if(isset($_SESSION["SessionWert"])){
         if($_SESSION["SessionWert"] != "Admin" && $_SESSION["SessionWert"] != "Guest"){
             header("location: ../checks/UA_access.php");
